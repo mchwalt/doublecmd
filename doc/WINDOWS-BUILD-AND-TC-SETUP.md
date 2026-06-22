@@ -45,6 +45,20 @@ so Lazarus can stay in Program Files:
 - `pixmaps/dctheme/*/actions/go-up.png`: the `[..]` parent-directory icon (theme icon
   `go-up`, used via `CheckAddThemePixmap('go-up')` in `upixmapmanager.pas`) replaced with
   Total Commander's gray up arrow (`WCMICONS.DLL,15`) instead of the green DC arrow.
+- Running file index in the panel footer (custom feature): a right-aligned field shows the
+  cursor position / total of the listing (excluding `..`), updated live on cursor move.
+  Click the index or press `Ctrl+G` to open a small inline editor and jump to a position
+  (Enter confirms; Esc or focus-loss cancels). Implementation:
+  - `TFileViewWithPanels`: the `lblPosition` footer label.
+  - `TOrderedFileView`: `UpdatePositionIndex` (computes pos/total, called from
+    `DoFileIndexChanged` so it covers columns/brief/thumbnail views), the inline `TEdit`
+    (`edtJump`) shown by click or by the `cm_GoToPosition` command (opened deferred via
+    `Application.QueueAsyncCall` so the triggering key event doesn't dismiss it).
+  - `Ctrl+G` shortcut: needs a mirror `cm_GoToPosition` in `TMainCommands` that delegates
+    `frmMain.ActiveFrame.ExecuteCommand('cm_GoToPosition', [])` - "Files Panel" hotkeys are
+    dispatched to the main form (`Form as IFormCommands`), which then delegates to the active
+    view (same pattern as `cm_GoToFirstEntry`). Default binding added in `uglobs`
+    `LoadDefaultHotkeyBindings` with `hkVersion` bumped so existing configs pick it up.
 
 ## 4. User-config changes (NOT in the repo; under %APPDATA%\doublecmd)
 
