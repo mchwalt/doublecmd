@@ -1903,7 +1903,11 @@ begin
   gResultingFramePositionAfterCompare := rfpacActiveOnLeft;
 
   { Fonts page }
+  {$IFDEF MSWINDOWS}
+  gFonts[dcfMain].Name := 'Microsoft Sans Serif'; // adopt Total Commander panel font
+  {$ELSE}
   gFonts[dcfMain].Name := 'default';
+  {$ENDIF}
   gFonts[dcfMain].Size := 10;
   gFonts[dcfMain].Style := [fsBold];
   gFonts[dcfMain].Quality := fqDefault;
