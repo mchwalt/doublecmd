@@ -1753,7 +1753,7 @@ object frmMain: TfrmMain
     object actRunTerm: TAction
       Tag = 7
       Category = 'Miscellaneous'
-      Caption = 'Run &Terminal'
+      Caption = 'Terminal/Comman&d Window'
       HelpType = htKeyword
       OnExecute = actExecute
     end

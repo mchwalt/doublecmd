@@ -2751,7 +2751,7 @@ msgstr "Vorschaubilder im rechten Dateifenster"
 
 #: tfrmmain.actrunterm.caption
 msgid "Run &Terminal"
-msgstr "Terminalemulation öffnen"
+msgstr "Terminal/Komman&dozeilenfenster öffnen"
 
 #: tfrmmain.actsavefavoritetabs.caption
 msgid "Save current tabs to a New Favorite Tabs"

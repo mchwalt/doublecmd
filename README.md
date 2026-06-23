@@ -8,6 +8,12 @@ Double Commander codebase.
 The fork keeps full compatibility with upstream and only adds Windows/TC-oriented
 tweaks and a few small features on top.
 
+## Changelog
+
+See [`CHANGELOG.md`](CHANGELOG.md) for the versioned history of this fork's changes
+(current: `1.3.0-tc.1`). The upstream Double Commander changelog is in
+[`doc/changelog.txt`](doc/changelog.txt).
+
 ## What this fork changes
 
 ### Total Commander look & feel
@@ -23,6 +29,12 @@ tweaks and a few small features on top.
 - **Click-to-jump** - click the index to open a small inline editor and jump to a
   position (Enter confirms, Esc or focus loss cancels).
 - **`Ctrl+G` shortcut** - opens the same jump editor from the keyboard.
+- **`ALT+B`, `d` terminal accelerator** - opens the terminal / command-line window
+  from the Commands menu, mirroring Total Commander's underlined mnemonic.
+
+### Fixes
+- **Menu separator navigation** - keyboard arrow navigation no longer dead-stops on
+  menu separators (works around an LCL Win32 owner-draw bug).
 
 ### Building on Windows
 Notes on building under Windows (Lazarus + FPC, the `C:\Program Files` space problem,

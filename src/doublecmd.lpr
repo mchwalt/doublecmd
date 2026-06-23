@@ -47,6 +47,9 @@ uses
   {$IF DEFINED(LCLWIN32) and DEFINED(DARKWIN)}
   uWin32WidgetSetDark,
   {$ENDIF}
+  {$IFDEF LCLWIN32}
+  uWin32MenuFix,
+  {$ENDIF}
   {$IFDEF LCLQT6}
   uQtWSControls,
   {$IFNDEF LCL_VER_499}
@@ -165,6 +168,11 @@ begin
 
 {$IF DEFINED(MSWINDOWS) and (DEFINED(LCLQT5) or DEFINED(DARKWIN))}
   ApplyDarkStyle;
+{$ENDIF}
+
+{$IFDEF LCLWIN32}
+  // Fix keyboard navigation skipping over menu separators (LCL bug)
+  ApplyMenuSeparatorFix;
 {$ENDIF}
 
 {$IF DEFINED(darwin)}
