@@ -10,6 +10,13 @@ fork revision counter.
 
 ## [Unreleased]
 
+## [1.3.0-tc.4] - 2026-06-24
+
+### Changed
+- Double-clicking the path label now edits the path by default (TC behaviour),
+  instead of opening the hot-dir menu (`gDblClickEditPath`). Right-click still
+  opens the path edit too.
+
 ## [1.3.0-tc.3] - 2026-06-24
 
 ### Added

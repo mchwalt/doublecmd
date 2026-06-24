@@ -2186,7 +2186,8 @@ begin
   gInplaceRename := False;
   gInplaceRenameButton := True;
   gDblClickToParent := False;
-  gDblClickEditPath := False;
+  // TC look-alike: double-click on the path label edits the path (like Total Commander)
+  gDblClickEditPath := True;
   gHotDirAddTargetOrNot := False;
   gHotDirFullExpandOrNot:=False;
   gShowPathInPopup:=FALSE;
