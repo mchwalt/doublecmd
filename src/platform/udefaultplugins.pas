@@ -31,7 +31,8 @@ uses
 
 const
   { Default plugins list version number }
-  pdVersion = 3;
+  { tc.2: bumped so existing configs migrate ZIP/ZIPX/JAR to the fast sevenzip.wcx }
+  pdVersion = 4;
 
 const
   WcxMask = '*.wcx'{$IFDEF CPU64} + ';*.wcx64'{$ENDIF};
@@ -105,13 +106,19 @@ begin
 
   I:= gWCXPlugins.IndexOfName('zip');
   if I < 0 then
-    gWCXPlugins.Add('zip', 735, Folder + 'zip' + PathDelim + 'zip.wcx')
+    gWCXPlugins.Add('zip', 735, Folder + 'sevenzip' + PathDelim + 'sevenzip.wcx')
   else
-    gWCXPlugins.Flags[I]:= 735;
+    begin
+      gWCXPlugins.Flags[I]:= 735;
+      // TC look-alike: handle ZIP with the fast 7z decoder, not the slow internal zip.wcx
+      gWCXPlugins.FileName[I]:= Folder + 'sevenzip' + PathDelim + 'sevenzip.wcx';
+    end;
 
   I:= gWCXPlugins.IndexOfName('jar');
   if I < 0 then
-    gWCXPlugins.Add('jar', 990, Folder + 'zip' + PathDelim + 'zip.wcx');
+    gWCXPlugins.Add('jar', 990, Folder + 'sevenzip' + PathDelim + 'sevenzip.wcx')
+  else
+    gWCXPlugins.FileName[I]:= Folder + 'sevenzip' + PathDelim + 'sevenzip.wcx';
 
   {$IF DEFINED(MSWINDOWS) or DEFINED(LINUX)}
   I:= gWCXPlugins.IndexOfName('7z');
@@ -187,9 +194,12 @@ begin
 
   I:= gWCXPlugins.IndexOfName('zipx');
   if I < 0 then
-    gWCXPlugins.Add('zipx', 223, Folder + 'zip' + PathDelim + 'zip.wcx')
+    gWCXPlugins.Add('zipx', 223, Folder + 'sevenzip' + PathDelim + 'sevenzip.wcx')
   else
-    gWCXPlugins.Flags[I]:= 223;
+    begin
+      gWCXPlugins.Flags[I]:= 223;
+      gWCXPlugins.FileName[I]:= Folder + 'sevenzip' + PathDelim + 'sevenzip.wcx';
+    end;
   {$ENDIF}
 
   {$IF DEFINED(MSWINDOWS)}

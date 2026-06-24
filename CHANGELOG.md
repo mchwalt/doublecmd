@@ -10,6 +10,13 @@ fork revision counter.
 
 ## [Unreleased]
 
+## [1.3.0-tc.2] - 2026-06-24
+
+### Changed
+- ZIP/ZIPX/JAR now default to the fast `sevenzip.wcx` decoder instead of the slow
+  internal `zip.wcx`, removing the multi-second delay when opening/extracting ZIPs
+  (`src/platform/udefaultplugins.pas`). Existing configs are migrated on start.
+
 ## [1.3.0-tc.1] - 2026-06-23
 
 Baseline of the fork on top of Double Commander 1.3.0.
