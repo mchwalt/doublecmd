@@ -614,6 +614,8 @@ var
   gOperationOptionDirectoryExists: TFileSourceOperationOptionDirectoryExists;
   gOperationOptionSetPropertyError: TFileSourceOperationOptionSetPropertyError;
   gOperationOptionReserveSpace: Boolean;
+  // Keep relative sub-directory structure when copying/moving from a flat view
+  gFlatViewCopyKeepStructure: Boolean;
   gOperationOptionCheckFreeSpace: Boolean;
   gOperationOptionCopyAttributes: Boolean;
   gOperationOptionCopyXattributes: Boolean;
@@ -2106,6 +2108,7 @@ begin
   gOperationOptionDirectoryExists := fsoodeNone;
   gOperationOptionSetPropertyError := fsoospeNone;
   gOperationOptionReserveSpace := True;
+  gFlatViewCopyKeepStructure := True;
   gOperationOptionCheckFreeSpace := True;
   gOperationOptionCopyAttributes := True;
   gOperationOptionCopyXattributes := True;
@@ -3090,6 +3093,7 @@ begin
         gOperationOptionDirectoryExists := TFileSourceOperationOptionDirectoryExists(GetValue(SubNode, 'DirectoryExists', Integer(gOperationOptionDirectoryExists)));
         gOperationOptionSetPropertyError := TFileSourceOperationOptionSetPropertyError(GetValue(SubNode, 'SetPropertyError', Integer(gOperationOptionSetPropertyError)));
         gOperationOptionReserveSpace := GetValue(SubNode, 'ReserveSpace', gOperationOptionReserveSpace);
+        gFlatViewCopyKeepStructure := GetValue(SubNode, 'FlatViewKeepStructure', gFlatViewCopyKeepStructure);
         gOperationOptionCheckFreeSpace := GetValue(SubNode, 'CheckFreeSpace', gOperationOptionCheckFreeSpace);
         gOperationOptionCopyAttributes := GetValue(SubNode, 'CopyAttributes', gOperationOptionCopyAttributes);
         gOperationOptionCopyXattributes := GetValue(SubNode, 'CopyXattributes', gOperationOptionCopyXattributes);
@@ -3770,6 +3774,7 @@ begin
     SetValue(SubNode, 'DirectoryExists', Integer(gOperationOptionDirectoryExists));
     SetValue(SubNode, 'SetPropertyError', Integer(gOperationOptionSetPropertyError));
     SetValue(SubNode, 'ReserveSpace', gOperationOptionReserveSpace);
+    SetValue(SubNode, 'FlatViewKeepStructure', gFlatViewCopyKeepStructure);
     SetValue(SubNode, 'CheckFreeSpace', gOperationOptionCheckFreeSpace);
     SetValue(SubNode, 'CopyAttributes', gOperationOptionCopyAttributes);
     SetValue(SubNode, 'CopyXattributes', gOperationOptionCopyXattributes);

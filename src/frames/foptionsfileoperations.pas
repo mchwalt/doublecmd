@@ -37,6 +37,7 @@ type
     bvlConfirmations: TDividerBevel;
     cbDeleteToTrash: TCheckBox;
     cbDropReadOnlyFlag: TCheckBox;
+    cbFlatViewKeepStructure: TCheckBox;
     cbProcessComments: TCheckBox;
     cbRenameSelOnlyName: TCheckBox;
     cbShowCopyTabSelectPanel: TCheckBox;
@@ -122,6 +123,7 @@ begin
   cbShowCopyTabSelectPanel.Checked := gShowCopyTabSelectPanel;
   cbDeleteToTrash.Checked          := gUseTrash;
   cbRenameSelOnlyName.Checked      := gRenameSelOnlyName;
+  cbFlatViewKeepStructure.Checked  := gFlatViewCopyKeepStructure;
 
   case gFileOperationsProgressKind of
     fopkSeparateWindow:           cbProgressKind.ItemIndex := 0;
@@ -153,6 +155,7 @@ begin
   gShowCopyTabSelectPanel := cbShowCopyTabSelectPanel.Checked;
   gUseTrash               := cbDeleteToTrash.Checked;
   gRenameSelOnlyName      := cbRenameSelOnlyName.Checked;
+  gFlatViewCopyKeepStructure := cbFlatViewKeepStructure.Checked;
 
   case cbProgressKind.ItemIndex of
     0: gFileOperationsProgressKind := fopkSeparateWindow;

@@ -51,6 +51,7 @@ type
   protected
     procedure AddLinkTarget(aFile: TFile; CurrentNode: TFileTreeNode); override;
     procedure AddFilesInDirectory(srcPath: String; CurrentNode: TFileTreeNode); override;
+    function CreateDirectoryNodeFile(const aPath: String): TFile; override;
   end;
 
   { TFileSystemOperationHelper }
@@ -401,6 +402,12 @@ begin
   end;
 
   FindCloseUAC(sr);
+end;
+
+function TFileSystemTreeBuilder.CreateDirectoryNodeFile(const aPath: String): TFile;
+begin
+  // Reflect the existing source directory (correct attributes, IsDirectory).
+  Result := TFileSystemFileSource.CreateFileFromFile(aPath);
 end;
 
 // ----------------------------------------------------------------------------

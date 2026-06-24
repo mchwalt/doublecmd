@@ -99,6 +99,17 @@ inherited frmOptionsFileOperations: TfrmOptionsFileOperations
       OnChange = cbDeleteToTrashChange
       TabOrder = 4
     end
+    object cbFlatViewKeepStructure: TCheckBox
+      AnchorSideLeft.Control = lblProgressKind
+      AnchorSideTop.Control = cbDeleteToTrash
+      AnchorSideTop.Side = asrBottom
+      Left = 10
+      Height = 24
+      Top = 154
+      Width = 400
+      Caption = '&Keep directory structure when copying/moving from flat view'
+      TabOrder = 11
+    end
     object cbCopyConfirmation: TCheckBox
       AnchorSideLeft.Control = lblProgressKind
       AnchorSideTop.Control = bvlConfirmations
@@ -145,7 +156,7 @@ inherited frmOptionsFileOperations: TfrmOptionsFileOperations
     end
     object bvlConfirmations: TDividerBevel
       AnchorSideLeft.Control = lblProgressKind
-      AnchorSideTop.Control = cbDeleteToTrash
+      AnchorSideTop.Control = cbFlatViewKeepStructure
       AnchorSideTop.Side = asrBottom
       AnchorSideRight.Control = gbUserInterface
       AnchorSideRight.Side = asrBottom

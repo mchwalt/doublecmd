@@ -37,6 +37,7 @@ type
     FSkipAllBigFiles: Boolean;
     FCorrectSymlinks: Boolean;
     FCopyOnWrite: TFileSourceOperationOptionGeneral;
+    FFlatViewKeepStructure: Boolean;
     procedure SetSearchTemplate(AValue: TSearchTemplate);
 
   protected
@@ -61,6 +62,8 @@ type
     property CopyAttributesOptions: TCopyAttributesOptions read FCopyAttributesOptions write FCopyAttributesOptions;
     property SkipAllBigFiles: Boolean read FSkipAllBigFiles write FSkipAllBigFiles;
     property CorrectSymLinks: Boolean read FCorrectSymLinks write FCorrectSymLinks;
+    // Recreate the relative sub-directory structure when moving from a flat view.
+    property FlatViewKeepStructure: Boolean read FFlatViewKeepStructure write FFlatViewKeepStructure;
     property CopyOnWrite: TFileSourceOperationOptionGeneral read FCopyOnWrite write FCopyOnWrite;
     property SetPropertyError: TFileSourceOperationOptionSetPropertyError read FSetPropertyError write FSetPropertyError;
     property ExcludeEmptyTemplateDirectories: Boolean read FExcludeEmptyTemplateDirectories write FExcludeEmptyTemplateDirectories;
@@ -85,6 +88,7 @@ begin
   FCheckFreeSpace := gOperationOptionCheckFreeSpace;
   FSkipAllBigFiles := False;
   FCorrectSymLinks := gOperationOptionCorrectLinks;
+  FFlatViewKeepStructure := gFlatViewCopyKeepStructure;
   FExcludeEmptyTemplateDirectories := True;
 
   inherited Create(aFileSource, theSourceFiles, aTargetPath);
@@ -132,6 +136,8 @@ begin
     TreeBuilder.SymLinkOption := fsooslDontFollow;
     TreeBuilder.SearchTemplate := Self.SearchTemplate;
     TreeBuilder.ExcludeEmptyTemplateDirectories := Self.ExcludeEmptyTemplateDirectories;
+    // Keep relative sub-directory structure when moving from a flat view.
+    TreeBuilder.KeepRelativePath := SourceFiles.Flat and FFlatViewKeepStructure;
 
     TreeBuilder.BuildFromFiles(SourceFiles);
     FSourceFilesTree := TreeBuilder.ReleaseTree;

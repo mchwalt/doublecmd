@@ -25,6 +25,7 @@ type
     cbCopyTime: TCheckBox;
     cbCopyOwnership: TCheckBox;
     cbExcludeEmptyDirectories: TCheckBox;
+    cbFlatViewKeepStructure: TCheckBox;
     cbReserveSpace: TCheckBox;
     cbCopyPermissions: TCheckBox;
     chkCopyOnWrite: TCheckBox;
@@ -51,6 +52,7 @@ type
     constructor Create(AOwner: TComponent; AFileSource: IInterface); override;
     destructor Destroy; override;
     procedure SaveOptions; override;
+    procedure SetSourceFlatView(AFlatView: Boolean); override;
     procedure SetOperationOptions(Operation: TObject); override;
   end;
 
@@ -175,6 +177,9 @@ begin
   cbReserveSpace.Checked := gOperationOptionReserveSpace;
   cbCheckFreeSpace.Checked := gOperationOptionCheckFreeSpace;
   cbExcludeEmptyDirectories.Checked := gOperationOptionExcludeEmptyDirectories;
+  cbFlatViewKeepStructure.Checked := gFlatViewCopyKeepStructure;
+  // Shown only for flat-view sources (see SetSourceFlatView).
+  cbFlatViewKeepStructure.Visible := False;
 end;
 
 destructor TFileSystemCopyMoveOperationOptionsUI.Destroy;
@@ -223,6 +228,12 @@ begin
   gOperationOptionReserveSpace := cbReserveSpace.Checked;
   gOperationOptionCheckFreeSpace := cbCheckFreeSpace.Checked;
   gOperationOptionExcludeEmptyDirectories := cbExcludeEmptyDirectories.Checked;
+  gFlatViewCopyKeepStructure := cbFlatViewKeepStructure.Checked;
+end;
+
+procedure TFileSystemCopyMoveOperationOptionsUI.SetSourceFlatView(AFlatView: Boolean);
+begin
+  cbFlatViewKeepStructure.Visible := AFlatView;
 end;
 
 procedure TFileSystemCopyMoveOperationOptionsUI.SetOperationOptions(Operation: TObject);
@@ -276,6 +287,7 @@ begin
     CheckFreeSpace := cbCheckFreeSpace.Checked;
     ReserveSpace := cbReserveSpace.Checked;
     Verify := chkVerify.Checked;
+    FlatViewKeepStructure := cbFlatViewKeepStructure.Checked;
     if Assigned(FTemplate) then
     begin
       SearchTemplate := FTemplate;
@@ -316,6 +328,7 @@ begin
     CheckFreeSpace := cbCheckFreeSpace.Checked;
     ReserveSpace := cbReserveSpace.Checked;
     Verify := chkVerify.Checked;
+    FlatViewKeepStructure := cbFlatViewKeepStructure.Checked;
     Options := CopyAttributesOptions;
     SetCopyOption(Options, caoCopyAttributes, cbCopyAttributes.Checked);
     SetCopyOption(Options, caoCopyTime, cbCopyTime.Checked);

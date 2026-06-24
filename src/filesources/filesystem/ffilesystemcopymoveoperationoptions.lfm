@@ -251,6 +251,18 @@ object FileSystemCopyMoveOperationOptionsUI: TFileSystemCopyMoveOperationOptions
       Caption = 'Copy on write'
       TabOrder = 10
     end
+    object cbFlatViewKeepStructure: TCheckBox
+      AnchorSideLeft.Control = pnlCheckboxes
+      AnchorSideTop.Control = chkCopyOnWrite
+      AnchorSideTop.Side = asrBottom
+      Left = 0
+      Height = 19
+      Top = 253
+      Width = 200
+      Caption = '&Keep directory structure (flat view)'
+      TabOrder = 11
+      Visible = False
+    end
   end
   object gbFileTemplate: TGroupBox
     AnchorSideLeft.Control = Owner

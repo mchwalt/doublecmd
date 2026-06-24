@@ -45,6 +45,9 @@ type
     FRecursive: Boolean;
     FFileChecks: TFindFileChecks;
     FRootDir: String;
+    // When true, BuildFromFiles recreates the relative sub-directory chain of each
+    // file (flat-view copy/move). Filenames keep their path below FRootDir.
+    FKeepRelativePath: Boolean;
 
     AskQuestion: TAskQuestionFunction;
     CheckOperationState: TCheckOperationStateFunction;
@@ -56,6 +59,11 @@ type
     procedure AddLinkTarget(aFile: TFile; CurrentNode: TFileTreeNode); virtual; abstract;
     procedure AddDirectory(aFile: TFile; CurrentNode: TFileTreeNode);
     procedure DecideOnLink(aFile: TFile; CurrentNode: TFileTreeNode);
+    // Creates a directory file object for an existing source directory. Returns nil
+    // in the base class; only file-system builders support relative-path rebuild.
+    function CreateDirectoryNodeFile(const aPath: String): TFile; virtual;
+    // Walks/creates the directory node chain for aRelDir under the root node.
+    function GetOrCreateRelativeNode(const aRelDir: String): TFileTreeNode;
 
     function GetItemsCount: Int64;
 
@@ -69,6 +77,7 @@ type
     function ReleaseTree: TFileTree;
 
     property ExcludeRootDir: Boolean read FExcludeRootDir write FExcludeRootDir;
+    property KeepRelativePath: Boolean read FKeepRelativePath write FKeepRelativePath;
     property Recursive: Boolean read FRecursive write FRecursive;
     property SymLinkOption: TFileSourceOperationOptionSymLink read FSymlinkOption write FSymlinkOption;
 
@@ -87,7 +96,7 @@ type
 implementation
 
 uses
-  uGlobs, uLng;
+  uGlobs, uLng, DCStrUtils, DCBasicTypes;
 
 { TFileTreeNodeData }
 
@@ -151,10 +160,77 @@ begin
       if Files[i].IsDirectory then
         AddFilesInDirectory(Files[i].FullPath + DirectorySeparator, FFilesTree);
   end
+  else if FKeepRelativePath then
+  begin
+    // Recreate the relative sub-directory structure (flat-view copy/move).
+    for i := 0 to Files.Count - 1 do
+      AddItem(Files[i].Clone,
+              GetOrCreateRelativeNode(ExtractDirLevel(IncludeTrailingPathDelimiter(FRootDir),
+                                                      Files[i].Path)));
+  end
   else
   begin
     for i := 0 to Files.Count - 1 do
       AddItem(Files[i].Clone, FFilesTree);
+  end;
+end;
+
+function TFileSourceTreeBuilder.CreateDirectoryNodeFile(const aPath: String): TFile;
+begin
+  // Base class cannot stat a directory; file-system builder overrides this.
+  Result := nil;
+end;
+
+function TFileSourceTreeBuilder.GetOrCreateRelativeNode(const aRelDir: String): TFileTreeNode;
+var
+  Components: TDynamicStringArray;
+  Comp, AbsPath: String;
+  i, j, AddedIndex: Integer;
+  ChildNode: TFileTreeNode;
+  DirFile: TFile;
+  NodeData: TFileTreeNodeData;
+  Found: Boolean;
+begin
+  Result := FFilesTree;
+  if aRelDir = EmptyStr then Exit;
+
+  AbsPath := ExcludeTrailingPathDelimiter(FRootDir);
+  Components := SplitString(ExcludeTrailingPathDelimiter(aRelDir), PathDelim);
+  for i := 0 to High(Components) do
+  begin
+    Comp := Components[i];
+    if Comp = EmptyStr then Continue;
+    AbsPath := AbsPath + PathDelim + Comp;
+
+    // Reuse an existing directory node with the same name, if any.
+    Found := False;
+    for j := 0 to Result.SubNodesCount - 1 do
+      if Result.SubNodes[j].TheFile.IsDirectory and
+         (Result.SubNodes[j].TheFile.Name = Comp) then
+      begin
+        Result := Result.SubNodes[j];
+        Found := True;
+        Break;
+      end;
+    if Found then Continue;
+
+    DirFile := CreateDirectoryNodeFile(AbsPath);
+    if not Assigned(DirFile) then
+    begin
+      // No directory object available - fall back to a flat target.
+      Result := FFilesTree;
+      Exit;
+    end;
+
+    AddedIndex := Result.AddSubNode(DirFile);
+    ChildNode := Result.SubNodes[AddedIndex];
+    NodeData := TFileTreeNodeData.Create(FRecursive);
+    // Force per-file processing: never rename/remove the whole source directory,
+    // because only the tagged files (not all siblings) must be copied/moved.
+    NodeData.SubnodesHaveExclusions := True;
+    ChildNode.Data := NodeData;
+    Inc(FDirectoriesCount);
+    Result := ChildNode;
   end;
 end;
 

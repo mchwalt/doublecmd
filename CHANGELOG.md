@@ -10,6 +10,14 @@ fork revision counter.
 
 ## [Unreleased]
 
+## [1.3.0-tc.3] - 2026-06-24
+
+### Added
+- Copy/move from a flat view (Ctrl+B) can now recreate the relative sub-directory
+  structure at the target instead of flattening (XTree-style). Global default in
+  Configuration > File operations, plus a per-operation checkbox in the F5/F6 dialog
+  shown only for flat-view sources.
+
 ## [1.3.0-tc.2] - 2026-06-24
 
 ### Changed

@@ -81,6 +81,7 @@ type
     FOperationOptionsUIClass: TFileSourceOperationOptionsUIClass;
     FOperationOptionsUI: TFileSourceOperationOptionsUI;
     FCurrentCopyDlgNameSelectionStep: TCurrentCopyDlgNameSelectionStep;
+    FSourceFlatView: Boolean;
 
     function GetQueueIdentifier: TOperationsManagerQueueIdentifier;
     procedure SetQueueIdentifier(AValue: TOperationsManagerQueueIdentifier);
@@ -101,7 +102,8 @@ type
   public
     constructor Create(TheOwner: TComponent; DialogType: TCopyMoveDlgType;
                        AFileSource: IFileSource; ADestFileSource: IFileSource;
-                       AOperationOptionsUIClass: TFileSourceOperationOptionsUIClass); reintroduce;
+                       AOperationOptionsUIClass: TFileSourceOperationOptionsUIClass;
+                       AFlatView: Boolean = False); reintroduce;
     constructor Create(TheOwner: TComponent); override;
     procedure SetOperationOptions(Operation: TFileSourceOperation);
 
@@ -128,11 +130,13 @@ var
 
 constructor TfrmCopyDlg.Create(TheOwner: TComponent; DialogType: TCopyMoveDlgType;
                                AFileSource: IFileSource; ADestFileSource: IFileSource;
-                               AOperationOptionsUIClass: TFileSourceOperationOptionsUIClass);
+                               AOperationOptionsUIClass: TFileSourceOperationOptionsUIClass;
+                               AFlatView: Boolean = False);
 begin
   FDialogType := DialogType;
   FFileSource := AFileSource;
   FDestFileSource := ADestFileSource;
+  FSourceFlatView := AFlatView;
   FOperationOptionsUIClass := AOperationOptionsUIClass;
   FCommands := TFormCommands.Create(Self);
   inherited Create(TheOwner);
@@ -455,6 +459,7 @@ begin
     FOperationOptionsUI := FOperationOptionsUIClass.Create(Self, FFileSource);
     FOperationOptionsUI.Parent := grpOptions;
     FOperationOptionsUI.Align  := alClient;
+    FOperationOptionsUI.SetSourceFlatView(FSourceFlatView);
   end
   else
     btnOptions.Visible := False;

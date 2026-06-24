@@ -3745,7 +3745,8 @@ begin
         OperationOptionsUIClass := OperationClass.GetOptionsUIClass;
 
       CopyDialog := TfrmCopyDlg.Create(
-        Self, cmdtCopy, params.resultFS, params.targetFS, OperationOptionsUIClass);
+        Self, cmdtCopy, params.resultFS, params.targetFS, OperationOptionsUIClass,
+        SourceFiles.Flat);
       CopyDialog.edtDst.Text := params.targetPath;
       CopyDialog.edtDst.ReadOnly := params.operationTemp;
       CopyDialog.lblCopySrc.Caption := GetFileDlgStr(rsMsgCpSel, rsMsgCpFlDr, SourceFiles);
@@ -3945,7 +3946,7 @@ begin
 
       MoveDialog := TfrmCopyDlg.Create(
         Self, cmdtMove, SourceFileSource, TargetFileSource,
-        OperationOptionsUIClass );
+        OperationOptionsUIClass, SourceFiles.Flat );
       MoveDialog.edtDst.Text := params.targetPath;
       MoveDialog.lblCopySrc.Caption := GetFileDlgStr(rsMsgRenSel, rsMsgRenFlDr, SourceFiles);
 
