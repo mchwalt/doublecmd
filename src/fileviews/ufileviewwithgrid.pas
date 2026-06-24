@@ -958,6 +958,9 @@ begin
   try
     AFileName:= ExtractDirLevel(CurrentPath, AFile.Path) + AFile.NameNoExt;
     lblInfo.Caption := MinimizeFilePath(AFileName, lblInfo.Canvas, lblInfo.Width);
+    // XTree ShowAll: let the separate tree follow the cursor's directory in flat view.
+    if gSeparateTree and (frmMain.ActiveFrame = Self) then
+      frmMain.UpdateTreeViewToDir(AFile.Path);
   finally
     AFile.Free;
   end;

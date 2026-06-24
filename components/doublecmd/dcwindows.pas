@@ -60,6 +60,11 @@ function GetFinalPathNameByHandle(hFile: THandle): UnicodeString;
    Retrieves the file system type name
 }
 function GetFileSystemType(const Path: String): UnicodeString;
+{en
+   Resolves 8.3 short path components to their long form.
+   Returns the input unchanged if resolution fails (e.g. path does not exist).
+}
+function GetLongName(const Path: String): String;
 
 implementation
 
@@ -87,6 +92,27 @@ begin
     Inc(Temp);
   end;
   if ((Temp - 1)^ = DriveSeparator) then Result:= Result + '\';
+end;
+
+function GetLongName(const Path: String): String;
+var
+  wShort, wLong: UnicodeString;
+  Len: DWORD;
+begin
+  Result := Path;
+  wShort := CeUtf8ToUtf16(Path);
+  SetLength(wLong, MAX_PATH);
+  Len := GetLongPathNameW(PWideChar(wShort), PWideChar(wLong), Length(wLong));
+  if (Len = 0) then Exit;
+  // Buffer too small: retry with the required size.
+  if (Len > DWORD(Length(wLong))) then
+  begin
+    SetLength(wLong, Len);
+    Len := GetLongPathNameW(PWideChar(wShort), PWideChar(wLong), Length(wLong));
+    if (Len = 0) then Exit;
+  end;
+  SetLength(wLong, Len);
+  Result := CeUtf16ToUtf8(wLong);
 end;
 
 function EnablePrivilege(hToken: HANDLE; lpszPrivilege: LPCTSTR): Boolean;

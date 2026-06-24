@@ -72,7 +72,7 @@ type
 implementation
 
 uses
-  DCStrUtils, uFile, uGlobs, uLng, uFileProperty, uFileViewWorker, uDCUtils;
+  DCStrUtils, uFile, uGlobs, uLng, uFileProperty, uFileViewWorker, uDCUtils, fMain;
 
 { TFileViewWithPanels }
 
@@ -200,6 +200,9 @@ begin
   try
     lblInfo.Caption := MinimizeFilePath(ExtractDirLevel(CurrentPath, AFile.FullPath),
                                         lblInfo.Canvas, lblInfo.Width);
+    // XTree ShowAll: let the separate tree follow the cursor's directory in flat view.
+    if gSeparateTree and (frmMain.ActiveFrame = Self) then
+      frmMain.UpdateTreeViewToDir(AFile.Path);
   finally
     AFile.Free;
   end;

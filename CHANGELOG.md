@@ -10,6 +10,14 @@ fork revision counter.
 
 ## [Unreleased]
 
+## [1.3.0-tc.5] - 2026-06-24
+
+### Added
+- XTree "ShowAll" feel: in flat view (Ctrl+B), the separate directory tree
+  (Ctrl+Shift+F8) now follows the cursor's directory. The tree also follows into
+  hidden folders (when hidden files are shown) and resolves 8.3 short paths
+  (`GetLongName`), so it works under `Temp`/`AppData` too.
+
 ## [1.3.0-tc.4] - 2026-06-24
 
 ### Changed

@@ -882,6 +882,7 @@ type
     procedure UpdateFileView;
     procedure UpdateShellTreeView;
     procedure UpdateTreeViewPath;
+    procedure UpdateTreeViewToDir(const APath: String);
     procedure UpdateTreeView;
     procedure UpdateDiskCount;
     procedure UpdateSelectedDrives;
@@ -978,7 +979,7 @@ uses
   fOptionsToolbarBase, fOptionsToolbarMiddle, fEditor, uColumns, StrUtils, uSysFolders,
   uColumnsFileView, dmHigh, uFileSourceOperationMisc
 {$IFDEF MSWINDOWS}
-  , uShellFileSource, uNetworkThread
+  , uShellFileSource, uNetworkThread, DCWindows
 {$ENDIF}
 {$IFDEF DARWIN}
   , uCocoaModernFormConfig
@@ -5010,16 +5011,34 @@ begin
       ShellTreeView.SelectionColor := CursorColor;
     end;
     FontOptionsToFont(gFonts[dcfMain], ShellTreeView.Font);
+    // Let the tree follow into hidden directories when hidden files are shown,
+    // otherwise SetPath silently fails for paths under hidden folders (e.g. AppData).
+    if gShowSystemFiles then
+      (ShellTreeView as TShellTreeView).ObjectTypes := [otFolders, otHidden]
+    else
+      (ShellTreeView as TShellTreeView).ObjectTypes := [otFolders];
   end;
 end;
 
 procedure TfrmMain.UpdateTreeViewPath;
 begin
+  UpdateTreeViewToDir(ActiveFrame.CurrentPath);
+end;
+
+procedure TfrmMain.UpdateTreeViewToDir(const APath: String);
+var
+  ATreePath: String;
+begin
   if (ShellTreeView = nil) then Exit;
   if (ShellTreeView.Tag <> 0) then Exit;
   if (fspDirectAccess in ActiveFrame.FileSource.Properties) then
   try
-    (ShellTreeView as TShellTreeView).Path := ActiveFrame.CurrentPath;
+    ATreePath := APath;
+    {$IFDEF MSWINDOWS}
+    // Resolve 8.3 short names so the long-name tree can match the node.
+    ATreePath := GetLongName(ATreePath);
+    {$ENDIF}
+    (ShellTreeView as TShellTreeView).Path := ATreePath;
   except
     // Skip
   end;
