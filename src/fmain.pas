@@ -1038,6 +1038,14 @@ type
     function ShellTreeViewSort(Node1, Node2: TTreeNode): Integer;
   end;
 
+  // Cracker to reach the protected ScrolledLeft of TCustomTreeView.
+  TTreeViewCracker = class(TCustomTreeView);
+
+var
+  // Last synced tree level, to detect up/down navigation for direction-aware
+  // horizontal scrolling of the separate tree (-1 = none yet).
+  ShellTreePrevLevel: Integer = -1;
+
 function HistoryIndexesToTag(aFileSourceIndex, aPathIndex: Integer): Longint;
 begin
   Result := (aFileSourceIndex << 16) or aPathIndex;
@@ -5028,6 +5036,8 @@ end;
 procedure TfrmMain.UpdateTreeViewToDir(const APath: String);
 var
   ATreePath: String;
+  ANode, ATop: TTreeNode;
+  ALeft, ASL, AMax, AMargin, ARows, I: Integer;
 begin
   if (ShellTreeView = nil) then Exit;
   if (ShellTreeView.Tag <> 0) then Exit;
@@ -5039,6 +5049,40 @@ begin
     ATreePath := GetLongName(ATreePath);
     {$ENDIF}
     (ShellTreeView as TShellTreeView).Path := ATreePath;
+    // Deeply-indented nodes scroll off to the right; orient the selected node
+    // so the parent hierarchy stays visible on the left. Direction-aware: going
+    // deeper, place the label end at about 2/3 of the width; navigating up, push
+    // it to the right edge so parents reappear sooner. Never push the icon off
+    // the left edge. Display* are client coords.
+    ANode := ShellTreeView.Selected;
+    if Assigned(ANode) then
+    begin
+      // Setting Path tends to leave the selected node at the very bottom. Bias it
+      // toward the vertical middle by backing up ~half a visible page, but cap the
+      // back-up (transient/oversized ClientHeight would scroll it off-screen). The
+      // MakeVisible afterwards is the hard guarantee it ends up in view.
+      ARows := ANode.Height;
+      if ARows <= 0 then ARows := 16;
+      ARows := (ShellTreeView.ClientHeight div ARows) div 2;
+      if ARows < 2 then ARows := 2;
+      if ARows > 12 then ARows := 12;
+      ATop := ANode;
+      for I := 1 to ARows do
+        if Assigned(ATop.GetPrevVisible) then ATop := ATop.GetPrevVisible;
+      ShellTreeView.TopItem := ATop;
+      ANode.MakeVisible;
+      ASL := TTreeViewCracker(ShellTreeView).ScrolledLeft;
+      if (ShellTreePrevLevel >= 0) and (ANode.Level < ShellTreePrevLevel) then
+        AMargin := 8                                   // up: aggressive left
+      else
+        AMargin := ShellTreeView.ClientWidth div 3;    // down/same: toward middle
+      ShellTreePrevLevel := ANode.Level;
+      ALeft := ASL + ANode.DisplayTextRight - (ShellTreeView.ClientWidth - AMargin);
+      AMax  := ASL + ANode.DisplayIconLeft - 2;
+      if ALeft > AMax then ALeft := AMax;
+      if ALeft < 0 then ALeft := 0;
+      TTreeViewCracker(ShellTreeView).ScrolledLeft := ALeft;
+    end;
   except
     // Skip
   end;

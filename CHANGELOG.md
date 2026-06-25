@@ -10,6 +10,14 @@ fork revision counter.
 
 ## [Unreleased]
 
+## [1.3.0-tc.6] - 2026-06-25
+
+### Changed
+- Separate directory tree (Ctrl+Shift+F8): smarter scrolling when following the
+  current path. Vertically the selected node is centred instead of stuck at the
+  bottom; horizontally it is oriented direction-aware (deeper -> label toward the
+  middle, up -> right edge) so parent folders stay visible in the narrow pane.
+
 ## [1.3.0-tc.5] - 2026-06-24
 
 ### Added
