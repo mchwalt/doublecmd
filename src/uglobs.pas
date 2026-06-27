@@ -297,6 +297,7 @@ var
   gCurDir,
   gTabHeader,
   gStatusBar,
+  gShowPositionIndex,
   gCmdLine,
   gLogWindow,
   gTermWindow,
@@ -2031,6 +2032,7 @@ begin
   gCurDir := True;
   gTabHeader := True;
   gStatusBar := True;
+  gShowPositionIndex := True;
   gCmdLine := True;
   gLogWindow := False;
   gTermWindow := False;
@@ -2969,6 +2971,7 @@ begin
       gCurDir := GetValue(Node, 'CurrentDirectory', gCurDir);
       gTabHeader := GetValue(Node, 'TabHeader', gTabHeader);
       gStatusBar := GetValue(Node, 'StatusBar', gStatusBar);
+      gShowPositionIndex := GetValue(Node, 'ShowPositionIndex', gShowPositionIndex);
       gCmdLine := GetValue(Node, 'CmdLine', gCmdLine);
       gLogWindow := GetValue(Node, 'LogWindow', gLogWindow);
       gTermWindow := GetValue(Node, 'TermWindow', gTermWindow);
@@ -3688,6 +3691,7 @@ begin
     SetValue(Node, 'CurrentDirectory', gCurDir);
     SetValue(Node, 'TabHeader', gTabHeader);
     SetValue(Node, 'StatusBar', gStatusBar);
+    SetValue(Node, 'ShowPositionIndex', gShowPositionIndex);
     SetValue(Node, 'CmdLine', gCmdLine);
     SetValue(Node, 'LogWindow', gLogWindow);
     SetValue(Node, 'TermWindow', gTermWindow);
