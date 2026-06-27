@@ -1,5 +1,11 @@
 # ToDo
 
+## Synchronisieren-Dialog: Farben
+
+- [ ] Im Dialog "Verzeichnisse synchronisieren" die Diff-Farben anpassen. Aktuell werden
+      Unterschiede in **Rot** dargestellt, das bei Rot-Grün-Sehschwäche nicht erkennbar ist.
+      TC-Farben übernehmen bzw. farbenblind-freundliche Farben (z. B. Blau) verwenden.
+
 ## Toolbar-Icons (Silk)
 
 Die Haupt-Toolbar nutzt jetzt das freie **Silk-Set** (CC BY 2.5) aus `pixmaps/silk/`,
