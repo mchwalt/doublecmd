@@ -2892,7 +2892,7 @@ msgstr "Verzeichniswechsel synchron in beiden Dateifenstern"
 
 #: tfrmmain.actsyncdirs.caption
 msgid "Syn&chronize dirs..."
-msgstr "Verzeichnisse synchronisieren …"
+msgstr "Verzeichnisse s&ynchronisieren …"
 
 #: tfrmmain.acttargetequalsource.caption
 msgid "Target &= Source"
