@@ -10,6 +10,19 @@ fork revision counter.
 
 ## [Unreleased]
 
+## [1.3.0-tc.7] - 2026-06-27
+
+### Added
+- Option to show/hide the running file index in the panel footer
+  (Configuration > Layout, "Show file position index in footer"; `gShowPositionIndex`,
+  default on).
+- The fork now ships default config files that are copied into a fresh user config on
+  first run (`default/` directory + `CopySettingsFiles` in `src/uglobs.pas`):
+  `colors.json` (colorblind-friendly blue marking colors), `shortcuts.scf`,
+  `highlighters.xml` and `multiarc.ini`. Machine-specific configs (`doublecmd.xml`,
+  `extassoc.xml`) are intentionally not shipped; `multiarc.ini` had its absolute ARJ
+  path de-machined (`d:\tools\arj.exe` -> `arj.exe`).
+
 ## [1.3.0-tc.6] - 2026-06-25
 
 ### Changed

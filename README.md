@@ -11,7 +11,7 @@ tweaks and a few small features on top.
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for the versioned history of this fork's changes
-(current: `1.3.0-tc.6`). The upstream Double Commander changelog is in
+(current: `1.3.0-tc.7`). The upstream Double Commander changelog is in
 [`doc/changelog.txt`](doc/changelog.txt).
 
 ## What this fork changes
@@ -29,6 +29,8 @@ See [`CHANGELOG.md`](CHANGELOG.md) for the versioned history of this fork's chan
 - **Click-to-jump** - click the index to open a small inline editor and jump to a
   position (Enter confirms, Esc or focus loss cancels).
 - **`Ctrl+G` shortcut** - opens the same jump editor from the keyboard.
+- **Show/hide the index** - the footer index can be toggled in
+  Configuration > Layout ("Show file position index in footer", on by default).
 - **`ALT+B`, `d` terminal accelerator** - opens the terminal / command-line window
   from the Commands menu, mirroring Total Commander's underlined mnemonic.
 
@@ -36,9 +38,24 @@ See [`CHANGELOG.md`](CHANGELOG.md) for the versioned history of this fork's chan
 - **Menu separator navigation** - keyboard arrow navigation no longer dead-stops on
   menu separators (works around an LCL Win32 owner-draw bug).
 
+### Bundled default config
+On first run (when the user config dir is empty) the fork copies a few opinionated
+defaults from the `default/` directory into the user config
+(`CopySettingsFiles` in `src/uglobs.pas`):
+- `colors.json` - colorblind-friendly blue marking colors.
+- `shortcuts.scf` - the fork's keyboard shortcuts (incl. `Ctrl+G`).
+- `highlighters.xml` - viewer/editor syntax highlighting.
+- `multiarc.ini` - archiver definitions.
+
+Machine-specific configs (`doublecmd.xml`, `extassoc.xml`) are deliberately **not**
+shipped, since they carry absolute paths (`C:\totalcmd\...`, external editor/tools).
+Existing user files are never overwritten.
+
 ### Building on Windows
-Notes on building under Windows (Lazarus + FPC, the `C:\Program Files` space problem,
-the `windres` wrapper) and the full TC setup are documented in
+Use Lazarus + FPC and run `build.bat release` from the repo root. Installing Lazarus
+to a path without spaces (e.g. the default `C:\Lazarus`) keeps the build trouble-free.
+Full notes - including the `C:\Program Files` space problem and `windres` wrapper for
+those who must keep Lazarus there, plus the complete TC setup - are in
 [`doc/WINDOWS-BUILD-AND-TC-SETUP.md`](doc/WINDOWS-BUILD-AND-TC-SETUP.md).
 
 ### Staying in sync with upstream
