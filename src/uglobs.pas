@@ -1718,6 +1718,21 @@ begin
   begin
     CopyFile(gpExePath + 'default' + PathDelim + sMULTIARC_FILENAME, gpCfgDir + sMULTIARC_FILENAME);
   end;
+  // colors / theme file (loaded by LoadColorsConfig, which runs after this)
+  if not mbFileExists(gpCfgDir + COLORS_JSON) then
+  begin
+    CopyFile(gpExePath + 'default' + PathDelim + COLORS_JSON, gpCfgDir + COLORS_JSON);
+  end;
+  // keyboard shortcuts file (loaded by LoadHotManConfig, which runs after this)
+  if not mbFileExists(gpCfgDir + 'shortcuts.scf') then
+  begin
+    CopyFile(gpExePath + 'default' + PathDelim + 'shortcuts.scf', gpCfgDir + 'shortcuts.scf');
+  end;
+  // highlighters file (loaded on demand by the editor/viewer)
+  if not mbFileExists(gpCfgDir + 'highlighters.xml') then
+  begin
+    CopyFile(gpExePath + 'default' + PathDelim + 'highlighters.xml', gpCfgDir + 'highlighters.xml');
+  end;
 end;
 
 procedure CreateGlobs;
