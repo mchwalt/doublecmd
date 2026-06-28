@@ -10,6 +10,11 @@ fork revision counter.
 
 ## [Unreleased]
 
+### Changed
+- Shell icon overlays now shown by default (`gIconOverlays`, Configuration > Icons,
+  "Show overlay icons"). Picks up the same Windows shell overlay handlers Explorer uses,
+  e.g. TortoiseGit/TortoiseSVN status badges and OneDrive markers.
+
 ## [1.3.0-tc.7] - 2026-06-27
 
 ### Added

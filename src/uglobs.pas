@@ -2234,7 +2234,7 @@ begin
   { Icons page }
   gShowIcons := sim_all_and_exe;
   gShowIconsNew := gShowIcons;
-  gIconOverlays := False;
+  gIconOverlays := True;
   gIconsSize := 32;
   gIconsSizeNew := gIconsSize;
   gDiskIconsSize := 16;
