@@ -2062,6 +2062,16 @@ msgstr "Plugin hinzufügen"
 msgid "Add to Stash"
 msgstr ""
 
+#: tfrmmain.actairdrop.caption
+msgctxt "tfrmmain.actairdrop.caption"
+msgid "AirDrop"
+msgstr "AirDrop (SnapDrop, PairDrop …)"
+
+#: tfrmmain.actairdrop.hint
+msgctxt "tfrmmain.actairdrop.hint"
+msgid "AirDrop"
+msgstr "AirDrop (SnapDrop, PairDrop …)"
+
 #: tfrmmain.actbenchmark.caption
 msgid "&Benchmark"
 msgstr "Benchmark"
@@ -2611,6 +2621,16 @@ msgstr "Verzeichnis in neue&m Tab öffnen"
 msgid "Open Drive by Index"
 msgstr "Laufwerk/Medium per Index öffnen"
 
+#: tfrmmain.actopenicloud.caption
+msgctxt "tfrmmain.actopenicloud.caption"
+msgid "iCloud Drive"
+msgstr "iCloud Drive"
+
+#: tfrmmain.actopenicloud.hint
+msgctxt "tfrmmain.actopenicloud.hint"
+msgid "iCloud Drive"
+msgstr "iCloud Drive ist der Cloud-Speicher von Apple. Vergleichbar mit z.B. Dropbox, OneDrive oder Google Drive"
+
 #: tfrmmain.actopenstash.caption
 msgid "Open Stash"
 msgstr ""
@@ -2696,6 +2716,14 @@ msgstr "Erneut in zuletzt geladenem ☆-Tab speichern"
 #: tfrmmain.actrestoreselection.caption
 msgid "&Restore Selection"
 msgstr "Auswahl w&iederherstellen"
+
+#: tfrmmain.actrevealinsystemfilemanager.caption
+msgid "Reveal in File Manager"
+msgstr ""
+
+#: tfrmmain.actrevealinsystemfilemanager.hint
+msgid "Reveal in System File Manager"
+msgstr ""
 
 #: tfrmmain.actreverseorder.caption
 msgid "Re&verse Order"
@@ -2816,6 +2844,11 @@ msgstr "&Gesperrt, kein Verzeichniswechsel möglich"
 #: tfrmmain.actsettaboptionpathresets.caption
 msgid "Locked with &Directory Changes Allowed"
 msgstr "Gesperrt, &Verzeichniswechsel möglich"
+
+#: tfrmmain.actshare.caption
+msgctxt "tfrmmain.actshare.caption"
+msgid "Share..."
+msgstr "Teilen …"
 
 #: tfrmmain.actshellexecute.caption
 msgctxt "TFRMMAIN.ACTSHELLEXECUTE.CAPTION"
@@ -6300,6 +6333,10 @@ msgstr "Verwende individuelle Abkürzungen:"
 msgid "Sorting"
 msgstr "Sortierung"
 
+#: tfrmoptionsfilesviews.lbl1k.caption
+msgid "1K ="
+msgstr ""
+
 #: tfrmoptionsfilesviews.lblbyte.caption
 msgid "&Byte:"
 msgstr "Byte:"
@@ -6363,6 +6400,14 @@ msgstr "Terabyte:"
 #: tfrmoptionsfilesviews.lblupdatedfilesposition.caption
 msgid "&Move updated files:"
 msgstr "Aktualisierte Dateien verschiebe&n:"
+
+#: tfrmoptionsfilesviews.rb1000.caption
+msgid "1000"
+msgstr ""
+
+#: tfrmoptionsfilesviews.rb1024.caption
+msgid "1024"
+msgstr ""
 
 #: tfrmoptionsfilesviewscomplement.btnaddattribute.caption
 msgctxt "tfrmoptionsfilesviewscomplement.btnaddattribute.caption"
@@ -10982,10 +11027,6 @@ msgstr "Gewähren Sie »Volle Festplattenzugriffsrechte« zur Unterstützung von
 msgid "Remove \"%s\""
 msgstr "\"%s\" entfernen"
 
-#: ulng.rsmenumacosshare
-msgid "Share..."
-msgstr "Teilen …"
-
 #: ulng.rsmfstbiairdroptips
 msgctxt "ulng.rsmfstbiairdroptips"
 msgid "AirDrop"
@@ -11087,16 +11128,6 @@ msgstr "Horizontal geteilt ein- und ausschalten"
 #: ulng.rsmfstbihorzsplittitle
 msgid "HorzSplit"
 msgstr "Horizontal geteilt"
-
-#: ulng.rsmfstbiiclouddrivetips
-msgctxt "ulng.rsmfstbiiclouddrivetips"
-msgid "iCloud Drive"
-msgstr "iCloud Drive ist der Cloud-Speicher von Apple. Vergleichbar mit z.B. Dropbox, OneDrive oder Google Drive"
-
-#: ulng.rsmfstbiiclouddrivetitle
-msgctxt "ulng.rsmfstbiiclouddrivetitle"
-msgid "iCloud Drive"
-msgstr "iCloud Drive"
 
 #: ulng.rsmfstbinetworktips
 msgctxt "ulng.rsmfstbinetworktips"

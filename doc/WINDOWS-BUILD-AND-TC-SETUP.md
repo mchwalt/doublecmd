@@ -12,6 +12,43 @@ re-discovered.
   `build.bat doublecmd` (app only). Output: `doublecmd.exe`, `doublecmd.dbg`,
   `doublecmd.zdli`.
 
+### Convenience wrappers (recommended)
+
+`build-dc.ps1` / `build-dc.cmd` (repo root) wrap `build.bat` and handle the two local
+pitfalls automatically, so you can build without remembering them:
+
+- They set `LAZARUS_HOME` to the 8.3 short path (section 2).
+- On a flaky FPC internal compiler error (see below) they delete the units output dir
+  and rebuild once (auto-retry).
+
+Usage:
+
+```
+build-dc.cmd                 # double-click; builds the app only (target "doublecmd")
+build-dc.cmd release         # components + plugins + app
+build-dc.cmd -Clean          # force a units clean before building
+.\build-dc.ps1 [-Target ...] [-Clean]   # same from a pwsh prompt
+```
+
+Targets match `build.bat`: `doublecmd` (default), `release`, `components`, `plugins`,
+`debug`, `darkwin`.
+
+### Flaky FPC internal compiler error (ICE)
+
+Occasionally a build aborts in an unrelated unit with messages like
+`(1026) Compilation raised exception internally`, `EListError: List index exceeds bounds`,
+or `Internal error 200611031`. This is not a code error - it comes from corrupt
+intermediate units (often after a previously aborted build). Fix: delete the units output
+and rebuild (`build-dc.ps1` does this automatically):
+
+```
+cmd /c "rd /s /q units\x86_64-win64-win32"
+```
+
+NOTE: `build.bat` ends with a debug-info extract step, so its exit code is often 0 even
+when the compile failed. Verify success by the log line `Linking ...doublecmd.exe` (and the
+absence of `Failed compiling`), not by the exit code.
+
 ## 2. The "Program Files" space problem (solved)
 
 The space in `C:\Program Files` breaks the build in two stages. Both fixes are needed

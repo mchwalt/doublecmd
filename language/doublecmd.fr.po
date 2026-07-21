@@ -2164,6 +2164,16 @@ msgstr "Ajouter un \"Plugin\""
 msgid "Add to Stash"
 msgstr ""
 
+#: tfrmmain.actairdrop.caption
+msgctxt "tfrmmain.actairdrop.caption"
+msgid "AirDrop"
+msgstr ""
+
+#: tfrmmain.actairdrop.hint
+msgctxt "tfrmmain.actairdrop.hint"
+msgid "AirDrop"
+msgstr ""
+
 #: tfrmmain.actbenchmark.caption
 msgid "&Benchmark"
 msgstr "Étalonnage"
@@ -2721,6 +2731,16 @@ msgstr "Ouvrir le &dossier dans un nouvel onglet"
 msgid "Open Drive by Index"
 msgstr "Ouvrir un lecteur par index"
 
+#: tfrmmain.actopenicloud.caption
+msgctxt "tfrmmain.actopenicloud.caption"
+msgid "iCloud Drive"
+msgstr ""
+
+#: tfrmmain.actopenicloud.hint
+msgctxt "tfrmmain.actopenicloud.hint"
+msgid "iCloud Drive"
+msgstr ""
+
 #: tfrmmain.actopenstash.caption
 msgid "Open Stash"
 msgstr ""
@@ -2808,6 +2828,14 @@ msgstr "Enregistrer les onglets courants dans un dernier groupe d'onglets favori
 #: tfrmmain.actrestoreselection.caption
 msgid "&Restore Selection"
 msgstr "&Recharger la sélection"
+
+#: tfrmmain.actrevealinsystemfilemanager.caption
+msgid "Reveal in File Manager"
+msgstr ""
+
+#: tfrmmain.actrevealinsystemfilemanager.hint
+msgid "Reveal in System File Manager"
+msgstr ""
 
 #: tfrmmain.actreverseorder.caption
 msgid "Re&verse Order"
@@ -2930,6 +2958,11 @@ msgstr "&Verrouillé"
 msgctxt "TFRMMAIN.ACTSETTABOPTIONPATHRESETS.CAPTION"
 msgid "Locked with &Directory Changes Allowed"
 msgstr "Verrouillé avec les changements de &dossiers autorisés"
+
+#: tfrmmain.actshare.caption
+msgctxt "tfrmmain.actshare.caption"
+msgid "Share..."
+msgstr "Partager..."
 
 #: tfrmmain.actshellexecute.caption
 msgctxt "tfrmmain.actshellexecute.caption"
@@ -6501,6 +6534,10 @@ msgctxt "TFRMOPTIONSFILESVIEWS.GBSORTING.CAPTION"
 msgid "Sorting"
 msgstr "Tri"
 
+#: tfrmoptionsfilesviews.lbl1k.caption
+msgid "1K ="
+msgstr ""
+
 #: tfrmoptionsfilesviews.lblbyte.caption
 msgid "&Byte:"
 msgstr "Octet:"
@@ -6567,6 +6604,14 @@ msgstr "Téraoctet:"
 #: tfrmoptionsfilesviews.lblupdatedfilesposition.caption
 msgid "&Move updated files:"
 msgstr "Déplacer les fichiers mis à jour :"
+
+#: tfrmoptionsfilesviews.rb1000.caption
+msgid "1000"
+msgstr ""
+
+#: tfrmoptionsfilesviews.rb1024.caption
+msgid "1024"
+msgstr ""
 
 #: tfrmoptionsfilesviewscomplement.btnaddattribute.caption
 msgctxt "tfrmoptionsfilesviewscomplement.btnaddattribute.caption"
@@ -11328,10 +11373,6 @@ msgstr ""
 msgid "Remove \"%s\""
 msgstr ""
 
-#: ulng.rsmenumacosshare
-msgid "Share..."
-msgstr "Partager..."
-
 #: ulng.rsmfstbiairdroptips
 msgctxt "ulng.rsmfstbiairdroptips"
 msgid "AirDrop"
@@ -11437,16 +11478,6 @@ msgstr ""
 
 #: ulng.rsmfstbihorzsplittitle
 msgid "HorzSplit"
-msgstr ""
-
-#: ulng.rsmfstbiiclouddrivetips
-msgctxt "ulng.rsmfstbiiclouddrivetips"
-msgid "iCloud Drive"
-msgstr ""
-
-#: ulng.rsmfstbiiclouddrivetitle
-msgctxt "ulng.rsmfstbiiclouddrivetitle"
-msgid "iCloud Drive"
 msgstr ""
 
 #: ulng.rsmfstbinetworktips

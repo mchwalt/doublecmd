@@ -2151,6 +2151,16 @@ msgstr ""
 msgid "Add to Stash"
 msgstr ""
 
+#: tfrmmain.actairdrop.caption
+msgctxt "tfrmmain.actairdrop.caption"
+msgid "AirDrop"
+msgstr ""
+
+#: tfrmmain.actairdrop.hint
+msgctxt "tfrmmain.actairdrop.hint"
+msgid "AirDrop"
+msgstr ""
+
 #: tfrmmain.actbenchmark.caption
 msgid "&Benchmark"
 msgstr "&Benchmark"
@@ -2775,6 +2785,16 @@ msgstr "Åbn mappe i ny &fane"
 msgid "Open Drive by Index"
 msgstr "Åbn drev efter indeks"
 
+#: tfrmmain.actopenicloud.caption
+msgctxt "tfrmmain.actopenicloud.caption"
+msgid "iCloud Drive"
+msgstr ""
+
+#: tfrmmain.actopenicloud.hint
+msgctxt "tfrmmain.actopenicloud.hint"
+msgid "iCloud Drive"
+msgstr ""
+
 #: tfrmmain.actopenstash.caption
 msgid "Open Stash"
 msgstr ""
@@ -2871,6 +2891,14 @@ msgstr "Gem seneste Favoritfaneblad"
 #: tfrmmain.actrestoreselection.caption
 msgid "&Restore Selection"
 msgstr "&Gendan valg"
+
+#: tfrmmain.actrevealinsystemfilemanager.caption
+msgid "Reveal in File Manager"
+msgstr ""
+
+#: tfrmmain.actrevealinsystemfilemanager.hint
+msgid "Reveal in System File Manager"
+msgstr ""
 
 # Vis
 #: tfrmmain.actreverseorder.caption
@@ -3015,6 +3043,11 @@ msgstr "&Lås faneblad"
 #: tfrmmain.actsettaboptionpathresets.caption
 msgid "Locked with &Directory Changes Allowed"
 msgstr "Lås faneblad, men tilla&d mappeskift"
+
+#: tfrmmain.actshare.caption
+msgctxt "tfrmmain.actshare.caption"
+msgid "Share..."
+msgstr ""
 
 #: tfrmmain.actshellexecute.caption
 msgctxt "TFRMMAIN.ACTSHELLEXECUTE.CAPTION"
@@ -6871,6 +6904,10 @@ msgstr "Indstil personlige forkortelser:"
 msgid "Sorting"
 msgstr "Sortering"
 
+#: tfrmoptionsfilesviews.lbl1k.caption
+msgid "1K ="
+msgstr ""
+
 # Opsætning  - Indstillinger - Visning
 #: tfrmoptionsfilesviews.lblbyte.caption
 msgid "&Byte:"
@@ -6954,6 +6991,14 @@ msgstr "&Terabyte: "
 #: tfrmoptionsfilesviews.lblupdatedfilesposition.caption
 msgid "&Move updated files:"
 msgstr "F&lyt ændrede filer:"
+
+#: tfrmoptionsfilesviews.rb1000.caption
+msgid "1000"
+msgstr ""
+
+#: tfrmoptionsfilesviews.rb1024.caption
+msgid "1024"
+msgstr ""
 
 # Opsætning - Indstillinger - Visning_ekstra
 #: tfrmoptionsfilesviewscomplement.btnaddattribute.caption
@@ -12073,10 +12118,6 @@ msgstr ""
 msgid "Remove \"%s\""
 msgstr ""
 
-#: ulng.rsmenumacosshare
-msgid "Share..."
-msgstr ""
-
 #: ulng.rsmfstbiairdroptips
 msgctxt "ulng.rsmfstbiairdroptips"
 msgid "AirDrop"
@@ -12182,16 +12223,6 @@ msgstr ""
 
 #: ulng.rsmfstbihorzsplittitle
 msgid "HorzSplit"
-msgstr ""
-
-#: ulng.rsmfstbiiclouddrivetips
-msgctxt "ulng.rsmfstbiiclouddrivetips"
-msgid "iCloud Drive"
-msgstr ""
-
-#: ulng.rsmfstbiiclouddrivetitle
-msgctxt "ulng.rsmfstbiiclouddrivetitle"
-msgid "iCloud Drive"
 msgstr ""
 
 #: ulng.rsmfstbinetworktips

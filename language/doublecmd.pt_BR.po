@@ -2157,6 +2157,16 @@ msgstr ""
 msgid "Add to Stash"
 msgstr ""
 
+#: tfrmmain.actairdrop.caption
+msgctxt "tfrmmain.actairdrop.caption"
+msgid "AirDrop"
+msgstr ""
+
+#: tfrmmain.actairdrop.hint
+msgctxt "tfrmmain.actairdrop.hint"
+msgid "AirDrop"
+msgstr ""
+
 #: tfrmmain.actbenchmark.caption
 msgid "&Benchmark"
 msgstr ""
@@ -2714,6 +2724,16 @@ msgstr "Abrir &pasta em nova guia"
 msgid "Open Drive by Index"
 msgstr ""
 
+#: tfrmmain.actopenicloud.caption
+msgctxt "tfrmmain.actopenicloud.caption"
+msgid "iCloud Drive"
+msgstr ""
+
+#: tfrmmain.actopenicloud.hint
+msgctxt "tfrmmain.actopenicloud.hint"
+msgid "iCloud Drive"
+msgstr ""
+
 #: tfrmmain.actopenstash.caption
 msgid "Open Stash"
 msgstr ""
@@ -2801,6 +2821,14 @@ msgstr "Resalvar nas últimas guias Favoritos carregadas."
 #: tfrmmain.actrestoreselection.caption
 msgid "&Restore Selection"
 msgstr "R&estaurar seleção"
+
+#: tfrmmain.actrevealinsystemfilemanager.caption
+msgid "Reveal in File Manager"
+msgstr ""
+
+#: tfrmmain.actrevealinsystemfilemanager.hint
+msgid "Reveal in System File Manager"
+msgstr ""
 
 #: tfrmmain.actreverseorder.caption
 msgid "Re&verse Order"
@@ -2923,6 +2951,11 @@ msgstr "&Bloqueado"
 msgctxt "TFRMMAIN.ACTSETTABOPTIONPATHRESETS.CAPTION"
 msgid "Locked with &Directory Changes Allowed"
 msgstr "Bloqueado com alterações de &pastas permitidas."
+
+#: tfrmmain.actshare.caption
+msgctxt "tfrmmain.actshare.caption"
+msgid "Share..."
+msgstr ""
 
 #: tfrmmain.actshellexecute.caption
 msgctxt "TFRMMAIN.ACTSHELLEXECUTE.CAPTION"
@@ -6499,6 +6532,10 @@ msgstr ""
 msgid "Sorting"
 msgstr "Ordenando"
 
+#: tfrmoptionsfilesviews.lbl1k.caption
+msgid "1K ="
+msgstr ""
+
 #: tfrmoptionsfilesviews.lblbyte.caption
 msgid "&Byte:"
 msgstr ""
@@ -6566,6 +6603,14 @@ msgstr ""
 #| msgid "&Move updated files"
 msgid "&Move updated files:"
 msgstr "&Mover arquivos atualizados:"
+
+#: tfrmoptionsfilesviews.rb1000.caption
+msgid "1000"
+msgstr ""
+
+#: tfrmoptionsfilesviews.rb1024.caption
+msgid "1024"
+msgstr ""
 
 #: tfrmoptionsfilesviewscomplement.btnaddattribute.caption
 msgctxt "tfrmoptionsfilesviewscomplement.btnaddattribute.caption"
@@ -11433,10 +11478,6 @@ msgstr ""
 msgid "Remove \"%s\""
 msgstr ""
 
-#: ulng.rsmenumacosshare
-msgid "Share..."
-msgstr ""
-
 #: ulng.rsmfstbiairdroptips
 msgctxt "ulng.rsmfstbiairdroptips"
 msgid "AirDrop"
@@ -11542,16 +11583,6 @@ msgstr ""
 
 #: ulng.rsmfstbihorzsplittitle
 msgid "HorzSplit"
-msgstr ""
-
-#: ulng.rsmfstbiiclouddrivetips
-msgctxt "ulng.rsmfstbiiclouddrivetips"
-msgid "iCloud Drive"
-msgstr ""
-
-#: ulng.rsmfstbiiclouddrivetitle
-msgctxt "ulng.rsmfstbiiclouddrivetitle"
-msgid "iCloud Drive"
 msgstr ""
 
 #: ulng.rsmfstbinetworktips
