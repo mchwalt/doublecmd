@@ -388,6 +388,10 @@ type
    procedure cm_AddToStash(const {%H-}Params: array of string);
    procedure cm_RemoveFromStash(const {%H-}Params: array of string);
    procedure cm_EmptyStash(const {%H-}Params: array of string);
+   procedure cm_OpeniCloud(const {%H-}Params: array of string);
+   procedure cm_Share(const {%H-}Params: array of string);
+   procedure cm_AirDrop(const {%H-}Params: array of string);
+   procedure cm_RevealInSystemFileManager(const {%H-}Params: array of string);
 
    // Internal commands
    procedure cm_ExecuteToolbarItem(const Params: array of string);
@@ -417,7 +421,11 @@ uses fOptionsPluginsBase, fOptionsPluginsDSX, fOptionsPluginsWCX,
      fMainCommandsDlg, uConnectionManager, fOptionsFavoriteTabs, fTreeViewMenu,
      uArchiveFileSource, fOptionsHotKeys, fBenchmark, uAdministrator, uWcxArchiveFileSource,
      uColumnsFileView, uTypes,
-     uStashFileSource, uStashFilesBackend
+     uStashFileSource, uStashFilesBackend,
+     LCLVersion
+     {$IFDEF DARWIN}
+     , uDarwinApplication, uDarwinPanel, uDarwinFileView
+     {$ENDIF}
      ;
 
 resourcestring
@@ -2027,6 +2035,9 @@ begin
   if sInputTabsFilename='' then
   begin
     dmComData.OpenDialog.Filter:= '*.tab|*.tab';
+{$if lcl_fullversion >= 4990000}
+    dmComData.OpenDialog.OptionsEx:= [];
+{$endif}
     dmComData.OpenDialog.FileName:= GetDefaultParam(Params);
     if dmComData.OpenDialog.Execute then
       sInputTabsFilename:=dmComData.OpenDialog.FileName;
@@ -3861,9 +3872,10 @@ begin
     end
     else if GetParamValue(Param, 'column', sValue) then
     begin
-      if sValue='ext' then WantedSortFunction:=fsfExtension else
-        if sValue='size' then WantedSortFunction:=fsfSize else
-          if sValue='datetime' then WantedSortFunction:=fsfModificationTime;
+      if sValue='namenoext' then WantedSortFunction:=fsfNameNoExtension else
+        if sValue='ext' then WantedSortFunction:=fsfExtension else
+          if sValue='size' then WantedSortFunction:=fsfSize else
+            if sValue='datetime' then WantedSortFunction:=fsfModificationTime;
     end
     else if GetParamValue(Param, 'order', sValue) then
     begin
@@ -5590,6 +5602,9 @@ begin
   if Length(Params) = 0 then
   begin
     dmComData.OpenDialog.Filter:= ParseLineToFileFilter([rsFilterPluginFiles, '*.dsx;*.wcx;*.wdx;*.wfx;*.wlx;*.dsx64;*.wcx64;*.wdx64;*.wfx64;*.wlx64', rsFilterAnyFiles, AllFilesMask]);
+{$if lcl_fullversion >= 4990000}
+    dmComData.OpenDialog.OptionsEx:= [ofAllowsFilePackagesContents];
+{$endif}
     dmComData.OpenDialog.InitialDir := frmMain.ActiveNotebook.ActivePage.FileView.CurrentPath;
     if dmComData.OpenDialog.Execute then
       sPluginFilename := dmComData.OpenDialog.FileName;
@@ -5784,6 +5799,34 @@ end;
 procedure TMainCommands.cm_EmptyStash(const Params: array of string);
 begin
   stashFilesBackend.clear;
+end;
+
+procedure TMainCommands.cm_OpeniCloud(const Params: array of string);
+begin
+  {$IFDEF DARWIN}
+  TDarwinFileViewUtil.addiCloudDrivePage;
+  {$ENDIF}
+end;
+
+procedure TMainCommands.cm_Share(const Params: array of string);
+begin
+  {$IFDEF DARWIN}
+  TDarwinPanelUtil.showSharingService;
+  {$ENDIF}
+end;
+
+procedure TMainCommands.cm_AirDrop(const Params: array of string);
+begin
+  {$IFDEF DARWIN}
+  TDarwinPanelUtil.showAirDrop;
+  {$ENDIF}
+end;
+
+procedure TMainCommands.cm_RevealInSystemFileManager(const Params: array of string);
+begin
+  {$IFDEF DARWIN}
+  TDarwinApplicationUtil.performService( 'Finder/Reveal' );
+  {$ENDIF}
 end;
 
 end.

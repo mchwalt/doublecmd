@@ -396,6 +396,7 @@ type
     FCommands: TFormCommands;
     FScaleFactor: Double;
     FZoomFactor: Integer;
+    FZoomed: Boolean;
     FExif: TExifReader;
     FWindowState: TWindowState;
     FElevate: TDuplicates;
@@ -595,7 +596,7 @@ const
   HotkeysCategory = 'Viewer';
 
   // Status bar panels indexes.
-  sbpFileName             = 4;
+  sbpFileName             = 5;
   sbpFileNr               = 0;
   // Text
   sbpPosition             = 1;
@@ -604,9 +605,10 @@ const
   // WLX
   sbpPluginName           = 1;
   // Graphics
-  sbpCurrentResolution    = 1;
-  sbpFullResolution       = 2;
-  sbpImageSelection       = 3;
+  sbpFrameNumber          = 1;
+  sbpCurrentResolution    = 2;
+  sbpFullResolution       = 3;
+  sbpImageSelection       = 4;
 
 const
   WRAP_MODE: array[Boolean] of TViewerControlMode = (vcmText, vcmWrap);
@@ -660,9 +662,9 @@ begin
   Viewer.LoadFile(0);
 
   if (WaitData = nil) then
-    Viewer.ShowOnTop
+    Viewer.Show
   else begin
-    WaitData.ShowOnTop(Viewer);
+    WaitData.Show(Viewer);
   end;
 end;
 
@@ -1991,8 +1993,9 @@ end;
 
 procedure TfrmViewer.ZoomImage(ADelta: Double);
 begin
-  if (FZoomFactor = 100) and (miStretch.Checked or miStretchOnlyLarge.Checked) then
+  if (not FZoomed) and (miStretch.Checked or miStretchOnlyLarge.Checked) then
   begin
+    FZoomed:= True;
     // Calculate zoom factor at first zoom
     FZoomFactor:= Round(FScaleFactor * 100);
   end;
@@ -2233,15 +2236,51 @@ begin
 end;
 
 procedure TfrmViewer.btnPrevGifFrameClick(Sender: TObject);
+var
+  AIcon: TIcon;
+  Index: Integer;
 begin
-  GifAnim.PriorFrame;
-  UpdateAnimState;
+  if bAnimation then
+  begin
+    GifAnim.PriorFrame;
+    UpdateAnimState;
+  end
+  else begin
+    AIcon:= Image.Picture.Icon;
+    Index:= AIcon.Current;
+    if (Index > 0) then
+      Dec(Index)
+    else begin
+      Index:= AIcon.Count - 1;
+    end;
+    AIcon.Current:= Index;
+    Status.Panels[sbpFrameNumber].Text:= Format('%d/%d', [Index + 1, AIcon.Count]);
+    AdjustImageSize;
+  end;
 end;
 
 procedure TfrmViewer.btnNextGifFrameClick(Sender: TObject);
+var
+  AIcon: TIcon;
+  Index: Integer;
 begin
-  GifAnim.NextFrame;
-  UpdateAnimState;
+  if bAnimation then
+  begin
+    GifAnim.NextFrame;
+    UpdateAnimState;
+  end
+  else begin
+    AIcon:= Image.Picture.Icon;
+    Index:= AIcon.Current;
+    if (Index < AIcon.Count - 1) then
+      Inc(Index)
+    else begin
+      Index:= 0;
+    end;
+    AIcon.Current:= Index;
+    Status.Panels[sbpFrameNumber].Text:= Format('%d/%d', [Index + 1, AIcon.Count]);
+    AdjustImageSize;
+  end;
 end;
 
 procedure TfrmViewer.sboxImageResize(Sender: TObject);
@@ -2990,14 +3029,27 @@ begin
   FScaleFactor:= FZoomFactor / 100;
 
   // Place and resize image
-  if (FZoomFactor = 100) and (miStretch.Checked or miStretchOnlyLarge.Checked) then
+  if (not FZoomed) and (miStretch.Checked or miStretchOnlyLarge.Checked) then
   begin
     FScaleFactor:= Min(sboxImage.ClientWidth / PicWidth, sboxImage.ClientHeight / PicHeight);
-    FScaleFactor:= IfThen((miStretchOnlyLarge.Checked) and (FScaleFactor > 1.0), 1.0, FScaleFactor);
-  end;
 
-  iWidth:= Round(ImgWidth * FScaleFactor);
-  iHeight:= Round(ImgHeight * FScaleFactor);
+    if (miStretchOnlyLarge.Checked) and (FScaleFactor > 1.0) then
+    begin
+      iWidth:= ImgWidth;
+      iHeight:= ImgHeight;
+      FScaleFactor:= 1.0;
+    end
+    else begin
+      iWidth:= Round(PicWidth * FScaleFactor);
+      iHeight:= Round(PicHeight * FScaleFactor);
+      FScaleFactor:= FScaleFactor * AFactor;
+    end;
+  end
+  else begin
+    FScaleFactor:= FZoomFactor / 100;
+    iWidth:= Round(ImgWidth * FScaleFactor);
+    iHeight:= Round(ImgHeight * FScaleFactor);
+  end;
 
   if (miCenter.Checked) then
   begin
@@ -3032,7 +3084,8 @@ end;
 function TfrmViewer.GetListerRect: TRect;
 begin
   Result:= ClientRect;
-  Dec(Result.Bottom, Status.Height);
+  if Status.Visible then
+    Dec(Result.Bottom, Status.Height);
   if Splitter.Visible then
   begin
     Inc(Result.Left, Splitter.Left + Splitter.Width);
@@ -3109,6 +3162,7 @@ function TfrmViewer.LoadGraphics(const sFileName:String): Boolean;
 
   procedure UpdateToolbar(bImage: Boolean);
   var
+    bIcon: Boolean;
     gifStates: TViewerGifStates;
   begin
     btnHightlight.Enabled:= bImage and (not miFullScreen.Checked);
@@ -3123,13 +3177,18 @@ function TfrmViewer.LoadGraphics(const sFileName:String): Boolean;
     btnGifMove.Enabled:= not bImage;
     btnGifToBmp.Enabled:= not bImage;
     btnGifSeparator.Enabled:= not bImage;
-    btnNextGifFrame.Enabled:= not bImage;
-    btnPrevGifFrame.Enabled:= not bImage;
+
+    with Image.Picture do
+    bIcon:= bImage and (Graphic is TIcon) and (Icon.Count > 1);
+
+    btnNextGifFrame.Enabled:= (not bImage) or (bIcon);
+    btnPrevGifFrame.Enabled:= (not bImage) or (bIcon);
 
     if bImage then
       gifStates:= []
-    else
+    else begin
       gifStates:= [vgsIsGif];
+    end;
     viewerFormHandler.onSlideStateChanged( self );
     viewerFormHandler.onGifStateChanged( self, gifStates );
     viewerFormHandler.onImageEditStateChanged( self );
@@ -3140,6 +3199,7 @@ var
   fsFileStream: TFileStreamEx;
 begin
   Result:= True;
+  FZoomed:= False;
   FZoomFactor:= 100;
   sExt:= ExtractOnlyFileExt(sFilename);
   if not SameText(sExt, 'gif') then
@@ -3169,6 +3229,11 @@ begin
           bImage:= True;
           bAnimation:= False;
           UpdateToolbar(True);
+          if Image.Picture.Graphic is TIcon then
+          begin
+            with Image.Picture.Icon do
+            Status.Panels[sbpFrameNumber].Text:= Format('%d/%d', [Current + 1, Count]);
+          end;
         finally
           FreeAndNil(fsFileStream);
         end;
@@ -3880,6 +3945,7 @@ begin
   miStretch.Checked:= not miStretch.Checked;
   if miStretch.Checked then
   begin
+    FZoomed:= False;
     FZoomFactor:= 100;
     miStretchOnlyLarge.Checked:= False
   end;
@@ -3889,7 +3955,12 @@ end;
 procedure TfrmViewer.cm_StretchOnlyLarge(const Params: array of string);
 begin
   miStretchOnlyLarge.Checked:= not miStretchOnlyLarge.Checked;
-  if miStretchOnlyLarge.Checked then miStretch.Checked:= False;
+  if miStretchOnlyLarge.Checked then
+  begin
+    FZoomed:= False;
+    FZoomFactor:= 100;
+    miStretch.Checked:= False;
+  end;
   UpdateImagePlacement;
 end;
 

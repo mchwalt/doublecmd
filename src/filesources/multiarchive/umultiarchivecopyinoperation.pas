@@ -11,8 +11,7 @@ uses
   uFileSource,
   uFile,
   uArchiveCopyOperation,
-  uMultiArchiveFileSource,
-  uTarWriter;
+  uMultiArchiveFileSource;
 
 type
 
@@ -22,7 +21,6 @@ type
 
   private
     FMultiArchiveFileSource: IMultiArchiveFileSource;
-    FTarWriter: TTarWriter;
     FPassword: String;
     FVolumeSize: String;
     FCustomParams: String;
@@ -34,13 +32,11 @@ type
     procedure DeleteFiles(const BasePath: String; aFiles: TFiles);
 
     function doMultiPackFiles(const files: TFiles): Integer;
-    function doTarFiles(const files: TFiles): Integer;
   protected
     FExProcess: TExProcess;
     FTempFile: String;
     FErrorLevel: LongInt;
     FCommandLine: String;
-    function Tar: Boolean;
     procedure OnReadLn(str: string);
     procedure OperationProgressHandler;
     procedure OnQueryString(str: string);
@@ -223,12 +219,17 @@ begin
 end;
 
 procedure TMultiArchiveCopyInOperation.MainExecute;
+var
+  removeFiles: TFiles = nil;
 
   procedure tarAndPack;
+  var
+    success: Boolean;
   begin
     // Put to TAR archive if needed
     if FTarBefore then begin
-      if NOT self.Tar() then
+      self.Tar( FMultiArchiveFileSource, success );
+      if NOT success then
         Exit;
       UpdateProgress( SourceFiles[0].FullPath, FMultiArchiveFileSource.ArchiveFileName, 0);
     end;
@@ -236,8 +237,35 @@ procedure TMultiArchiveCopyInOperation.MainExecute;
     ProcessFilesWithMultiRootPath( self.SourceFiles, @self.doMultiPackFiles );
   end;
 
-var
-  removeFiles: TFiles = nil;
+  procedure cleanup;
+  var
+    success: Boolean;
+  begin
+    success:= False;
+    try
+      // Delete temporary TAR archive if needed
+      if FTarBefore then
+        mbDeleteFile(FTarFileName);
+
+      try
+        success:= CheckForErrors(FMultiArchiveFileSource.ArchiveFileName, FExProcess.ExitStatus);
+      except
+        // if abort or exception, delete Archive File
+        mbDeleteFile(FMultiArchiveFileSource.ArchiveFileName);
+        raise;
+      end;
+
+      if success then begin
+        // if success, delete files need to be removed
+        if Assigned(removeFiles) then
+          DeleteFiles(EmptyStr, removeFiles);
+      end;
+    finally
+      FreeAndNil(FFullFilesTree);
+      removeFiles.Free;
+    end;
+  end;
+
 begin
   // 1. calc statistics
   uFileSystemUtil.FillAndCount(
@@ -264,23 +292,7 @@ begin
   try
     tarAndPack;
   finally
-    try
-      // Delete temporary TAR archive if needed
-      if FTarBefore then
-        mbDeleteFile(FTarFileName);
-
-      if CheckForErrors(FMultiArchiveFileSource.ArchiveFileName, FExProcess.ExitStatus) then begin
-        // if success, delete files need to be removed
-        if Assigned(removeFiles) then
-          DeleteFiles(EmptyStr, removeFiles);
-      end else begin
-        // if fail, delete Archive File
-        mbDeleteFile(FMultiArchiveFileSource.ArchiveFileName);
-      end;
-    finally
-      FreeAndNil(FFullFilesTree);
-      removeFiles.Free;
-    end;
+    cleanup;
   end;
 end;
 
@@ -296,7 +308,7 @@ procedure TMultiArchiveCopyInOperation.ShowError(sMessage: String; logOptions: T
 begin
   if not gSkipFileOpError then
   begin
-    if AskQuestion(sMessage, '', [fsourSkip, fsourCancel],
+    if AskQuestion(sMessage, '', [fsourSkip, fsourAbort],
                    fsourSkip, fsourAbort) = fsourAbort then
     begin
       RaiseAbortOperation;
@@ -327,13 +339,11 @@ end;
 
 function TMultiArchiveCopyInOperation.CheckForErrors(const FileName: String; ExitStatus: LongInt): Boolean;
 begin
-  if ExitStatus > FErrorLevel then begin
+  if (ExitStatus>FErrorLevel) or (ExitStatus<0) then begin
     Result:= False;
     ShowError(Format(rsMsgLogError + rsMsgLogPack,
                      [FileName +
                       ' - ' + rsMsgExitStatusCode + ' ' + IntToStr(ExitStatus)]), [log_arc_op]);
-  end else if ExitStatus < 0 then begin
-    Result:= False;
   end else begin
     Result:= True;
     LogMessage(Format(rsMsgLogSuccess + rsMsgLogPack,
@@ -361,77 +371,6 @@ begin
       DeleteDirectory(BasePath + aFile.FullPath, False)
     else
       mbDeleteFile(BasePath + aFile.FullPath);
-  end;
-end;
-
-function TMultiArchiveCopyInOperation.doTarFiles(const files: TFiles): Integer;
-var
-  success: Boolean;
-  currentFullFiles: TFiles = nil;
-  uselessTotalFiles: Int64;
-  uselessTotalBytes: Int64;
-begin
-  Result:= -1;
-  try
-    if Assigned(FFullFilesTree) then begin
-      success:= FTarWriter.TarFiles(FFullFilesTree, FStatistics);
-    end else begin
-      uArchiveFileSourceUtil.FillAndCount(files,
-                   currentFullFiles,
-                   uselessTotalFiles,
-                   uselessTotalBytes);    // gets full list of files (recursive)
-      success:= FTarWriter.TarFiles(currentFullFiles, FStatistics);
-    end;
-    if success then
-      Result:= 0;
-  finally
-    currentFullFiles.Free;
-  end;
-end;
-
-function TMultiArchiveCopyInOperation.Tar: Boolean;
-
-  function tarFiles: Boolean;
-  var
-    tarBeginResult: Boolean;
-    resultCode: Integer;
-  begin
-    Result:= False;
-    tarBeginResult:= FTarWriter.TarBegin( FStatistics );
-    if tarBeginResult then begin
-      resultCode:= -1;
-      try
-        resultCode:= ProcessFilesWithMultiRootPath( SourceFiles, @self.doTarFiles );
-      finally
-        Result:= FTarWriter.TarEnd( FStatistics, resultCode=0 );
-      end;
-    end;
-  end;
-
-begin
-  Result:= False;
-  FTarFileName:= RemoveFileExt(FMultiArchiveFileSource.ArchiveFileName);
-  FTarWriter:= TTarWriter.Create(FTarFileName,
-                                @AskQuestion,
-                                @RaiseAbortOperation,
-                                @CheckOperationState,
-                                @UpdateStatistics
-                               );
-
-  try
-    if tarFiles() then
-    begin
-      // Fill file list with tar archive file
-      SourceFiles.Clear;
-      SourceFiles.Path:= ExtractFilePath(FTarFileName);
-      SourceFiles.Add(TFileSystemFileSource.CreateFileFromFile(FTarFileName));
-      // SourceFiles changed, FFullFilesTree becomes meaningless
-      FreeAndNil(FFullFilesTree);
-
-      Result:= True;
-    end;
-  finally
-    FreeAndNil(FTarWriter);
   end;
 end;
 
