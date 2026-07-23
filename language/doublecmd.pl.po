@@ -2055,16 +2055,6 @@ msgstr "Dodaj wtyczkę"
 msgid "Add to Stash"
 msgstr ""
 
-#: tfrmmain.actairdrop.caption
-msgctxt "tfrmmain.actairdrop.caption"
-msgid "AirDrop"
-msgstr ""
-
-#: tfrmmain.actairdrop.hint
-msgctxt "tfrmmain.actairdrop.hint"
-msgid "AirDrop"
-msgstr ""
-
 #: tfrmmain.actbenchmark.caption
 msgid "&Benchmark"
 msgstr "&Test wydajności"
@@ -2080,6 +2070,14 @@ msgstr "Krótki widok"
 #: tfrmmain.actcalculatespace.caption
 msgid "Calculate &Occupied Space"
 msgstr "Oblicz zaj&mowane miejsce"
+
+#: tfrmmain.actcallplatformfunctions.caption
+msgid "Call platform functions"
+msgstr ""
+
+#: tfrmmain.actcallplatformfunctions.hint
+msgid "Call platform functions (the function to be called is specified by the parameter 'func')"
+msgstr ""
 
 #: tfrmmain.actchangedir.caption
 msgid "Change directory"
@@ -2614,20 +2612,6 @@ msgstr "Otwórz &katalog w nowej zakładce"
 msgid "Open Drive by Index"
 msgstr "Otwórz dysk według indeksu"
 
-#: tfrmmain.actopenicloud.caption
-msgctxt "tfrmmain.actopenicloud.caption"
-msgid "iCloud Drive"
-msgstr ""
-
-#: tfrmmain.actopenicloud.hint
-msgctxt "tfrmmain.actopenicloud.hint"
-msgid "iCloud Drive"
-msgstr ""
-
-#: tfrmmain.actopenstash.caption
-msgid "Open Stash"
-msgstr ""
-
 #: tfrmmain.actopenvirtualfilesystemlist.caption
 msgid "Open &VFS List"
 msgstr "Otwórz listę &VFS"
@@ -2709,14 +2693,6 @@ msgstr "Zapisz w ostatnio załadowanych ulubionych zakładkach"
 #: tfrmmain.actrestoreselection.caption
 msgid "&Restore Selection"
 msgstr "P&rzywróć zaznaczenie"
-
-#: tfrmmain.actrevealinsystemfilemanager.caption
-msgid "Reveal in File Manager"
-msgstr ""
-
-#: tfrmmain.actrevealinsystemfilemanager.hint
-msgid "Reveal in System File Manager"
-msgstr ""
 
 #: tfrmmain.actreverseorder.caption
 msgid "Re&verse Order"
@@ -2837,11 +2813,6 @@ msgstr "&Zablokowana"
 #: tfrmmain.actsettaboptionpathresets.caption
 msgid "Locked with &Directory Changes Allowed"
 msgstr "Zablokowana z możliwością zmiany &katalogu"
-
-#: tfrmmain.actshare.caption
-msgctxt "tfrmmain.actshare.caption"
-msgid "Share..."
-msgstr "Udostępnij..."
 
 #: tfrmmain.actshellexecute.caption
 msgctxt "tfrmmain.actshellexecute.caption"
@@ -3234,6 +3205,11 @@ msgstr "Zaz&nacz"
 msgctxt "tfrmmain.mnunetwork.caption"
 msgid "&Network"
 msgstr "&Sieć"
+
+#: tfrmmain.mnuopenstash.caption
+msgctxt "tfrmmain.mnuopenstash.caption"
+msgid "Open Stash"
+msgstr ""
 
 #: tfrmmain.mnushow.caption
 msgctxt "tfrmmain.mnushow.caption"
@@ -10998,6 +10974,10 @@ msgstr ""
 msgid "Remove \"%s\""
 msgstr ""
 
+#: ulng.rsmenumacosshare
+msgid "Share..."
+msgstr "Udostępnij..."
+
 #: ulng.rsmfstbiairdroptips
 msgctxt "ulng.rsmfstbiairdroptips"
 msgid "AirDrop"
@@ -11103,6 +11083,16 @@ msgstr ""
 
 #: ulng.rsmfstbihorzsplittitle
 msgid "HorzSplit"
+msgstr ""
+
+#: ulng.rsmfstbiiclouddrivetips
+msgctxt "ulng.rsmfstbiiclouddrivetips"
+msgid "iCloud Drive"
+msgstr ""
+
+#: ulng.rsmfstbiiclouddrivetitle
+msgctxt "ulng.rsmfstbiiclouddrivetitle"
+msgid "iCloud Drive"
 msgstr ""
 
 #: ulng.rsmfstbinetworktips

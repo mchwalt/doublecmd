@@ -141,12 +141,12 @@ end;
 
 procedure airdropAction( const Sender: id );
 begin
-  frmMain.Commands.cm_AirDrop([]);
+  frmMain.Commands.cm_CallPlatformFunctions(['func=AirDrop']);
 end;
 
 procedure quickLookAction( const Sender: id );
 begin
-  TDarwinPanelUtil.showQuickLook;
+  frmMain.Commands.cm_CallPlatformFunctions(['func=QuickLook']);
 end;
 
 procedure editTagAction( const Sender: id );
@@ -156,12 +156,12 @@ end;
 
 procedure finderRevealAction( const Sender: id );
 begin
-  frmMain.Commands.cm_RevealInSystemFileManager([]);
+  frmMain.Commands.cm_CallPlatformFunctions(['func=RevealInFinder']);
 end;
 
 procedure finderInfoAction( const Sender: id );
 begin
-  TDarwinApplicationUtil.performService( 'Finder/Show Info' );
+  frmMain.Commands.cm_CallPlatformFunctions(['func=ShowInfoInFinder']);
 end;
 
 procedure compareAction( const Sender: id );
@@ -454,7 +454,7 @@ end;
 
 procedure iCloudAction( const Sender: id );
 begin
-  frmMain.Commands.cm_OpeniCloud([]);
+  frmMain.Commands.cm_OpenVirtualFileSystemList( ['plugin=iCloud'] );
 end;
 
 procedure networkAction( const Sender: id );
@@ -464,7 +464,7 @@ end;
 
 procedure stashAction( const Sender: id );
 begin
-  frmMain.Commands.cm_OpenStash([]);
+  frmMain.Commands.cm_OpenVirtualFileSystemList( ['plugin='+rsstashname] );
 end;
 
 procedure terminalAction( const Sender: id );
@@ -551,8 +551,8 @@ const
     priority: NSToolbarItemVisibilityPriorityStandard;
     navigational: False;
     iconName: 'cloud';
-    title: 'iCloud Drive';
-    tips: 'iCloud Drive';
+    title: rsMFSTBIiCloudDriveTitle;
+    tips: rsMFSTBIiCloudDriveTips;
     bordered: True;
     onAction: @iCloudAction;
   );
@@ -906,12 +906,14 @@ procedure addMainFormShortCutTips;
 begin
   addShortCutTipsToItemConfig( 'Main', 'cm_ViewHistoryPrev', goBackwardItemConfig );
   addShortCutTipsToItemConfig( 'Main', 'cm_ViewHistoryNext', goForwardItemConfig );
-  addShortCutTipsToItemConfig( 'Main', 'cm_OpeniCloud', iCloudItemConfig );
+  addShortCutTipsToItemConfig( 'Main', 'cm_OpenVirtualFileSystemList', ['plugin=iCloud'], iCloudItemConfig );
   addShortCutTipsToItemConfig( 'Main', 'cm_OpenVirtualFileSystemList', networkItemConfig );
-  addShortCutTipsToItemConfig( 'Main', 'cm_OpenStash', stashItemConfig );
-  addShortCutTipsToItemConfig( 'Main', 'cm_Share', shareItemConfig );
-  addShortCutTipsToItemConfig( 'Main', 'cm_AirDrop', airDropItemConfig );
-  addShortCutTipsToItemConfig( 'Main', 'cm_RevealInSystemFileManager', finderRevealItemConfig );
+  addShortCutTipsToItemConfig( 'Main', 'cm_OpenVirtualFileSystemList', ['plugin='+rsstashname], stashItemConfig );
+  addShortCutTipsToItemConfig( 'Main', 'cm_CallPlatformFunctions', ['func=Share'], shareItemConfig );
+  addShortCutTipsToItemConfig( 'Main', 'cm_CallPlatformFunctions', ['func=AirDrop'], airDropItemConfig );
+  addShortCutTipsToItemConfig( 'Main', 'cm_CallPlatformFunctions', ['func=EditFinderTags'], tagItemConfig );
+  addShortCutTipsToItemConfig( 'Main', 'cm_CallPlatformFunctions', ['func=RevealInFinder'], finderRevealItemConfig );
+  addShortCutTipsToItemConfig( 'Main', 'cm_CallPlatformFunctions', ['func=ShowInfoInFinder'], finderInfoItemConfig );
 
   addShortCutTipsToItemConfig( QuickLookShortCut, quickLookItemConfig );
 end;
@@ -940,7 +942,9 @@ end;
 
 procedure doInitMainFormConfig;
 begin
-  QuickLookShortCut:= ShortCut( Word(' '), [ssAlt] );
+  QuickLookShortCut:= getShortCutOfCommand( 'Main', 'cm_CallPlatformFunctions', ['func=QuickLook'] );
+  if QuickLookShortCut = 0 then
+    QuickLookShortCut:= ShortCut( Word(' '), [ssAlt] );
 
   loadVectorImageWithName( 'airdrop.svg', 'doublecmd.airdrop' );
   loadVectorImageWithName( 'finder.svg', 'doublecmd.finder' );

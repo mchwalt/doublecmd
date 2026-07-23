@@ -2102,16 +2102,6 @@ msgstr "Додај прикључак"
 msgid "Add to Stash"
 msgstr ""
 
-#: tfrmmain.actairdrop.caption
-msgctxt "tfrmmain.actairdrop.caption"
-msgid "AirDrop"
-msgstr ""
-
-#: tfrmmain.actairdrop.hint
-msgctxt "tfrmmain.actairdrop.hint"
-msgid "AirDrop"
-msgstr ""
-
 #: tfrmmain.actbenchmark.caption
 msgid "&Benchmark"
 msgstr "&Опит"
@@ -2128,6 +2118,14 @@ msgstr "Сажети преглед"
 #: tfrmmain.actcalculatespace.caption
 msgid "Calculate &Occupied Space"
 msgstr "Израчунај заузеће простора"
+
+#: tfrmmain.actcallplatformfunctions.caption
+msgid "Call platform functions"
+msgstr ""
+
+#: tfrmmain.actcallplatformfunctions.hint
+msgid "Call platform functions (the function to be called is specified by the parameter 'func')"
+msgstr ""
 
 #: tfrmmain.actchangedir.caption
 msgid "Change directory"
@@ -2669,20 +2667,6 @@ msgstr "Отвори &фасциклу у новом листу"
 msgid "Open Drive by Index"
 msgstr "Отвори уређај по списку"
 
-#: tfrmmain.actopenicloud.caption
-msgctxt "tfrmmain.actopenicloud.caption"
-msgid "iCloud Drive"
-msgstr ""
-
-#: tfrmmain.actopenicloud.hint
-msgctxt "tfrmmain.actopenicloud.hint"
-msgid "iCloud Drive"
-msgstr ""
-
-#: tfrmmain.actopenstash.caption
-msgid "Open Stash"
-msgstr ""
-
 #: tfrmmain.actopenvirtualfilesystemlist.caption
 msgctxt "TFRMMAIN.ACTOPENVIRTUALFILESYSTEMLIST.CAPTION"
 msgid "Open &VFS List"
@@ -2766,14 +2750,6 @@ msgstr "Поново сачувај последње учитане омиљен
 #: tfrmmain.actrestoreselection.caption
 msgid "&Restore Selection"
 msgstr "&Поврати избор"
-
-#: tfrmmain.actrevealinsystemfilemanager.caption
-msgid "Reveal in File Manager"
-msgstr ""
-
-#: tfrmmain.actrevealinsystemfilemanager.hint
-msgid "Reveal in System File Manager"
-msgstr ""
 
 #: tfrmmain.actreverseorder.caption
 msgid "Re&verse Order"
@@ -2896,11 +2872,6 @@ msgstr "&Закључано"
 msgctxt "TFRMMAIN.ACTSETTABOPTIONPATHRESETS.CAPTION"
 msgid "Locked with &Directory Changes Allowed"
 msgstr "Закључено са дозволом измене &фасцикли"
-
-#: tfrmmain.actshare.caption
-msgctxt "tfrmmain.actshare.caption"
-msgid "Share..."
-msgstr ""
 
 #: tfrmmain.actshellexecute.caption
 msgctxt "TFRMMAIN.ACTSHELLEXECUTE.CAPTION"
@@ -3303,6 +3274,11 @@ msgstr "Ознака&"
 msgctxt "TFRMMAIN.MNUNETWORK.CAPTION"
 msgid "&Network"
 msgstr "Мрежа"
+
+#: tfrmmain.mnuopenstash.caption
+msgctxt "tfrmmain.mnuopenstash.caption"
+msgid "Open Stash"
+msgstr ""
 
 #: tfrmmain.mnushow.caption
 msgctxt "tfrmmain.mnushow.caption"
@@ -11270,6 +11246,10 @@ msgstr ""
 msgid "Remove \"%s\""
 msgstr ""
 
+#: ulng.rsmenumacosshare
+msgid "Share..."
+msgstr ""
+
 #: ulng.rsmfstbiairdroptips
 msgctxt "ulng.rsmfstbiairdroptips"
 msgid "AirDrop"
@@ -11375,6 +11355,16 @@ msgstr ""
 
 #: ulng.rsmfstbihorzsplittitle
 msgid "HorzSplit"
+msgstr ""
+
+#: ulng.rsmfstbiiclouddrivetips
+msgctxt "ulng.rsmfstbiiclouddrivetips"
+msgid "iCloud Drive"
+msgstr ""
+
+#: ulng.rsmfstbiiclouddrivetitle
+msgctxt "ulng.rsmfstbiiclouddrivetitle"
+msgid "iCloud Drive"
 msgstr ""
 
 #: ulng.rsmfstbinetworktips
