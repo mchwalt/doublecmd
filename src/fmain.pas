@@ -76,12 +76,8 @@ type
     actAddPlugin: TAction;
     actAddToStash: TAction;
     actEmptyStash: TAction;
-    actAirDrop: TAction;
-    actRevealInSystemFileManager: TAction;
-    actOpeniCloud: TAction;
-    actShare: TAction;
+    actCallPlatformFunctions: TAction;
     actRemoveFromStash: TAction;
-    actOpenStash: TAction;
     actMainFontZoomOut: TAction;
     actMainFontZoomIn: TAction;
     actMapNetworkDrive: TAction;

@@ -2086,16 +2086,6 @@ msgstr "添加插件"
 msgid "Add to Stash"
 msgstr "添加至暫存區"
 
-#: tfrmmain.actairdrop.caption
-msgctxt "tfrmmain.actairdrop.caption"
-msgid "AirDrop"
-msgstr "隔空投送"
-
-#: tfrmmain.actairdrop.hint
-msgctxt "tfrmmain.actairdrop.hint"
-msgid "AirDrop"
-msgstr "隔空投送"
-
 #: tfrmmain.actbenchmark.caption
 msgid "&Benchmark"
 msgstr "基準測試(&B)"
@@ -2112,6 +2102,14 @@ msgstr "簡要檢視"
 #: tfrmmain.actcalculatespace.caption
 msgid "Calculate &Occupied Space"
 msgstr "計算佔用空間 (&O)"
+
+#: tfrmmain.actcallplatformfunctions.caption
+msgid "Call platform functions"
+msgstr ""
+
+#: tfrmmain.actcallplatformfunctions.hint
+msgid "Call platform functions (the function to be called is specified by the parameter 'func')"
+msgstr ""
 
 #: tfrmmain.actchangedir.caption
 msgid "Change directory"
@@ -2651,20 +2649,6 @@ msgstr "在新分頁開啟資料夾 (&F)"
 msgid "Open Drive by Index"
 msgstr "依索引開啟磁碟"
 
-#: tfrmmain.actopenicloud.caption
-msgctxt "tfrmmain.actopenicloud.caption"
-msgid "iCloud Drive"
-msgstr "iCloud雲碟"
-
-#: tfrmmain.actopenicloud.hint
-msgctxt "tfrmmain.actopenicloud.hint"
-msgid "iCloud Drive"
-msgstr "iCloud雲碟"
-
-#: tfrmmain.actopenstash.caption
-msgid "Open Stash"
-msgstr "開啟暫存區"
-
 #: tfrmmain.actopenvirtualfilesystemlist.caption
 msgid "Open &VFS List"
 msgstr "開啟虛擬檔案系統清單 (&V)"
@@ -2747,14 +2731,6 @@ msgstr "重新儲存上次加載的「我的最愛」分頁"
 #: tfrmmain.actrestoreselection.caption
 msgid "&Restore Selection"
 msgstr "回復所選項目 (&R)"
-
-#: tfrmmain.actrevealinsystemfilemanager.caption
-msgid "Reveal in File Manager"
-msgstr "轉到檔案管理器"
-
-#: tfrmmain.actrevealinsystemfilemanager.hint
-msgid "Reveal in System File Manager"
-msgstr "在系統檔案管理器中訪問"
 
 #: tfrmmain.actreverseorder.caption
 msgid "Re&verse Order"
@@ -2876,11 +2852,6 @@ msgstr "鎖定 (&L)"
 #: tfrmmain.actsettaboptionpathresets.caption
 msgid "Locked with &Directory Changes Allowed"
 msgstr "鎖定並允許在目前分頁變更資料夾 (&D)"
-
-#: tfrmmain.actshare.caption
-msgctxt "tfrmmain.actshare.caption"
-msgid "Share..."
-msgstr "共享..."
 
 #: tfrmmain.actshellexecute.caption
 msgctxt "tfrmmain.actshellexecute.caption"
@@ -3280,6 +3251,11 @@ msgstr "標記 (&M)"
 msgctxt "TFRMMAIN.MNUNETWORK.CAPTION"
 msgid "&Network"
 msgstr "網路"
+
+#: tfrmmain.mnuopenstash.caption
+msgctxt "tfrmmain.mnuopenstash.caption"
+msgid "Open Stash"
+msgstr "開啟暫存區"
 
 #: tfrmmain.mnushow.caption
 msgctxt "tfrmmain.mnushow.caption"
@@ -11272,6 +11248,10 @@ msgstr "授予「完全磁盤訪問」權限以支持「訪達」標籤..."
 msgid "Remove \"%s\""
 msgstr "移除「%s」"
 
+#: ulng.rsmenumacosshare
+msgid "Share..."
+msgstr "共享..."
+
 #: ulng.rsmfstbiairdroptips
 msgctxt "ulng.rsmfstbiairdroptips"
 msgid "AirDrop"
@@ -11373,6 +11353,16 @@ msgstr "切換水平/垂直分隔顯示模式"
 #: ulng.rsmfstbihorzsplittitle
 msgid "HorzSplit"
 msgstr "水平分隔"
+
+#: ulng.rsmfstbiiclouddrivetips
+msgctxt "ulng.rsmfstbiiclouddrivetips"
+msgid "iCloud Drive"
+msgstr "iCloud雲碟"
+
+#: ulng.rsmfstbiiclouddrivetitle
+msgctxt "ulng.rsmfstbiiclouddrivetitle"
+msgid "iCloud Drive"
+msgstr "iCloud雲碟"
 
 #: ulng.rsmfstbinetworktips
 msgctxt "ulng.rsmfstbinetworktips"

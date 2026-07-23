@@ -71,7 +71,6 @@ type
    // parameters would have to be converted to and from strings).
    //
    procedure DoOpenVirtualFileSystemList(Panel: TFileView);
-   procedure DoOpenStash(Panel: TFileView);
    procedure DoPanelsSplitterPerPos(SplitPos: Integer);
    procedure DoUpdateFileView(AFileView: TFileView; {%H-}UserData: Pointer);
    procedure DoCloseTab(Notebook: TFileViewNotebook; PageIndex: Integer);
@@ -187,7 +186,6 @@ type
    procedure cm_Open(const {%H-}Params: array of string);
    procedure cm_ShellExecute(const Params: array of string);
    procedure cm_OpenVirtualFileSystemList(const {%H-}Params: array of string);
-   procedure cm_OpenStash(const {%H-}Params: array of string);
    procedure cm_TargetEqualSource(const {%H-}Params: array of string);
    procedure cm_LeftEqualRight(const {%H-}Params: array of string);
    procedure cm_RightEqualLeft(const {%H-}Params: array of string);
@@ -388,10 +386,7 @@ type
    procedure cm_AddToStash(const {%H-}Params: array of string);
    procedure cm_RemoveFromStash(const {%H-}Params: array of string);
    procedure cm_EmptyStash(const {%H-}Params: array of string);
-   procedure cm_OpeniCloud(const {%H-}Params: array of string);
-   procedure cm_Share(const {%H-}Params: array of string);
-   procedure cm_AirDrop(const {%H-}Params: array of string);
-   procedure cm_RevealInSystemFileManager(const {%H-}Params: array of string);
+   procedure cm_CallPlatformFunctions(const {%H-}Params: array of string);
 
    // Internal commands
    procedure cm_ExecuteToolbarItem(const Params: array of string);
@@ -743,18 +738,6 @@ var
   FileSource: IFileSource;
 begin
   FileSource:= TVfsFileSource.Create(gWFXPlugins);
-  if Assigned(FileSource) then
-  begin
-    Panel.AddFileSource(FileSource, FileSource.GetRootDir);
-    frmMain.ActiveFrame.SetFocus;
-  end;
-end;
-
-procedure TMainCommands.DoOpenStash(Panel: TFileView);
-var
-  FileSource: IFileSource;
-begin
-  FileSource:= TStashFileSource.GetFileSource;
   if Assigned(FileSource) then
   begin
     Panel.AddFileSource(FileSource, FileSource.GetRootDir);
@@ -1485,13 +1468,20 @@ begin
 end;
 
 procedure TMainCommands.cm_OpenVirtualFileSystemList(const Params: array of string);
+var
+  plugin: String;
+  f: TFile;
 begin
   DoOpenVirtualFileSystemList(frmMain.ActiveFrame);
-end;
+  if NOT GetParamValue(Params, 'plugin', plugin) then
+    Exit;
+  if plugin.IsEmpty then
+    Exit;
 
-procedure TMainCommands.cm_OpenStash(const Params: array of string);
-begin
-  DoOpenStash(frmMain.ActiveFrame);
+  f:= TFile.Create(EmptyStr);
+  f.Name:= plugin;
+  ChooseFileSource(frmMain.ActiveFrame, frmMain.ActiveFrame.FileSource, f );
+  f.Free;
 end;
 
 //------------------------------------------------------
@@ -5801,31 +5791,28 @@ begin
   stashFilesBackend.clear;
 end;
 
-procedure TMainCommands.cm_OpeniCloud(const Params: array of string);
+procedure TMainCommands.cm_CallPlatformFunctions(const Params: array of string);
+var
+  func: String;
 begin
   {$IFDEF DARWIN}
-  TDarwinFileViewUtil.addiCloudDrivePage;
-  {$ENDIF}
-end;
+  if NOT GetParamValue(Params, 'func', func) then
+    Exit;
 
-procedure TMainCommands.cm_Share(const Params: array of string);
-begin
-  {$IFDEF DARWIN}
-  TDarwinPanelUtil.showSharingService;
-  {$ENDIF}
-end;
-
-procedure TMainCommands.cm_AirDrop(const Params: array of string);
-begin
-  {$IFDEF DARWIN}
-  TDarwinPanelUtil.showAirDrop;
-  {$ENDIF}
-end;
-
-procedure TMainCommands.cm_RevealInSystemFileManager(const Params: array of string);
-begin
-  {$IFDEF DARWIN}
-  TDarwinApplicationUtil.performService( 'Finder/Reveal' );
+  case func of
+    'Share':
+      TDarwinPanelUtil.showSharingService;
+    'AirDrop':
+      TDarwinPanelUtil.showAirDrop;
+    'RevealInFinder':
+      TDarwinApplicationUtil.performService( 'Finder/Reveal' );
+    'ShowInfoInFinder':
+      TDarwinApplicationUtil.performService( 'Finder/Show Info' );
+    'QuickLook':
+      TDarwinPanelUtil.showQuickLook;
+    'EditFinderTags':
+      TDarwinPanelUtil.showEditFinderTags( nil, frmMain );
+  end;
   {$ENDIF}
 end;
 
