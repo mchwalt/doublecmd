@@ -2089,16 +2089,6 @@ msgstr "Добавить плагин"
 msgid "Add to Stash"
 msgstr "Добавить во временную панель"
 
-#: tfrmmain.actairdrop.caption
-msgctxt "tfrmmain.actairdrop.caption"
-msgid "AirDrop"
-msgstr "AirDrop"
-
-#: tfrmmain.actairdrop.hint
-msgctxt "tfrmmain.actairdrop.hint"
-msgid "AirDrop"
-msgstr "AirDrop"
-
 #: tfrmmain.actbenchmark.caption
 msgid "&Benchmark"
 msgstr "&Тест производительности"
@@ -2115,6 +2105,14 @@ msgstr "Краткий вид"
 #: tfrmmain.actcalculatespace.caption
 msgid "Calculate &Occupied Space"
 msgstr "Подсчитать &занимаемое место..."
+
+#: tfrmmain.actcallplatformfunctions.caption
+msgid "Call platform functions"
+msgstr ""
+
+#: tfrmmain.actcallplatformfunctions.hint
+msgid "Call platform functions (the function to be called is specified by the parameter 'func')"
+msgstr ""
 
 #: tfrmmain.actchangedir.caption
 msgid "Change directory"
@@ -2656,20 +2654,6 @@ msgstr "Открыть пап&ку в новой вкладке"
 msgid "Open Drive by Index"
 msgstr "Открыть диск по индексу"
 
-#: tfrmmain.actopenicloud.caption
-msgctxt "tfrmmain.actopenicloud.caption"
-msgid "iCloud Drive"
-msgstr "Диск iCloud"
-
-#: tfrmmain.actopenicloud.hint
-msgctxt "tfrmmain.actopenicloud.hint"
-msgid "iCloud Drive"
-msgstr "Диск iCloud"
-
-#: tfrmmain.actopenstash.caption
-msgid "Open Stash"
-msgstr "Открыть временную панель"
-
 #: tfrmmain.actopenvirtualfilesystemlist.caption
 msgctxt "TFRMMAIN.ACTOPENVIRTUALFILESYSTEMLIST.CAPTION"
 msgid "Open &VFS List"
@@ -2753,14 +2737,6 @@ msgstr "Пересохранить последние загруженные и�
 #: tfrmmain.actrestoreselection.caption
 msgid "&Restore Selection"
 msgstr "Восс&тановить выделение"
-
-#: tfrmmain.actrevealinsystemfilemanager.caption
-msgid "Reveal in File Manager"
-msgstr ""
-
-#: tfrmmain.actrevealinsystemfilemanager.hint
-msgid "Reveal in System File Manager"
-msgstr ""
 
 #: tfrmmain.actreverseorder.caption
 msgid "Re&verse Order"
@@ -2883,11 +2859,6 @@ msgstr "&Заблокировать вкладку"
 msgctxt "TFRMMAIN.ACTSETTABOPTIONPATHRESETS.CAPTION"
 msgid "Locked with &Directory Changes Allowed"
 msgstr "Заблокировать с возможностью &смены каталога"
-
-#: tfrmmain.actshare.caption
-msgctxt "tfrmmain.actshare.caption"
-msgid "Share..."
-msgstr "Поделиться..."
 
 #: tfrmmain.actshellexecute.caption
 msgctxt "tfrmmain.actshellexecute.caption"
@@ -3287,6 +3258,11 @@ msgstr "&Выделение"
 msgctxt "TFRMMAIN.MNUNETWORK.CAPTION"
 msgid "&Network"
 msgstr "&Сеть"
+
+#: tfrmmain.mnuopenstash.caption
+msgctxt "tfrmmain.mnuopenstash.caption"
+msgid "Open Stash"
+msgstr "Открыть временную панель"
 
 #: tfrmmain.mnushow.caption
 msgctxt "tfrmmain.mnushow.caption"
@@ -11286,6 +11262,10 @@ msgstr "Предоставьте разрешение \"Полный досту�
 msgid "Remove \"%s\""
 msgstr "Удалить \"%s\""
 
+#: ulng.rsmenumacosshare
+msgid "Share..."
+msgstr "Поделиться..."
+
 #: ulng.rsmfstbiairdroptips
 msgctxt "ulng.rsmfstbiairdroptips"
 msgid "AirDrop"
@@ -11387,6 +11367,16 @@ msgstr "Переключить режим расположения панеле�
 #: ulng.rsmfstbihorzsplittitle
 msgid "HorzSplit"
 msgstr "Горизонтальное разделение"
+
+#: ulng.rsmfstbiiclouddrivetips
+msgctxt "ulng.rsmfstbiiclouddrivetips"
+msgid "iCloud Drive"
+msgstr "Диск iCloud"
+
+#: ulng.rsmfstbiiclouddrivetitle
+msgctxt "ulng.rsmfstbiiclouddrivetitle"
+msgid "iCloud Drive"
+msgstr "Диск iCloud"
 
 #: ulng.rsmfstbinetworktips
 msgctxt "ulng.rsmfstbinetworktips"

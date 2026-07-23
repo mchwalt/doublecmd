@@ -8,6 +8,7 @@ interface
 uses
   Classes, SysUtils,
   LCLType, Forms, Menus, ComCtrls, Graphics,
+  DCBasicTypes,
   fMain, fEditor, fDiffer, fViewer,
   uHotkeyManager, uKeyboard, uEarlyConfig, uGlobs, uLng, uDCUtils, uVectorImage,
   uFileView, uBriefFileView, uColumnsFileView, uThumbFileView,
@@ -49,6 +50,30 @@ begin
   s:= poFile.Translate( identifier, item.tips );
   item.title:= s;
   item.tips:= s;
+end;
+
+function getShortCutOfCommand(
+  const formName: String;
+  const command: String;
+  const params: TDynamicStringArray ): TShortCut;
+var
+  form: THMForm;
+  hotkey: THotKey;
+begin
+  Result:= 0;
+
+  form:= HotMan.Forms.Find( formName );
+  if form = nil then
+    Exit;
+
+  hotkey:= form.Hotkeys.FindByCommand( command, params );
+  if hotkey = nil then
+    Exit;
+
+  if Length(hotkey.Shortcuts) = 0 then
+    Exit;
+
+  Result:= TextToShortCutEx( hotkey.Shortcuts[0] );
 end;
 
 function shortCutToMacOSString( const shortCut: TShortCut ): String;
@@ -127,23 +152,22 @@ end;
 procedure addShortCutTipsToItemConfig(
   const formName: String;
   const command: String;
+  const params: TDynamicStringArray;
   var item: TCocoaConfigToolBarItemWithUI );
 var
-  form: THMForm;
-  hotkey: THotKey;
+  shortCut: TShortCut;
 begin
-  form:= HotMan.Forms.Find( formName );
-  if form = nil then
-    Exit;
+  shortCut:= getShortCutOfCommand( formName, command, params );
+  if shortCut <> 0 then
+    addShortCutTipsToItemConfig( shortCut, item );
+end;
 
-  hotkey:= form.Hotkeys.FindByCommand( command );
-  if hotkey = nil then
-    Exit;
-
-  if Length(hotkey.Shortcuts) = 0 then
-    Exit;
-
-  addShortCutTipsToItemConfig( TextToShortCutEx(hotkey.Shortcuts[0]), item );
+procedure addShortCutTipsToItemConfig(
+  const formName: String;
+  const command: String;
+  var item: TCocoaConfigToolBarItemWithUI ); inline;
+begin
+  addShortCutTipsToItemConfig( formName, command, nil, item );
 end;
 
 {$i ucocoamodernformconfig_main.inc}

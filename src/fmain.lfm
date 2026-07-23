@@ -1217,7 +1217,7 @@ object frmMain: TfrmMain
         Action = actOpenVirtualFileSystemList
       end
       object mnuOpenStash: TMenuItem
-        Action = actOpenStash
+        Caption = 'Open Stash'
       end
       object mnuCmdSwapSourceTarget: TMenuItem
         Action = actExchange
@@ -2887,12 +2887,6 @@ object frmMain: TfrmMain
       Caption = 'Add to Stash'
       OnExecute = actExecute
     end
-    object actOpenStash: TAction
-      Tag = 4
-      Category = 'File Operations'
-      Caption = 'Open Stash'
-      OnExecute = actExecute
-    end
     object actRemoveFromStash: TAction
       Tag = 4
       Category = 'File Operations'
@@ -2905,31 +2899,11 @@ object frmMain: TfrmMain
       Caption = 'Empty Stash'
       OnExecute = actExecute
     end
-    object actOpeniCloud: TAction
-      Tag = 4
-      Category = 'File Operations'
-      Caption = 'iCloud Drive'
-      Hint = 'iCloud Drive'
-      OnExecute = actExecute
-    end
-    object actShare: TAction
-      Tag = 4
-      Category = 'File Operations'
-      Caption = 'Share...'
-      OnExecute = actExecute
-    end
-    object actAirDrop: TAction
-      Tag = 4
-      Category = 'File Operations'
-      Caption = 'AirDrop'
-      Hint = 'AirDrop'
-      OnExecute = actExecute
-    end
-    object actRevealInSystemFileManager: TAction
-      Tag = 4
-      Category = 'File Operations'
-      Caption = 'Reveal in File Manager'
-      Hint = 'Reveal in System File Manager'
+    object actCallPlatformFunctions: TAction
+      Tag = 18
+      Category = 'Tools'
+      Caption = 'Call platform functions'
+      Hint = 'Call platform functions (the function to be called is specified by the parameter ''func'')'
       OnExecute = actExecute
     end
   end

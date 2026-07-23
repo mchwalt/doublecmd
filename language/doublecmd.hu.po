@@ -2061,16 +2061,6 @@ msgstr "Bővítmény hozzáadása"
 msgid "Add to Stash"
 msgstr ""
 
-#: tfrmmain.actairdrop.caption
-msgctxt "tfrmmain.actairdrop.caption"
-msgid "AirDrop"
-msgstr "AirDrop"
-
-#: tfrmmain.actairdrop.hint
-msgctxt "tfrmmain.actairdrop.hint"
-msgid "AirDrop"
-msgstr "AirDrop"
-
 #: tfrmmain.actbenchmark.caption
 msgid "&Benchmark"
 msgstr "&Teljesítményteszt"
@@ -2086,6 +2076,14 @@ msgstr "Rövid nézet"
 #: tfrmmain.actcalculatespace.caption
 msgid "Calculate &Occupied Space"
 msgstr "&Foglalt terület számítása"
+
+#: tfrmmain.actcallplatformfunctions.caption
+msgid "Call platform functions"
+msgstr ""
+
+#: tfrmmain.actcallplatformfunctions.hint
+msgid "Call platform functions (the function to be called is specified by the parameter 'func')"
+msgstr ""
 
 #: tfrmmain.actchangedir.caption
 msgid "Change directory"
@@ -2620,20 +2618,6 @@ msgstr "Mappa megnyitása ú&j lapon"
 msgid "Open Drive by Index"
 msgstr "Meghajtó megnyitása index alapján"
 
-#: tfrmmain.actopenicloud.caption
-msgctxt "tfrmmain.actopenicloud.caption"
-msgid "iCloud Drive"
-msgstr "iCloud meghajtó"
-
-#: tfrmmain.actopenicloud.hint
-msgctxt "tfrmmain.actopenicloud.hint"
-msgid "iCloud Drive"
-msgstr "iCloud meghajtó"
-
-#: tfrmmain.actopenstash.caption
-msgid "Open Stash"
-msgstr ""
-
 #: tfrmmain.actopenvirtualfilesystemlist.caption
 msgid "Open &VFS List"
 msgstr "&VFS lista megnyitása"
@@ -2715,14 +2699,6 @@ msgstr "Utoljára betöltött Kedvenc Lapok újramentése"
 #: tfrmmain.actrestoreselection.caption
 msgid "&Restore Selection"
 msgstr "Kijelölés vissza&állítása"
-
-#: tfrmmain.actrevealinsystemfilemanager.caption
-msgid "Reveal in File Manager"
-msgstr ""
-
-#: tfrmmain.actrevealinsystemfilemanager.hint
-msgid "Reveal in System File Manager"
-msgstr ""
 
 #: tfrmmain.actreverseorder.caption
 msgid "Re&verse Order"
@@ -2843,11 +2819,6 @@ msgstr "&Zárolt"
 #: tfrmmain.actsettaboptionpathresets.caption
 msgid "Locked with &Directory Changes Allowed"
 msgstr "Zárolt, de &könyvtárváltás engedélyezett"
-
-#: tfrmmain.actshare.caption
-msgctxt "tfrmmain.actshare.caption"
-msgid "Share..."
-msgstr "Megosztás..."
 
 #: tfrmmain.actshellexecute.caption
 msgctxt "TFRMMAIN.ACTSHELLEXECUTE.CAPTION"
@@ -3242,6 +3213,11 @@ msgstr "Jelö&lés"
 msgctxt "tfrmmain.mnunetwork.caption"
 msgid "&Network"
 msgstr "Háló&zat"
+
+#: tfrmmain.mnuopenstash.caption
+msgctxt "tfrmmain.mnuopenstash.caption"
+msgid "Open Stash"
+msgstr ""
 
 #: tfrmmain.mnushow.caption
 msgctxt "tfrmmain.mnushow.caption"
@@ -11028,6 +11004,10 @@ msgstr "Adjon \"Teljes lemezhozzáférés\" engedélyt a Finder címkék támoga
 msgid "Remove \"%s\""
 msgstr "\"%s\" eltávolítása"
 
+#: ulng.rsmenumacosshare
+msgid "Share..."
+msgstr "Megosztás..."
+
 #: ulng.rsmfstbiairdroptips
 msgctxt "ulng.rsmfstbiairdroptips"
 msgid "AirDrop"
@@ -11129,6 +11109,16 @@ msgstr "Vízszintes felosztás mód váltása"
 #: ulng.rsmfstbihorzsplittitle
 msgid "HorzSplit"
 msgstr "VízszFeloszt"
+
+#: ulng.rsmfstbiiclouddrivetips
+msgctxt "ulng.rsmfstbiiclouddrivetips"
+msgid "iCloud Drive"
+msgstr "iCloud meghajtó"
+
+#: ulng.rsmfstbiiclouddrivetitle
+msgctxt "ulng.rsmfstbiiclouddrivetitle"
+msgid "iCloud Drive"
+msgstr "iCloud meghajtó"
 
 #: ulng.rsmfstbinetworktips
 msgctxt "ulng.rsmfstbinetworktips"
