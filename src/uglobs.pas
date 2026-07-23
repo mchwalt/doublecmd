@@ -1741,6 +1741,14 @@ begin
   begin
     CopyFile(gpExePath + 'default' + PathDelim + 'highlighters.xml', gpCfgDir + 'highlighters.xml');
   end;
+  // default toolbar (TC look-alike, silk icons): imported once by
+  // ConvertToolbarBarConfig on first run, which renames it to *.obsolete.
+  // Guard on the .obsolete marker so it is not re-dropped after import.
+  if (not mbFileExists(gpCfgDir + 'default.bar')) and
+     (not mbFileExists(gpCfgDir + 'default.bar.obsolete')) then
+  begin
+    CopyFile(gpExePath + 'default' + PathDelim + 'default.bar', gpCfgDir + 'default.bar');
+  end;
 end;
 
 procedure CreateGlobs;
