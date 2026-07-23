@@ -34,6 +34,14 @@ See [`CHANGELOG.md`](CHANGELOG.md) for the versioned history of this fork's chan
 - **`ALT+B`, `d` terminal accelerator** - opens the terminal / command-line window
   from the Commands menu, mirroring Total Commander's underlined mnemonic.
 
+### Accessibility
+The fork is **optimized for color-blind people** (red-green / deuteranopia). Status
+colors avoid the red/green pairing that is hard to tell apart:
+- **Synchronize Directories dialog** - the diff colors use the color-blind-safe
+  Okabe-Ito palette instead of green/blue/red: orange (`→` copy to right),
+  blue (`←` copy to left) and violet (`≠` different). Applies to both the Light and
+  Dark themes, as compiled defaults and in the shipped `default/colors.json`.
+
 ### Fixes
 - **Menu separator navigation** - keyboard arrow navigation no longer dead-stops on
   menu separators (works around an LCL Win32 owner-draw bug).
@@ -42,10 +50,12 @@ See [`CHANGELOG.md`](CHANGELOG.md) for the versioned history of this fork's chan
 On first run (when the user config dir is empty) the fork copies a few opinionated
 defaults from the `default/` directory into the user config
 (`CopySettingsFiles` in `src/uglobs.pas`):
-- `colors.json` - colorblind-friendly blue marking colors.
+- `colors.json` - colorblind-friendly marking colors and Okabe-Ito sync-dialog colors.
 - `shortcuts.scf` - the fork's keyboard shortcuts (incl. `Ctrl+G`).
 - `highlighters.xml` - viewer/editor syntax highlighting.
 - `multiarc.ini` - archiver definitions.
+- `default.bar` - the TC look-alike main toolbar (Silk icons via `%COMMANDER_PATH%`).
+  Imported into `doublecmd.xml` on first run, then renamed to `default.bar.obsolete`.
 
 Machine-specific configs (`doublecmd.xml`, `extassoc.xml`) are deliberately **not**
 shipped, since they carry absolute paths (`C:\totalcmd\...`, external editor/tools).
