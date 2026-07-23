@@ -31,9 +31,9 @@
         SuccessColor : 32768
       },
       SyncDirs : {
-        LeftColor : 32768,
-        RightColor : 16711680,
-        UnknownColor : 255,
+        LeftColor : 40934,
+        RightColor : 11694592,
+        UnknownColor : 10975692,
         SelectedColor : -2147483635
       },
       Viewer : {
@@ -1738,9 +1738,9 @@
         SuccessColor : 9097847
       },
       SyncDirs : {
-        LeftColor : 9097847,
-        RightColor : 12622689,
-        UnknownColor : 6383296,
+        LeftColor : 40934,
+        RightColor : 15316054,
+        UnknownColor : 10975692,
         SelectedColor : -2147483635
       },
       Viewer : {

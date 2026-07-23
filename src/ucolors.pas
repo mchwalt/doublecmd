@@ -293,9 +293,10 @@ begin
   end;
   with FColors[0].SyncDirs do
   begin
-    LeftColor:= clGreen;
-    RightColor:= clBlue;
-    UnknownColor:= clRed;
+    // Colour-blind friendly (Okabe-Ito) palette instead of red/green
+    LeftColor:= RGBToColor(230, 159,   0); // orange  #E69F00 -> copy to right
+    RightColor:= RGBToColor(  0, 114, 178); // blue    #0072B2 -> copy to left
+    UnknownColor:= RGBToColor(204, 121, 167); // violet  #CC79A7 -> not equal
     SelectedColor:= clHighlight;
   end;
   with FColors[0].Viewer do
@@ -360,9 +361,10 @@ begin
   end;
   with FColors[1].SyncDirs do
   begin
-    LeftColor:= $8AD277;
-    RightColor:= $C09B61;
-    UnknownColor:= $6166C0;
+    // Colour-blind friendly (Okabe-Ito) palette, lighter blue for dark bg
+    LeftColor:= RGBToColor(230, 159,   0); // orange   #E69F00 -> copy to right
+    RightColor:= RGBToColor( 86, 180, 233); // sky blue #56B4E9 -> copy to left
+    UnknownColor:= RGBToColor(204, 121, 167); // violet   #CC79A7 -> not equal
   end;
   with FColors[1].ProgressColors do
   begin
