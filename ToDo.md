@@ -2,9 +2,10 @@
 
 ## Synchronisieren-Dialog: Farben
 
-- [ ] Im Dialog "Verzeichnisse synchronisieren" die Diff-Farben anpassen. Aktuell werden
-      Unterschiede in **Rot** dargestellt, das bei Rot-Grün-Sehschwäche nicht erkennbar ist.
-      TC-Farben übernehmen bzw. farbenblind-freundliche Farben (z. B. Blau) verwenden.
+- [x] Im Dialog "Verzeichnisse synchronisieren" die Diff-Farben angepasst: statt
+      grün/blau/**rot** jetzt die farbenblind-sichere Okabe-Ito-Palette
+      (Orange `→`, Blau `←`, Violett `≠`). Umgesetzt in `src/ucolors.pas` (Light+Dark)
+      und `default/colors.json`.
 
 ## Toolbar-Icons (Silk)
 
@@ -14,15 +15,18 @@ relativ referenziert via `%COMMANDER_PATH%` (statt der proprietären
 Silk-Icons gemappt.
 
 Offen / bei Gelegenheit:
-- [ ] Einige Icons weichen optisch vom TC-XP-Original ab und könnten durch nähere Treffer
-      ersetzt werden, z. B.:
-      - "Auswahl umkehren" (cm_MarkInvert) = `arrow_switch` (gekreuzte Pfeile)
-      - "Synchronisieren" (cm_SyncDirs) = `arrow_merge` (Verzweigungspfeil)
-      - "Suchen" (cm_Search) = `find` (Fernglas)
-      Alternativen gibt es im Silk-Set; Tausch = Icon herunterladen + die eine Pfadzeile
-      in der Toolbar-Config anpassen.
-- [ ] Ggf. ein durchgängig XP-näheres, frei lizenziertes Icon-Set evaluieren.
-- [ ] Toolbar-Definition (mit den relativen Icon-Pfaden) als Repo-Default mitliefern,
-      damit frische Installationen die Toolbar bekommen. Aktuell referenziert nur die
-      lokale `%APPDATA%\doublecmd.xml` die Icons; `doublecmd.xml` wird bewusst nicht als
-      Default committet (enthält noch maschinenspezifische Editor-/Tool-Pfade).
+- [x] Nähere Treffer für "Auswahl umkehren" (`arrow_switch`), "Synchronisieren"
+      (`arrow_merge`) und "Suchen" (`find`) sind gesetzt — sowohl in der Live-Config als
+      auch in der ausgelieferten `default/default.bar`.
+- [x] XP-näheres, frei lizenziertes Icon-Set evaluiert → **Entscheidung: bei Silk bleiben**.
+      Silk (famfamfam, CC BY 2.5, 16px) ist der beste freie XP-Ära-Fit. Alternativen:
+      Fugue/Diagona (Y. Kamiyamane, CC BY 3.0, 16px, clean) als Ergänzung für einzelne
+      schlecht passende Icons; FatCow (CC BY 3.0) ist eher Vista-glossy, Tango zu Linux-artig.
+      Ein durchgängig "XP-natives" Bild gäbe es nur mit den proprietären TC-`WCMICONS.DLL`.
+      → Bei Bedarf gezielt einzelne Buttons aus Fugue nachziehen, kein Set-Wechsel.
+- [x] Toolbar-Definition als Repo-Default mitgeliefert: `default/default.bar`
+      (TC-`[Buttonbar]`-Format, relative `%COMMANDER_PATH%`-Icon-Pfade). `CopySettingsFiles`
+      kopiert sie bei leerem Config-Dir; DC importiert sie beim ersten Start über
+      `ConvertToolbarBarConfig` in die `doublecmd.xml` und benennt sie zu `.obsolete` um.
+      Getestet mit isoliertem `--config-dir`: 16 Commands + 7 Separatoren korrekt importiert.
+      `doublecmd.xml` selbst wird weiterhin bewusst nicht committet (maschinenspezifische Pfade).
