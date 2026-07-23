@@ -18,7 +18,12 @@ Offen / bei Gelegenheit:
 - [x] Nähere Treffer für "Auswahl umkehren" (`arrow_switch`), "Synchronisieren"
       (`arrow_merge`) und "Suchen" (`find`) sind gesetzt — sowohl in der Live-Config als
       auch in der ausgelieferten `default/default.bar`.
-- [ ] Ggf. ein durchgängig XP-näheres, frei lizenziertes Icon-Set evaluieren.
+- [x] XP-näheres, frei lizenziertes Icon-Set evaluiert → **Entscheidung: bei Silk bleiben**.
+      Silk (famfamfam, CC BY 2.5, 16px) ist der beste freie XP-Ära-Fit. Alternativen:
+      Fugue/Diagona (Y. Kamiyamane, CC BY 3.0, 16px, clean) als Ergänzung für einzelne
+      schlecht passende Icons; FatCow (CC BY 3.0) ist eher Vista-glossy, Tango zu Linux-artig.
+      Ein durchgängig "XP-natives" Bild gäbe es nur mit den proprietären TC-`WCMICONS.DLL`.
+      → Bei Bedarf gezielt einzelne Buttons aus Fugue nachziehen, kein Set-Wechsel.
 - [x] Toolbar-Definition als Repo-Default mitgeliefert: `default/default.bar`
       (TC-`[Buttonbar]`-Format, relative `%COMMANDER_PATH%`-Icon-Pfade). `CopySettingsFiles`
       kopiert sie bei leerem Config-Dir; DC importiert sie beim ersten Start über
