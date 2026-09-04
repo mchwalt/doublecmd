@@ -56,8 +56,22 @@ gespeicherten 50 %: das linke Panel ist rund dreimal so breit wie das rechte.
 - [ ] Auf pristine `upstream/master` gegenprüfen — reproduziert es dort, ist es ein
       Upstream-Bug und eine Meldung wert.
 
-## Upstream-PR #2953 (Lauf-Index) nach dem großen Merge prüfen
+## Upstream-PR #2958 (Lauf-Index)
 
-- [ ] Der Upstream-Merge vom 2026-09-04 (128 Commits) hat u.a. `ufileview.pas` und
-      `ufileviewheader.pas` angefasst. Prüfen, ob der PR-Branch `feature/running-index-jump`
-      noch konfliktfrei auf aktuellem `upstream/master` sitzt; ggf. rebasen und PR aktualisieren.
+**Achtung, Nummer geändert:** #2953 ist **closed** (27.06.2026) — beim Umschalten der
+Fork-Sichtbarkeit riss die Fork-Network-Verknüpfung, der PR liess sich nicht wieder öffnen.
+Aktiv ist **#2958** (OPEN, gleicher Inhalt, Head `12fad33ec`). Head-Repo ist der zweite Fork
+`mchwalt/doublecmd-pr`, Branch `feature/running-index-jump` — er liegt daher **nicht** in
+`origin` (mchwalt/doublecmd).
+
+- [x] Nach dem 128-Commit-Upstream-Merge noch konfliktfrei? **Ja.** `git merge-tree
+      --write-tree upstream/master 12fad33ec` läuft ohne Konflikt durch (Merge-Base
+      `6d72a856e`). Von den 6 PR-Dateien hat upstream nur `uglobs.pas` und
+      `umaincommands.pas` angefasst, ohne Hunk-Überlappung. `hkVersion` steht upstream
+      weiter auf 72, die 73 des PR ist also noch frei.
+- [x] Baut der gemergte Baum? **Ja.** Merge von `12fad33ec` auf `upstream/master` in einem
+      separaten Worktree, `build.bat release`: `uorderedfileview.pas` und `foptionslayout.pas`
+      kompilieren, `doublecmd.exe` (13,58 MB) linkt, keine ICE — nur der bekannte nicht-fatale
+      Quirk "File dmhigh.json/doublecmd.svgz not found". Geprüft 2026-09-04.
+- [ ] Kein Rebase nötig; nur noch Maintainer-Review von #2958 abwarten. Bei nächstem grossen
+      Upstream-Merge Konflikt- und Build-Check wiederholen.
