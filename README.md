@@ -10,7 +10,7 @@ tweaks and a few small features on top.
 
 ## Changelog
 
-See [`CHANGELOG.md`](CHANGELOG.md) for the versioned history of this fork's changes
+See [`doc/CHANGELOG.md`](doc/CHANGELOG.md) for the versioned history of this fork's changes
 (current: `1.3.0-tc.8`). The upstream Double Commander changelog is in
 [`doc/changelog.txt`](doc/changelog.txt).
 

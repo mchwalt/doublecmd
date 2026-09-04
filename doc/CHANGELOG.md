@@ -2,7 +2,7 @@
 
 All notable changes to this Total Commander look-alike fork are documented here.
 Only the fork's own changes on top of upstream Double Commander are listed; for the
-upstream history see [`doc/changelog.txt`](doc/changelog.txt).
+upstream history see [`changelog.txt`](changelog.txt).
 
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Version scheme: `<upstream-base>-tc.<n>` - the Double Commander base version plus a
@@ -34,7 +34,7 @@ fork revision counter.
 ### Internal
 - Merged upstream Double Commander up to `12fe40c33` (128 commits, conflict-free, 107
   files): new icon-theme unit, reworked Synchronize Directories dialog, MultiArchive/7z
-  copy fixes. Upstream detail in [`doc/changelog.txt`](doc/changelog.txt).
+  copy fixes. Upstream detail in [`changelog.txt`](changelog.txt).
 - Build wrappers `build-dc.ps1`/`build-dc.cmd` (LAZARUS_HOME 8.3 short path + auto-retry
   on flaky FPC internal compiler errors) and Linux/cross-platform build notes.
 
