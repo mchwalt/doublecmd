@@ -47,6 +47,17 @@ gespeicherten 50 %: das linke Panel ist rund dreimal so breit wie das rechte.
   die volle Fensterbreite nicht erneut angewendet. Einstiegspunkte: `SetMainSplitterPos`,
   die `pnlLeft.Width`-Zuweisung sowie das Laden von `'Splitter'` aus der Config in
   `src/fmain.pas`.
-- [ ] Ursache eingrenzen: ist es DPI-/Breiten-abhängig? Tritt es auch bei schmalem Fenster
-      und bei unmaximiertem Start auf? Reproduziert es auf pristine `upstream/master`
-      (dann Upstream-Bug und Meldung wert) oder nur hier?
+- **Neuer Datenpunkt (2026-09-04, Build `a2b3df79e` nach dem Upstream-Merge):** mit frischem
+  `--config-dir` und **1936 px breitem, nicht maximiertem** Fenster sitzt der Trenner korrekt
+  bei ~50 %. Der Effekt zeigt sich also nur bei breitem/maximiertem Fenster.
+- [x] Tritt es auch bei schmalem, unmaximiertem Fenster auf? **Nein** (Datenpunkt oben).
+- [ ] Schwelle eingrenzen: ab welcher Fensterbreite kippt es, und ist es DPI- oder rein
+      breitenabhängig?
+- [ ] Auf pristine `upstream/master` gegenprüfen — reproduziert es dort, ist es ein
+      Upstream-Bug und eine Meldung wert.
+
+## Upstream-PR #2953 (Lauf-Index) nach dem großen Merge prüfen
+
+- [ ] Der Upstream-Merge vom 2026-09-04 (128 Commits) hat u.a. `ufileview.pas` und
+      `ufileviewheader.pas` angefasst. Prüfen, ob der PR-Branch `feature/running-index-jump`
+      noch konfliktfrei auf aktuellem `upstream/master` sitzt; ggf. rebasen und PR aktualisieren.
