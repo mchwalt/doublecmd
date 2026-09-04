@@ -71,7 +71,8 @@ type
                          tb_close_on_doubleclick, tb_show_drive_letter,
                          tb_reusing_tab_when_possible,
                          tb_confirm_close_locked_tab,
-                         tb_keep_renamed_when_back_normal);
+                         tb_keep_renamed_when_back_normal,
+                         tb_show_unavailable_marker);
 
   TTabsOptionsDoubleClick = (tadc_Nothing, tadc_CloseTab, tadc_FavoriteTabs, tadc_TabsPopup);
 
@@ -686,6 +687,7 @@ var
   gDifferIgnoreWhiteSpace: Boolean;
 
   {SyncDirs}
+  gSyncDirsEmptyDirs,
   gSyncDirsSubdirs,
   gSyncDirsByContent,
   gSyncDirsAsymmetric,
@@ -2162,7 +2164,8 @@ begin
                      tb_activate_panel_on_click,
                      tb_close_on_doubleclick,
                      tb_reusing_tab_when_possible,
-                     tb_confirm_close_locked_tab];
+                     tb_confirm_close_locked_tab,
+                     tb_show_unavailable_marker];
   gDirTabActionOnDoubleClick := tadc_FavoriteTabs;
   gDirTabLimit := 32;
   gDirTabPosition := tbpos_top;
@@ -2320,6 +2323,7 @@ begin
   gDifferIgnoreWhiteSpace := False;
 
   {SyncDirs}
+  gSyncDirsEmptyDirs := False;
   gSyncDirsSubdirs := False;
   gSyncDirsByContent := False;
   gSyncDirsAsymmetric := False;
@@ -3411,6 +3415,7 @@ begin
     Node := Root.FindNode('SyncDirs');
     if Assigned(Node) then
     begin
+      gSyncDirsEmptyDirs := GetValue(Node, 'EmptyDirs', gSyncDirsEmptyDirs);
       gSyncDirsSubdirs := GetValue(Node, 'Subdirs', gSyncDirsSubdirs);
       gSyncDirsByContent := GetValue(Node, 'ByContent', gSyncDirsByContent);
       gSyncDirsAsymmetric := GetValue(Node, 'Asymmetric', gSyncDirsAsymmetric);
@@ -4001,6 +4006,7 @@ begin
 
     { SyncDirs }
     Node := FindNode(Root, 'SyncDirs', True);
+    SetValue(Node, 'EmptyDirs', gSyncDirsEmptyDirs);
     SetValue(Node, 'Subdirs', gSyncDirsSubdirs);
     SetValue(Node, 'ByContent', gSyncDirsByContent);
     SetValue(Node, 'Asymmetric', gSyncDirsAsymmetric and gSyncDirsAsymmetricSave);

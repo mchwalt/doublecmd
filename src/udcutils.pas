@@ -236,6 +236,7 @@ function ContrastColor(Color: TColor; APercent: Byte): TColor;
 procedure SetColorInColorBox(const lcbColorBox: TColorBox; const lColor: TColor);
 procedure UpdateColor(Control: TControl; Checked: Boolean);
 function findScaleFactorByFirstForm: Double;
+function findScaleFactorByFirstFormEx: Double;
 function findScaleFactorByControl( control: TControl ): Double;
 procedure EnableControl(Control:  TControl; Enabled: Boolean);
 procedure AlignControlsEx(AContainer: TWinControl; AComboBox: TWinControl; ALabel: TLabel);
@@ -666,7 +667,8 @@ begin
       aFile.Path := sNewRootPath + ExtractDirLevel(Files.Path, aFile.Path);
     end;
 
-    Files.Path := sNewRootPath;
+    if sNewRootPath <> EmptyStr then
+      Files.Path := sNewRootPath;
   end;
 end;
 
@@ -992,6 +994,10 @@ begin
     else if (I > 0) then
       begin
         comboBox.Items.Move(I, 0);
+{$IF DEFINED(LCLQT) OR DEFINED(LCLQT5) OR DEFINED(LCLQT6)}
+        // https://github.com/doublecmd/doublecmd/issues/2386
+        comboBox.ItemIndex := -1;
+{$ENDIF}
         // Reset selected item (and combobox text), because Move has destroyed it.
         comboBox.ItemIndex := 0;
       end;
@@ -1279,6 +1285,20 @@ begin
   Result:= 1;
   if Screen.FormCount > 0 then
     Result:= Screen.Forms[0].GetCanvasScaleFactor();
+end;
+
+function findScaleFactorByFirstFormEx: Double;
+begin
+  Result:= 1;
+  if Screen.FormCount > 0 then
+  begin
+{$IF DEFINED(LCLGTK2) OR DEFINED(LCLWIN32)}
+    if Screen.Forms[0].PixelsPerInch > 96 then
+      Result:= Screen.Forms[0].PixelsPerInch / 96;
+{$ELSE}
+    Result:= Screen.Forms[0].GetCanvasScaleFactor();
+{$ENDIF}
+  end;
 end;
 
 function findScaleFactorByControl( control: TControl ): Double;

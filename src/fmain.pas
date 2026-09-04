@@ -616,6 +616,7 @@ type
     procedure miLogMenuClick(Sender: TObject);
     procedure miTrayIconExitClick(Sender: TObject);
     procedure miTrayIconRestoreClick(Sender: TObject);
+    procedure mnuOpenStashClick(Sender: TObject);
     procedure PanelButtonClick(Button: TSpeedButton; FileView: TFileView);
     procedure pnlDiskResize(Sender: TObject);
     procedure ShellTreeViewSelect;
@@ -833,6 +834,7 @@ type
     function FrameLeft: TFileView;
     function FrameRight: TFileView;
     procedure ForEachView(CallbackFunction: TForEachViewFunction; UserData: Pointer);
+    procedure UpdateAvailabilityForViewsUnderPath(AFileView: TFileView; AUserData: Pointer);
     procedure GetListOpenedPaths(const APaths:TStringList);
     //check selected count and generate correct msg, parameters is lng indexs
     Function GetFileDlgStr(sLngOne, sLngMulti : String; Files: TFiles):String;
@@ -1742,6 +1744,11 @@ end;
 procedure TfrmMain.miTrayIconRestoreClick(Sender: TObject);
 begin
   RestoreFromTray;
+end;
+
+procedure TfrmMain.mnuOpenStashClick(Sender: TObject);
+begin
+  Commands.cm_OpenVirtualFileSystemList( ['plugin='+rsstashname] );
 end;
 
 procedure TfrmMain.PanelButtonClick(Button: TSpeedButton; FileView: TFileView);
@@ -3072,6 +3079,20 @@ var
   imgIndex: Integer;
   ABitmap: TCustomBitmap;
   actionName: TComponentName;
+
+  procedure setOpenStashIcon;
+  var
+    iconName: String;
+  begin
+    TStashFileSource.GetMainIcon(iconName);
+    ABitmap:= PixMapManager.GetThemeIcon(ittInternal, iconName, gIconsInMenusSize);
+    if NOT Assigned(ABitmap) then
+      Exit;
+    imgIndex := imgLstActions.Add(ABitmap, nil);
+    mnuOpenStash.ImageIndex:= imgIndex;
+    ABitmap.Free;
+  end;
+
 begin
   mnuMain.Images := nil;
   pmTabMenu.Images := nil;
@@ -3113,6 +3134,8 @@ begin
       ABitmap.Free;
     end;
   end;
+
+  setOpenStashIcon;
 end;
 
 procedure TfrmMain.UpdateHotDirIcons;
@@ -4825,7 +4848,7 @@ begin
           else begin
             AFileSource:= FileView.FileSource;
           end;
-          if not AFileSource.FileSystemEntryExists(ExcludeTrailingBackslash(NewPath)) then
+          if not FileOrDirExists(AFileSource, ExcludeTrailingBackslash(NewPath)) then
           begin
             actSyncChangeDir.Checked:= False;
             Exit(False);
@@ -7394,6 +7417,12 @@ begin
   end;
 end;
 
+procedure TfrmMain.UpdateAvailabilityForViewsUnderPath(AFileView: TFileView; AUserData: Pointer);
+begin
+  if IsInPath(PDrive(AUserData)^.Path, AFileView.CurrentPath, True, True) then
+    AFileView.UpdatePathAvailability;
+end;
+
 procedure TfrmMain.OnDriveWatcherEvent(EventType: TDriveWatcherEvent; const ADrive: PDrive);
 begin
   // Update disk panel does not work correctly when main
@@ -7407,7 +7436,13 @@ begin
 
   if (FrameLeft = nil) or (FrameRight = nil) then Exit;
 
-  if (EventType = dweDriveRemoved) and Assigned(ADrive) then
+  if (EventType = dweDriveAdded) and Assigned(ADrive) then
+  begin
+    // Refresh tab markers for views whose path is on the new drive,
+    // e.g. a previously unplugged removable drive became available again.
+    ForEachView(@UpdateAvailabilityForViewsUnderPath, ADrive);
+  end
+  else if (EventType = dweDriveRemoved) and Assigned(ADrive) then
   begin
     if IsInPath(ADrive^.Path, ActiveFrame.CurrentPath, True, True) then
       ActiveFrame.CurrentPath:= GetHomeDir

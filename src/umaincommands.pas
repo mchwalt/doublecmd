@@ -902,6 +902,11 @@ begin
       end
       else
       begin
+        if FileIsLinkToFolder(aFile.FullPath, NewPath) then
+        begin
+          TargetPage.FileView.AddFileSource(SourcePage.FileView.FileSource, NewPath);
+        end
+        else
         // Change file source, if the file under cursor can be opened as another file source.
         try
           if not ChooseFileSource(TargetPage.FileView, SourcePage.FileView.FileSource, aFile) then
@@ -3605,20 +3610,8 @@ begin
 end;
 
 procedure TMainCommands.cm_SyncDirs(const Params: array of string);
-var
-  OperationType: TFileSourceOperationType;
 begin
-  with frmMain do
-  begin
-    if GetCopyOperationType(FrameLeft.FileSource, FrameRight.FileSource, OperationType) or
-       GetCopyOperationType(FrameRight.FileSource, FrameLeft.FileSource, OperationType) then
-    begin
-      ShowSyncDirsDlg(FrameLeft, FrameRight);
-    end
-    else begin
-      msgWarning(rsMsgErrNotSupported);
-    end;
-  end;
+  ShowSyncDirsDlg(frmMain.FrameLeft, frmMain.FrameRight);
 end;
 
 //------------------------------------------------------
