@@ -10,10 +10,33 @@ fork revision counter.
 
 ## [Unreleased]
 
+## [1.3.0-tc.8] - 2026-09-04
+
+### Added
+- The TC look-alike toolbar now comes ready to use: `default/default.bar` (Total
+  Commander `[Buttonbar]` format, 16 commands + 7 separators) is dropped into a fresh
+  config and imported by DC on first run - no manual toolbar setup any more.
+- Bundled Silk toolbar icons (famfamfam, CC BY 2.5) under `pixmaps/silk/`, referenced via
+  `%COMMANDER_PATH%`. The toolbar no longer depends on a local, proprietary
+  `C:\totalcmd\WCMICONS.DLL`, so the config is portable between machines.
+
 ### Changed
+- Synchronize Directories dialog uses the colorblind-safe Okabe-Ito palette instead of
+  red/green: orange = copy to right, blue = copy to left (sky blue on dark backgrounds),
+  violet = different. Light and dark theme, compiled defaults plus `default/colors.json`.
 - Shell icon overlays now shown by default (`gIconOverlays`, Configuration > Icons,
   "Show overlay icons"). Picks up the same Windows shell overlay handlers Explorer uses,
   e.g. TortoiseGit/TortoiseSVN status badges and OneDrive markers.
+
+### Fixed
+- German menu entry "Verzeichnisse s&ynchronisieren" got its missing mnemonic back.
+
+### Internal
+- Merged upstream Double Commander up to `12fe40c33` (128 commits, conflict-free, 107
+  files): new icon-theme unit, reworked Synchronize Directories dialog, MultiArchive/7z
+  copy fixes. Upstream detail in [`doc/changelog.txt`](doc/changelog.txt).
+- Build wrappers `build-dc.ps1`/`build-dc.cmd` (LAZARUS_HOME 8.3 short path + auto-retry
+  on flaky FPC internal compiler errors) and Linux/cross-platform build notes.
 
 ## [1.3.0-tc.7] - 2026-06-27
 
