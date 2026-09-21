@@ -77,6 +77,7 @@ type
     RightColor,
     UnknownColor,
     SelectedColor: TColor;
+    DirSelectedColor: TColor;
   end;
   PSyncDirsColors = ^TSyncDirsColors;
 
@@ -298,6 +299,7 @@ begin
     RightColor:= RGBToColor(  0, 114, 178); // blue    #0072B2 -> copy to left
     UnknownColor:= RGBToColor(204, 121, 167); // violet  #CC79A7 -> not equal
     SelectedColor:= clHighlight;
+    DirSelectedColor:= clGreen;
   end;
   with FColors[0].Viewer do
   begin
@@ -549,6 +551,7 @@ begin
     Group.Add('RightColor', ColorTheme.SyncDirs.RightColor);
     Group.Add('UnknownColor', ColorTheme.SyncDirs.UnknownColor);
     Group.Add('SelectedColor', ColorTheme.SyncDirs.SelectedColor);
+    Group.Add('DirSelectedColor', ColorTheme.SyncDirs.DirSelectedColor);
 
     Group:= TJSONObject.Create;
     Theme.Add('Viewer', Group);
@@ -663,6 +666,7 @@ begin
         RightColor:= Group.Get('RightColor', RightColor);
         UnknownColor:= Group.Get('UnknownColor', UnknownColor);
         SelectedColor:= Group.Get('SelectedColor', SelectedColor);
+        DirSelectedColor:= Group.Get('DirSelectedColor', DirSelectedColor);
       end;
       Group:= Theme.Get('Viewer', Empty);
       with ColorTheme.Viewer do

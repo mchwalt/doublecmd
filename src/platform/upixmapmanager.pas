@@ -912,7 +912,7 @@ const
   mime_generic_icons = 'generic-icons';
   pixmaps_cache = 'pixmaps.cache';
   cache_signature: DWord = $44435043; // 'DCPC'
-  cache_version: DWord = 1;
+  cache_version: DWord = 2;
 var
   I, J, K: Integer;
   mTime: TFileTime;
@@ -922,7 +922,7 @@ var
   node: THTDataNode = nil;
   cache: TFileStreamEx = nil;
   EntriesCount, IconsCount: Cardinal;
-  GlobalMime: String = '/usr/share/mime/';
+  SystemMimeDirs: TDynamicStringArray;
   sMimeType, sMimeIconName, sExtension: String;
 
   procedure LoadGlobs(const APath: String);
@@ -963,12 +963,14 @@ var
            (globs.Strings[I][1] <> '#') then // and comments
         begin
           sMimeType := globs.Names[I];
-          sExtension:= ExtractFileExt(globs.ValueFromIndex[I]);
+          sExtension:= globs.ValueFromIndex[I];
 
-          // Support only extensions, not full file name masks.
-          if (sExtension <> '') and (sExtension <> '.*') then
+          // Only plain "*.ext" masks are supported,
+          // other patterns are ignored (like "*.kcrash.txt", "Makefile" etc).
+          if (Length(sExtension) > 2) and (sExtension[1] = '*') and (sExtension[2] = '.') and
+             (LastDelimiter('.*?[', Copy(sExtension, 3, MaxInt)) = 0) then
           begin
-            Delete(sExtension, 1, 1);
+            Delete(sExtension, 1, 2);
 
             node := THTDataNode(FExtToMimeIconName.Find(sExtension));
             if Assigned(node) then
@@ -1022,9 +1024,15 @@ var
 
 begin
   LocalMime:= IncludeTrailingBackslash(GetUserDataDir) + 'mime/';
+  // Respect $XDG_DATA_DIRS instead of hardcoding '/usr/share/mime/'
+  SystemMimeDirs:= GetSystemDataDirs;
 
-  mTime:= Max(mbFileAge(LocalMime + mime_globs),
-              mbFileAge(GlobalMime + mime_globs));
+  mTime:= mbFileAge(LocalMime + mime_globs);
+  for K:= Low(SystemMimeDirs) to High(SystemMimeDirs) do
+  begin
+    SystemMimeDirs[K]:= IncludeTrailingBackslash(SystemMimeDirs[K]) + 'mime/';
+    mTime:= Max(mTime, mbFileAge(SystemMimeDirs[K] + mime_globs));
+  end;
 
   // Try to load from cache.
   if (mbFileAge(gpCfgDir + pixmaps_cache) = mTime) and
@@ -1065,7 +1073,8 @@ begin
 
   EntriesCount := 0;
   LoadGlobs(LocalMime);
-  LoadGlobs(GlobalMime);
+  for K:= Low(SystemMimeDirs) to High(SystemMimeDirs) do
+    LoadGlobs(SystemMimeDirs[K]);
 
   // save to cache
   if EntriesCount > 0 then

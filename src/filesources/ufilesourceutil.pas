@@ -39,7 +39,13 @@ procedure SetFileSystemPath(aFileView: TFileView; aPath: String);
 function RenameFile(aFileSource: IFileSource; const aFile: TFile;
                     const NewFileName: String; Interactive: Boolean; Reload: Boolean): TSetFilePropertyResult;
 
-function CreateDirectoryEx(const fs: IFileSource; const path: String): Boolean;
+function CreateDirectoryFromFile(
+  const targetFS: IFileSource;
+  const targetPath: String;
+  const sourceFS: IFileSource;
+  const sourceFile: TFile ): Boolean;
+
+function CreateDirectory(const fs: IFileSource; const path: String): Boolean;
 
 function FileExists(const fs: IFileSource; const path: String): Boolean; overload;
 function DirectoryExists(const fs: IFileSource; const path: String): Boolean; overload;
@@ -50,7 +56,8 @@ function isCompatibleFileSourceForCopyOperation( fs1: IFileSource; fs2: IFileSou
 implementation
 
 uses
-  LCLProc, fFileExecuteYourSelf, uGlobs, uShellExecute, uFindEx, uDebug,
+  LCLProc, FileUtil,
+  fFileExecuteYourSelf, uGlobs, uShellExecute, uFindEx, uDebug,
   uOSUtils, uShowMsg, uLng, uVfsModule, DCOSUtils, DCStrUtils, uFileProcs,
   uFileSourceManager,
   uFileSourceOperation,
@@ -58,6 +65,7 @@ uses
   uVfsFileSource,
   uFileSourceProperty,
   uFileSystemFileSource,
+  uFileSystemUtil,
   uWfxPluginFileSource,
   uArchiveFileSourceUtil,
   uFileSourceOperationMessageBoxesUI,
@@ -435,36 +443,87 @@ begin
   end;
 end;
 
-// for FileSources that don't support CreateDirectory(), try CreateCopyInOperation
-function CreateDirectoryEx(const fs: IFileSource; const path: String): Boolean;
+
+procedure internalCopyAttrToFile(const path: String; const templateFile: TFile);
+begin
+  if templateFile.AttributesProperty.IsNativeAttributes then
+    mbFileSetAttr( path, templateFile.Attributes );
+  FileSetTime( path, templateFile );
+end;
+
+function internalCreateDirByCopyInOperationFromFile(
+  const targetFS: IFileSource;
+  const targetPath: String;
+  const templateFile: TFile ): Boolean;
 var
   files: TFiles = nil;
   operation: TFileSourceOperation = nil;
   tempDir: String;
   tempPath: String;
 begin
-  Result:= fs.CreateDirectory(path);
-  if Result then
+  tempDir:= GetTempName( GetTempFolderDeletableAtTheEnd, EmptyStr );
+  tempPath:= tempDir + PathDelim + GetLastDir(targetPath);
+  Result:= mbForceDirectory( tempPath );
+  if NOT Result then
     Exit;
 
-  tempDir:= GetTempName(GetTempFolderDeletableAtTheEnd, EmptyStr);
-  tempPath:= tempDir + path;
-  if not mbForceDirectory(tempPath) then
-    Exit;
+  if Assigned(templateFile) then
+    internalCopyAttrToFile( tempPath, templateFile );
 
   try
     files:= TFiles.Create(tempDir);
     files.Add(TFileSystemFileSource.CreateFileFromFile(tempPath));
-    operation:= fs.CreateCopyInOperation(
+    operation:= targetFS.CreateCopyInOperation(
       TFileSystemFileSource.GetFileSource,
       files,
-      PathDelim);
+      GetParentDir(targetPath));
     operation.Execute;
-    DelTree(tempDir);
   finally
     files.Free;
     operation.Free;
+    DeleteDirectory(tempDir, False);
   end;
+end;
+
+function internalCreateDirDirectlyFromFile(
+  const targetFS: IFileSource;
+  const targetPath: String;
+  const sourceFS: IFileSource;
+  const sourceFile: TFile ): Boolean;
+var
+  realPath: String;
+begin
+  Result:= targetFS.CreateDirectory( targetPath );
+  if NOT Result then
+    Exit;
+  realPath:= targetFS.GetRealPath( targetPath );
+  if fspDirectAccess in sourceFS.Properties then
+    mbFileCopyAttr( sourceFile.FullPath, realPath, CopyAttributesOptionCopyAll )
+  else
+    internalCopyAttrToFile( realPath, sourceFile );
+end;
+
+function CreateDirectoryFromFile(
+  const targetFS: IFileSource;
+  const targetPath: String;
+  const sourceFS: IFileSource;
+  const sourceFile: TFile ): Boolean;
+begin
+  if fspDirectAccess in targetFS.Properties then
+    Result:= internalCreateDirDirectlyFromFile( targetFS, targetPath, sourceFS, sourceFile )
+  else
+    Result:= internalCreateDirByCopyInOperationFromFile( targetFS, targetPath, sourceFile );
+end;
+
+
+// for FileSources that don't support CreateDirectory(), try CreateCopyInOperation
+function CreateDirectory(const fs: IFileSource; const path: String): Boolean;
+begin
+  Result:= fs.CreateDirectory(path);
+  if Result then
+    Exit;
+
+  internalCreateDirByCopyInOperationFromFile(fs, path, nil);
 end;
 
 function FileExists(const fs: IFileSource; const path: String): Boolean;
