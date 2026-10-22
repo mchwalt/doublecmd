@@ -10,6 +10,13 @@ fork revision counter.
 
 ## [Unreleased]
 
+## [1.3.0-tc.10] - 2026-10-22
+
+### Changed
+- Synchronize Directories colors are back to the Double Commander defaults (red/green/
+  blue, green directory selection). Reverts the Okabe-Ito palette from tc.8 and the
+  yellow directory selection from tc.9: violet text on the blue selection bar was unreadable.
+
 ## [1.3.0-tc.9] - 2026-10-22
 
 ### Added (via upstream merge)
