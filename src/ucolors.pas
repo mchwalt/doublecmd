@@ -299,7 +299,7 @@ begin
     RightColor:= RGBToColor(  0, 114, 178); // blue    #0072B2 -> copy to left
     UnknownColor:= RGBToColor(204, 121, 167); // violet  #CC79A7 -> not equal
     SelectedColor:= clHighlight;
-    DirSelectedColor:= clGreen;
+    DirSelectedColor:= RGBToColor(240, 228,  66); // yellow  #F0E442 -> selected dir (not green)
   end;
   with FColors[0].Viewer do
   begin
@@ -367,6 +367,7 @@ begin
     LeftColor:= RGBToColor(230, 159,   0); // orange   #E69F00 -> copy to right
     RightColor:= RGBToColor( 86, 180, 233); // sky blue #56B4E9 -> copy to left
     UnknownColor:= RGBToColor(204, 121, 167); // violet   #CC79A7 -> not equal
+    DirSelectedColor:= RGBToColor(128, 108,   0); // dark yellow #806C00 -> selected dir
   end;
   with FColors[1].ProgressColors do
   begin

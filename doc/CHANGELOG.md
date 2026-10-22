@@ -19,6 +19,11 @@ fork revision counter.
   dialog, done in a single pass; multi-level directory creation (e.g. sync to FTP).
 - Search dialog: "Add to Stash" for search results.
 
+### Changed
+- Synchronize Directories: the new upstream "Directory Selection" color (selected
+  directory row) is yellow #F0E442 (dark theme: #806C00) instead of green, matching
+  the colorblind-safe Okabe-Ito palette and keeping the bold row text readable.
+
 ### Internal
 - Merged upstream Double Commander up to `cb7921913` (162 commits incl. v1.2.9,
   conflict-free, 104 files): SyncDirs model/service split, Swedish translations, fixes

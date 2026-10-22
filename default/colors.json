@@ -34,7 +34,8 @@
         LeftColor : 40934,
         RightColor : 11694592,
         UnknownColor : 10975692,
-        SelectedColor : -2147483635
+        SelectedColor : -2147483635,
+        DirSelectedColor : 4384240
       },
       Viewer : {
         ImageBackColor1 : -2147483643,
@@ -1741,7 +1742,8 @@
         LeftColor : 40934,
         RightColor : 15316054,
         UnknownColor : 10975692,
-        SelectedColor : -2147483635
+        SelectedColor : -2147483635,
+        DirSelectedColor : 27776
       },
       Viewer : {
         ImageBackColor1 : -2147483643,
