@@ -10,6 +10,20 @@ fork revision counter.
 
 ## [Unreleased]
 
+## [1.3.0-tc.9] - 2026-10-22
+
+### Added (via upstream merge)
+- Synchronize Directories: "Copy file properties" from the popup menu, with selectable
+  properties, UAC support and Ignore/Abort on errors.
+- Synchronize Directories: "Delete all empty directories" option in the sync confirm
+  dialog, done in a single pass; multi-level directory creation (e.g. sync to FTP).
+- Search dialog: "Add to Stash" for search results.
+
+### Internal
+- Merged upstream Double Commander up to `cb7921913` (162 commits incl. v1.2.9,
+  conflict-free, 104 files): SyncDirs model/service split, Swedish translations, fixes
+  for multi-file drag & drop and Brief View cursor in archives. Detail in [`changelog.txt`](changelog.txt).
+
 ## [1.3.0-tc.8] - 2026-09-04
 
 ### Added
