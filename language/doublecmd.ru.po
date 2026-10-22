@@ -1523,6 +1523,11 @@ msgstr "ИД процесса"
 msgid "Executable Path"
 msgstr "Исполняемый файл"
 
+#: tfrmfinddlg.actaddtostash.caption
+msgctxt "tfrmfinddlg.actaddtostash.caption"
+msgid "Add to Stash"
+msgstr "Добавить в хранилище"
+
 #: tfrmfinddlg.actcancel.caption
 msgctxt "tfrmfinddlg.actcancel.caption"
 msgid "C&ancel"
@@ -2086,6 +2091,7 @@ msgid "Add Plugin"
 msgstr "Добавить плагин"
 
 #: tfrmmain.actaddtostash.caption
+msgctxt "tfrmmain.actaddtostash.caption"
 msgid "Add to Stash"
 msgstr "Добавить в хранилище"
 
@@ -4381,6 +4387,10 @@ msgstr "Категория:"
 #: tfrmoptionscolors.lbldeleted.caption
 msgid "Deleted:"
 msgstr "Удалено:"
+
+#: tfrmoptionscolors.lbldirselection.caption
+msgid "Directory Selection:"
+msgstr "Выделение каталога:"
 
 #: tfrmoptionscolors.lblerror.caption
 msgid "Error:"
@@ -9202,6 +9212,14 @@ msgctxt "TFRMSYMLINK.LBLLINKTOCREATE.CAPTION"
 msgid "&Link name"
 msgstr "&Имя ссылки"
 
+#: tfrmsyncdirsdlg.actcopypropertieslefttoright.caption
+msgid "Copy file properties -> (left to right)..."
+msgstr ""
+
+#: tfrmsyncdirsdlg.actcopypropertiesrighttoleft.caption
+msgid "Copy file properties <- (right to left)..."
+msgstr ""
+
 #: tfrmsyncdirsdlg.actdeleteboth.caption
 msgid "Delete on both sides"
 msgstr "Удалить с обеих сторон"
@@ -9399,6 +9417,39 @@ msgstr "Синхронизировать"
 #: tfrmsyncdirsperformdlg.chkconfirmoverwrites.caption
 msgid "Confirm overwrites"
 msgstr "Подтвердить замену"
+
+#: tfrmsyncdirsperformdlg.chkdeleteleftallemptydirs.caption
+msgid "Left: Delete all empty directories"
+msgstr ""
+
+#: tfrmsyncdirsperformdlg.chkdeleterightallemptydirs.caption
+msgctxt "tfrmsyncdirsperformdlg.chkdeleterightallemptydirs.caption"
+msgid "Right: Delete all empty directories"
+msgstr ""
+
+#: tfrmsyncdirsperformdlg.chkverify.caption
+msgid "Verify"
+msgstr "Проверить после завершения"
+
+#: tfrmsyncdirsselectpropertiesdlg.chkattributes.caption
+msgid "File &attributes"
+msgstr ""
+
+#: tfrmsyncdirsselectpropertiesdlg.chkpermissions.caption
+msgid "&Permissions /  Ownership"
+msgstr ""
+
+#: tfrmsyncdirsselectpropertiesdlg.chktime.caption
+msgid "&Timestamp (date+time)"
+msgstr ""
+
+#: tfrmsyncdirsselectpropertiesdlg.chkxattributes.caption
+msgid "&Extended attributes"
+msgstr ""
+
+#: tfrmsyncdirsselectpropertiesdlg.lbllabel.caption
+msgid "Copy these file properties:"
+msgstr ""
 
 #: tfrmtreeviewmenu.caption
 msgctxt "tfrmtreeviewmenu.caption"

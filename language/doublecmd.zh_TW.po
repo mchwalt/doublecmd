@@ -20,12 +20,12 @@ msgstr "正在比較... %d%% (按下 ESC 鍵可取消)"
 #: fsyncdirsdlg.rsdeleteleft
 #, object-pascal-format
 msgid "Left: Delete %d file(s)"
-msgstr "左邊: 刪除 %d個檔案"
+msgstr "左邊: 刪除 %d 個檔案"
 
 #: fsyncdirsdlg.rsdeleteright
 #, object-pascal-format
 msgid "Right: Delete %d file(s)"
-msgstr "右邊: 刪除 %d個檔案"
+msgstr "右邊: 刪除 %d 個檔案"
 
 #: fsyncdirsdlg.rsfilesfound
 #, object-pascal-format
@@ -1523,6 +1523,11 @@ msgstr "行程 ID"
 msgid "Executable Path"
 msgstr "可執行檔案路徑"
 
+#: tfrmfinddlg.actaddtostash.caption
+msgctxt "tfrmfinddlg.actaddtostash.caption"
+msgid "Add to Stash"
+msgstr "添加至暫存區"
+
 #: tfrmfinddlg.actcancel.caption
 msgctxt "tfrmfinddlg.actcancel.caption"
 msgid "C&ancel"
@@ -2083,6 +2088,7 @@ msgid "Add Plugin"
 msgstr "添加插件"
 
 #: tfrmmain.actaddtostash.caption
+msgctxt "tfrmmain.actaddtostash.caption"
 msgid "Add to Stash"
 msgstr "添加至暫存區"
 
@@ -3486,7 +3492,7 @@ msgstr "建立新資料夾"
 
 #: tfrmmkdir.cbextended.caption
 msgid "&Extended syntax"
-msgstr ""
+msgstr "擴展語法 (&E)"
 
 #: tfrmmkdir.lblmakedir.caption
 msgid "&Input new directory name:"
@@ -4375,6 +4381,10 @@ msgstr "類別:"
 msgid "Deleted:"
 msgstr "已刪除:"
 
+#: tfrmoptionscolors.lbldirselection.caption
+msgid "Directory Selection:"
+msgstr "資料夾被選中時:"
+
 #: tfrmoptionscolors.lblerror.caption
 msgid "Error:"
 msgstr "錯誤:"
@@ -4425,7 +4435,7 @@ msgstr "右邊:"
 #: tfrmoptionscolors.lblselection.caption
 msgctxt "tfrmoptionscolors.lblselection.caption"
 msgid "Selection:"
-msgstr "選擇:"
+msgstr "檔案被選中時:"
 
 #: tfrmoptionscolors.lblsuccess.caption
 msgctxt "tfrmoptionscolors.lblsuccess.caption"
@@ -5199,7 +5209,7 @@ msgstr ""
 #: tfrmoptionsdirectoryhotlist.btnsort.caption
 msgctxt "tfrmoptionsdirectoryhotlist.btnsort.caption"
 msgid "&Sort..."
-msgstr ""
+msgstr "排序 (&S)..."
 
 #: tfrmoptionsdirectoryhotlist.cbaddtarget.caption
 msgid "&When adding directory, add also target"
@@ -5235,7 +5245,7 @@ msgstr ""
 #: tfrmoptionsdirectoryhotlist.gbhotlistotheroptions.caption
 msgctxt "tfrmoptionsdirectoryhotlist.gbhotlistotheroptions.caption"
 msgid "Other options"
-msgstr ""
+msgstr "其他選項"
 
 #: tfrmoptionsdirectoryhotlist.lbledithotdirname.editlabel.caption
 msgctxt "tfrmoptionsdirectoryhotlist.lbledithotdirname.editlabel.caption"
@@ -5645,21 +5655,21 @@ msgstr "開 (&N)"
 #: tfrmoptionsfavoritetabs.btnadd.caption
 msgctxt "tfrmoptionsfavoritetabs.btnadd.caption"
 msgid "Add..."
-msgstr ""
+msgstr "新增..."
 
 #: tfrmoptionsfavoritetabs.btndelete.caption
 msgctxt "tfrmoptionsfavoritetabs.btndelete.caption"
 msgid "Delete..."
-msgstr ""
+msgstr "刪除..."
 
 #: tfrmoptionsfavoritetabs.btnimportexport.caption
 msgid "Import/Export"
-msgstr ""
+msgstr "導入/導出"
 
 #: tfrmoptionsfavoritetabs.btninsert.caption
 msgctxt "tfrmoptionsfavoritetabs.btninsert.caption"
 msgid "Insert..."
-msgstr ""
+msgstr "插入..."
 
 #: tfrmoptionsfavoritetabs.btnrename.caption
 msgctxt "tfrmoptionsfavoritetabs.btnrename.caption"
@@ -5669,7 +5679,7 @@ msgstr "重新命名"
 #: tfrmoptionsfavoritetabs.btnsort.caption
 msgctxt "tfrmoptionsfavoritetabs.btnsort.caption"
 msgid "Sort..."
-msgstr ""
+msgstr "排序..."
 
 #: tfrmoptionsfavoritetabs.cbexistingtabstokeep.text
 msgctxt "tfrmoptionsfavoritetabs.cbexistingtabstokeep.text"
@@ -5679,7 +5689,7 @@ msgstr ""
 #: tfrmoptionsfavoritetabs.cbfullexpandtree.caption
 msgctxt "tfrmoptionsfavoritetabs.cbfullexpandtree.caption"
 msgid "Always expand tree"
-msgstr ""
+msgstr "始終擴展樹"
 
 #: tfrmoptionsfavoritetabs.cbsavedirhistory.text
 msgctxt "tfrmoptionsfavoritetabs.cbsavedirhistory.text"
@@ -5703,7 +5713,7 @@ msgstr "「我的最愛」分页清單（可通过拖曳重新排序）"
 #: tfrmoptionsfavoritetabs.gbfavoritetabsotheroptions.caption
 msgctxt "tfrmoptionsfavoritetabs.gbfavoritetabsotheroptions.caption"
 msgid "Other options"
-msgstr ""
+msgstr "其他選項"
 
 #: tfrmoptionsfavoritetabs.gpsavedtabsrestorationaction.caption
 msgid "What to restore where for the selected entry:"
@@ -7543,7 +7553,7 @@ msgstr "搜尋下列項目"
 
 #: tfrmoptionstabs.cbkeeprenamednamebacktonormal.caption
 msgid "Keep renamed name when unlocking a tab"
-msgstr ""
+msgstr "解鎖分頁時保留重新命名後的名稱"
 
 #: tfrmoptionstabs.cbtabsactivateonclick.caption
 msgctxt "TFRMOPTIONSTABS.CBTABSACTIVATEONCLICK.CAPTION"
@@ -7557,7 +7567,7 @@ msgstr "總是顯示分頁 (&S)"
 
 #: tfrmoptionstabs.cbtabscloseduplicatewhenclosing.caption
 msgid "Close duplicate tabs when closing application"
-msgstr ""
+msgstr "關閉應用程式時，也關閉重複的標籤頁"
 
 #: tfrmoptionstabs.cbtabsconfirmcloseall.caption
 msgctxt "TFRMOPTIONSTABS.CBTABSCONFIRMCLOSEALL.CAPTION"
@@ -7566,7 +7576,7 @@ msgstr "關閉所有分頁時需確認 (&F)"
 
 #: tfrmoptionstabs.cbtabsconfirmcloselocked.caption
 msgid "Confirm close locked tabs"
-msgstr ""
+msgstr "確認關閉已鎖定的分頁"
 
 #: tfrmoptionstabs.cbtabslimitoption.caption
 msgctxt "TFRMOPTIONSTABS.CBTABSLIMITOPTION.CAPTION"
@@ -7595,7 +7605,7 @@ msgstr "開啟新分頁於目前分頁旁邊 (&N)"
 
 #: tfrmoptionstabs.cbtabsreusetabwhenpossible.caption
 msgid "Reuse existing tab when possible"
-msgstr ""
+msgstr "盡可能複用現有分頁"
 
 #: tfrmoptionstabs.cbtabsshowclosebutton.caption
 msgctxt "TFRMOPTIONSTABS.CBTABSSHOWCLOSEBUTTON.CAPTION"
@@ -7604,11 +7614,11 @@ msgstr "顯示分頁關閉按鈕 (&B)"
 
 #: tfrmoptionstabs.cbtabsshowdriveletter.caption
 msgid "Always show drive letter in tab title"
-msgstr ""
+msgstr "始終在標題中顯示磁碟符"
 
 #: tfrmoptionstabs.cbtabsunavailablemarker.caption
 msgid "Mark unavailable path in tab title with &a question mark ?"
-msgstr ""
+msgstr "在標題中用問號「?」標記不可用的路徑"
 
 #: tfrmoptionstabs.gbtabs.caption
 msgctxt "TFRMOPTIONSTABS.GBTABS.CAPTION"
@@ -7622,7 +7632,7 @@ msgstr "字元"
 
 #: tfrmoptionstabs.lbltabsactionondoubleclick.caption
 msgid "Action to do when double click on a tab:"
-msgstr ""
+msgstr "雙擊選分頁時執行:"
 
 #: tfrmoptionstabs.lbltabsposition.caption
 msgctxt "TFRMOPTIONSTABS.LBLTABSPOSITION.CAPTION"
@@ -9200,6 +9210,14 @@ msgctxt "TFRMSYMLINK.LBLLINKTOCREATE.CAPTION"
 msgid "&Link name"
 msgstr "連結名稱 (&L)"
 
+#: tfrmsyncdirsdlg.actcopypropertieslefttoright.caption
+msgid "Copy file properties -> (left to right)..."
+msgstr "複製檔案內容 -> (從左到右)"
+
+#: tfrmsyncdirsdlg.actcopypropertiesrighttoleft.caption
+msgid "Copy file properties <- (right to left)..."
+msgstr "複製檔案內容 <- (從右到左)"
+
 #: tfrmsyncdirsdlg.actdeleteboth.caption
 msgid "Delete on both sides"
 msgstr "兩側均刪除"
@@ -9397,6 +9415,39 @@ msgstr "同步"
 msgid "Confirm overwrites"
 msgstr "確認覆蓋"
 
+#: tfrmsyncdirsperformdlg.chkdeleteleftallemptydirs.caption
+msgid "Left: Delete all empty directories"
+msgstr "左邊: 刪除所有空白資料夾"
+
+#: tfrmsyncdirsperformdlg.chkdeleterightallemptydirs.caption
+msgctxt "tfrmsyncdirsperformdlg.chkdeleterightallemptydirs.caption"
+msgid "Right: Delete all empty directories"
+msgstr "右邊: 刪除所有空白資料夾"
+
+#: tfrmsyncdirsperformdlg.chkverify.caption
+msgid "Verify"
+msgstr "校驗"
+
+#: tfrmsyncdirsselectpropertiesdlg.chkattributes.caption
+msgid "File &attributes"
+msgstr "檔案屬性 (&A)"
+
+#: tfrmsyncdirsselectpropertiesdlg.chkpermissions.caption
+msgid "&Permissions /  Ownership"
+msgstr "權限/擁有者 (&P)"
+
+#: tfrmsyncdirsselectpropertiesdlg.chktime.caption
+msgid "&Timestamp (date+time)"
+msgstr "日期時間 (&T)"
+
+#: tfrmsyncdirsselectpropertiesdlg.chkxattributes.caption
+msgid "&Extended attributes"
+msgstr "擴展屬性 (&E)"
+
+#: tfrmsyncdirsselectpropertiesdlg.lbllabel.caption
+msgid "Copy these file properties:"
+msgstr "複製以下檔案內容:"
+
 #: tfrmtreeviewmenu.caption
 msgctxt "tfrmtreeviewmenu.caption"
 msgid "Tree View Menu"
@@ -9404,19 +9455,19 @@ msgstr "樹形檢視選單"
 
 #: tfrmtreeviewmenu.lblsearchingentry.caption
 msgid "Select your hot directory:"
-msgstr ""
+msgstr "選擇常用資料夾:"
 
 #: tfrmtreeviewmenu.pmicasesensitive.caption
 msgid "Search is case sensitive"
-msgstr ""
+msgstr "搜尋時區分大小寫"
 
 #: tfrmtreeviewmenu.pmifullcollapse.caption
 msgid "Full collapse"
-msgstr ""
+msgstr "完全摺疊"
 
 #: tfrmtreeviewmenu.pmifullexpand.caption
 msgid "Full expand"
-msgstr ""
+msgstr "完全展開"
 
 #: tfrmtreeviewmenu.pmiignoreaccents.caption
 msgid "Search ignore accents and ligatures"
@@ -9424,23 +9475,23 @@ msgstr "搜尋時忽略變音符號和連字"
 
 #: tfrmtreeviewmenu.pminotcasesensitive.caption
 msgid "Search is not case sensitive"
-msgstr ""
+msgstr "搜尋時不區分大小寫"
 
 #: tfrmtreeviewmenu.pminotignoreaccents.caption
 msgid "Search is strict regarding accents and ligatures"
-msgstr ""
+msgstr "搜尋時區分重音和連字"
 
 #: tfrmtreeviewmenu.pminotshowwholebranchifmatch.caption
 msgid "Don't show the branch content \"just\" because the searched string is found in the branche name"
-msgstr ""
+msgstr "不顯示分支內容, 因為要搜尋的字串在分支名稱中找到"
 
 #: tfrmtreeviewmenu.pmishowwholebranchifmatch.caption
 msgid "If searched string is found in a branch name, show the whole branch even if elements don't match"
-msgstr ""
+msgstr "如果在分支名稱中找到了搜尋字串，則顯示整個分支即使其中的元素不符"
 
 #: tfrmtreeviewmenu.tbcancelandquit.hint
 msgid "Close Tree View Menu"
-msgstr ""
+msgstr "關閉樹形檢視選單"
 
 #: tfrmtreeviewmenu.tbconfigurationtreeviewmenus.hint
 msgctxt "tfrmtreeviewmenu.tbconfigurationtreeviewmenus.hint"
@@ -11800,12 +11851,12 @@ msgstr "無法複製檔案 %s 到 %s"
 #: ulng.rsmsgerrcannotmovedirectory
 #, object-pascal-format
 msgid "Cannot move directory %s"
-msgstr ""
+msgstr "無法移動資料夾 %s"
 
 #: ulng.rsmsgerrcannotmovefile
 #, object-pascal-format
 msgid "Cannot move file %s"
-msgstr ""
+msgstr "無法移動檔案 %s"
 
 #: ulng.rsmsgerrcreatefiledirectoryexists
 #, object-pascal-format
@@ -11914,12 +11965,12 @@ msgstr "無法替「%s」設置擁有者/群組"
 #: ulng.rsmsgerrsetpermissions
 #, object-pascal-format
 msgid "Can not set permissions for \"%s\""
-msgstr ""
+msgstr "無法替「%s」設置權限"
 
 #: ulng.rsmsgerrsetxattribute
 #, object-pascal-format
 msgid "Can not set extended attributes for \"%s\""
-msgstr ""
+msgstr "無法替「%s」設置擴展屬性"
 
 #: ulng.rsmsgerrsmallbuf
 msgid "Buffer too small"
@@ -12520,12 +12571,12 @@ msgstr "預先配置檔「%s」已存在。是否要覆蓋?"
 #: ulng.rsmsgpresetconfigdelete
 #, object-pascal-format
 msgid "Are you sure you want to delete preset \"%s\"?"
-msgstr ""
+msgstr "您確定要刪除預設「%s」嗎？"
 
 #: ulng.rsmsgproblemexecutingcommand
 #, object-pascal-format
 msgid "Problem executing command (%s)"
-msgstr ""
+msgstr "執行指令「%s」時出錯"
 
 #: ulng.rsmsgprocessid
 #, object-pascal-format
@@ -12538,15 +12589,15 @@ msgstr ""
 
 #: ulng.rsmsgprovidethisfile
 msgid "Please, make this file available. Retry?"
-msgstr ""
+msgstr "請確認此檔案可用。重試？"
 
 #: ulng.rsmsgrenamefavtabs
 msgid "Enter new friendly name for this Favorite Tabs"
-msgstr ""
+msgstr "為此「我的最愛」輸入新的友善名稱"
 
 #: ulng.rsmsgrenamefavtabsmenu
 msgid "Enter new name for this menu"
-msgstr ""
+msgstr "為此選單輸入新名稱"
 
 #: ulng.rsmsgrenfldr
 #, object-pascal-format
@@ -12560,7 +12611,7 @@ msgstr "你確定要重新命名/移動所選擇的「%s」嗎?"
 
 #: ulng.rsmsgreplacethistext
 msgid "Do you want to replace this text?"
-msgstr ""
+msgstr "你確定要替換這些文字？"
 
 #: ulng.rsmsgrestartforapplychanges
 msgid "Please, restart Double Commander in order to apply changes"
@@ -12569,12 +12620,12 @@ msgstr "請重新啟動 Double Commander 以套用變更"
 #: ulng.rsmsgscriptcantfindlibrary
 #, object-pascal-format
 msgid "ERROR: Problem loading Lua library file \"%s\""
-msgstr ""
+msgstr "錯誤：載入 Lua 庫檔案「%s」時出錯"
 
 #: ulng.rsmsgsekectfiletype
 #, object-pascal-format
 msgid "Select to which file type to add extension \"%s\""
-msgstr ""
+msgstr "選擇要新增副檔名「%s」的檔案類型"
 
 #: ulng.rsmsgselectedinfo
 #, object-pascal-format
@@ -12583,7 +12634,7 @@ msgstr "選擇: %s / %sB  |  檔案: %d / %d  |  資料夾: %d / %d"
 
 #: ulng.rsmsgselectexecutablefile
 msgid "Select executable file for"
-msgstr ""
+msgstr "選擇可執行檔案"
 
 #: ulng.rsmsgselectonlychecksumfiles
 msgid "Please select only checksum files!"
