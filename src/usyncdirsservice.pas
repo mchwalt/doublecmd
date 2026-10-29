@@ -41,8 +41,6 @@ type
 
   TDoubleFiles = array [TDoubleSide] of TFiles;
 
-  TDoubleInteger = array [TDoubleSide] of Integer;
-
   { TSyncDirsOperationHandle }
 
   TSyncDirsOperationHandle = procedure ( const operation: TFileSourceOperation; const state: TFileSourceOperationState ) is nested;
@@ -143,7 +141,7 @@ type
     _fileSources: TDoubleFileSources;
   public
     constructor Create( const callback: ISyncDirsCommonCallback; const fileProcessor: ISyncDirsFileProcessorWithUI; const filteredList: TFlatDirFileList; const fileSources: TDoubleFileSources );
-    procedure delete( const indexes: TIntegerList; const deleteLeft: Boolean; const deleteRight: Boolean );
+    function delete( const indexes: TIntegerList; const deleteLeft: Boolean; const deleteRight: Boolean ): Boolean;
     function deleteAllEmptyDirs( const side: TDoubleSide ): Boolean;
     procedure copyProperties( const indexes: TIntegerList; const targetSide: TDoubleSide; const attrs: TCopyAttributesOptions);
 
@@ -170,8 +168,8 @@ type
     _basePaths: TDoublePaths;
     _selectedList: TStringListEx;
   private
-    procedure fillSelectedList( const selectedFiles: TDoubleFiles );
-    function isSelectedFile( const f: TFile ): Boolean;
+    procedure fillSelectedList( const fileSources: TDoubleFileSources; const selectedFiles: TDoubleFiles );
+    function isSelectedFile( const fs: IFileSource; const f: TFile ): Boolean;
   public
     constructor Create(
       const callback: ISyncDirsTreeBuilderCallback;
@@ -212,7 +210,7 @@ type
     procedure onCheckContentThreadStart;
     procedure onCheckContentThreadFinish;
     procedure onCheckContentThreadReapplyFilter;
-    procedure onCheckContentThreadCountUpdated( const equalInc: Integer; const notEqInc: Integer );
+    procedure onCheckContentThreadCountUpdated( const totalInc: Integer; const equalInc: Integer; const notEqInc: Integer );
   end;
 
   { TSyncDirsCheckContentThread }
@@ -220,18 +218,17 @@ type
   TSyncDirsCheckContentThread = class( TThread )
   private
     _fullTree: TTwoLevelTree;
+    _filterFlags: TFilterFlags;
     _callback: ISyncDirsCheckContentThreadCallback;
-    _done: Boolean;
     _mutex: TCriticalSection;
     _statistics: TFileSourceCopyOperationStatistics;
   protected
     procedure Execute; override;
     procedure UpdateStatistics(var NewStatistics: TFileSourceCopyOperationStatistics);
   public
-    constructor Create(const fullTree: TTwoLevelTree; const callback: ISyncDirsCheckContentThreadCallback);
+    constructor Create(const fullTree: TTwoLevelTree; const filterFlags: TFilterFlags; const callback: ISyncDirsCheckContentThreadCallback);
     destructor Destroy; override;
     function RetrieveStatistics: TFileSourceCopyOperationStatistics;
-    property Done: Boolean read _done;
   end;
 
 implementation
@@ -678,14 +675,15 @@ begin
   _fileSources:= fileSources;
 end;
 
-procedure TSyncDirsCommonService.delete(
+function TSyncDirsCommonService.delete(
   const indexes: TIntegerList;
   const deleteLeft: Boolean;
-  const deleteRight: Boolean );
+  const deleteRight: Boolean ): Boolean;
 var
   leftFiles: TFiles = nil;
   rightFiles: TFiles = nil;
 begin
+  Result:= True;
   try
     if deleteLeft then
       leftFiles:= TFiles.Create(EmptyStr);
@@ -695,9 +693,9 @@ begin
     _filteredList.deleteAndGetSelected( indexes, leftFiles, rightFiles );
 
     if deleteLeft then
-      _fileProcessor.fileProcessorWithUIDeleteFiles( self.leftFS, leftFiles );
-    if deleteRight then
-      _fileProcessor.fileProcessorWithUIDeleteFiles( self.rightFS, rightFiles );
+      Result:= _fileProcessor.fileProcessorWithUIDeleteFiles( self.leftFS, leftFiles );
+    if Result AND deleteRight then
+      Result:= _fileProcessor.fileProcessorWithUIDeleteFiles( self.rightFS, rightFiles );
   finally
     leftFiles.Free;
     rightFiles.Free;
@@ -779,51 +777,26 @@ end;
 
 { TSyncDirsTreeBuilder }
 
-// for FileSources with mapped names — such as iCloud — using the filename as
-// the index is unsuitable; switching to FullPath instead provides a more
-// consistent and universal approach.
-procedure TSyncDirsTreeBuilder.fillSelectedList( const selectedFiles: TDoubleFiles );
+procedure TSyncDirsTreeBuilder.fillSelectedList( const fileSources: TDoubleFileSources; const selectedFiles: TDoubleFiles );
 var
   side: TDoubleSide;
-  otherSide: TDoubleSide;
   i: Integer;
-  path: String;
   filename: String;
-  baseRealPaths: TDoublePaths;
-  baseRealPathsLength: TDoubleInteger;
-
-  procedure initRealPath( const side: TDoubleSide ); inline;
-  begin
-    baseRealPaths[side]:= IncludeTrailingPathDelimiter( _fileSources[side].GetRealPath(_basePaths[side]) );
-    baseRealPathsLength[side]:= baseRealPaths[side].Length;
-  end;
-
 begin
-  initRealPath( dsLeft );
-  initRealPath( dsRight );
-
   for side:= dsLeft to dsRight do begin
-    if side = dsLeft then
-      otherSide:= dsRight
-    else
-      otherSide:= dsLeft;
     for i:= 0 to selectedFiles[side].Count-1 do begin
-      path:= selectedFiles[side][i].FullPath;
-      _selectedList.Add( path );    // add the path on the side
-      if NOT PathIsInPath(path, baseRealPaths[side]) then
-        continue;
-      filename:= path.Substring( baseRealPathsLength[side] );
-      if filename = EmptyStr then
-        continue;
-      path:= _fileSources[otherSide].GetRealPath( _basePaths[otherSide] + filename );
-      _selectedList.Add( path );    // add the path on the other side
+      filename:= GetSuitableFileName( fileSources[side], selectedFiles[side][i] );
+      _selectedList.Add( filename );
     end;
   end;
 end;
 
-function TSyncDirsTreeBuilder.isSelectedFile( const f: TFile ): Boolean;
+function TSyncDirsTreeBuilder.isSelectedFile( const fs: IFileSource; const f: TFile ): Boolean;
+var
+  filename: String;
 begin
-  Result:= _selectedList.IndexOf(f.FullPath) >= 0;
+  filename:= GetSuitableFileName( fs, f );
+  Result:= _selectedList.IndexOf(filename) >= 0;
 end;
 
 constructor TSyncDirsTreeBuilder.Create(
@@ -876,7 +849,7 @@ procedure TSyncDirsTreeBuilder.build( const FFullTree: TTwoLevelTree; const sele
     files := currentFileSource.GetFiles(dirFullPath);
     if (cfOnlySelected in _compareOption.flags) and (dir=EmptyStr) then begin
       for fileIndex:= files.Count - 1 downto 0 do begin
-        if NOT isSelectedFile(files[fileIndex]) then
+        if NOT isSelectedFile(currentFileSource, files[fileIndex]) then
           files.Delete(fileIndex);
       end;
     end;
@@ -1012,7 +985,7 @@ procedure TSyncDirsTreeBuilder.build( const FFullTree: TTwoLevelTree; const sele
   end;
 
 begin
-  self.fillSelectedList( selectedFiles );
+  self.fillSelectedList( _fileSources, selectedFiles );
   scanDir('', -1, nil, nil);
 end;
 
@@ -1335,6 +1308,9 @@ const
 var
   Buffer1, Buffer2: PByte;
   Statistics: TFileSourceCopyOperationStatistics;
+  totalInc: Integer;
+  equalInc: Integer;
+  notEqualInc: Integer;
 
   function CompareFiles(const FileName1, FileName2: String; Size: Int64): Boolean;
   var
@@ -1377,11 +1353,41 @@ var
     end;
   end;
 
+  procedure initInc;
+  var
+    isEqualSelected: Boolean = False;
+    isUnknowSelected: Boolean = False;
+  begin
+    totalInc:= 0;
+    equalInc:= 0;
+    notEqualInc:= 0;
+
+    if NOT (ffDuplicate in _filterFlags) then
+      Exit;
+
+    if ffEqual in _filterFlags then
+      isEqualSelected:= True;
+    if ffUnknown in _filterFlags then
+      isUnknowSelected:= True;
+
+    if isEqualSelected and isUnknowSelected then begin
+      equalInc:= 1;
+      notEqualInc:= -1;
+    end else if isEqualSelected then begin
+      equalInc:= 1;
+      totalInc:= 1;
+    end else if isUnknowSelected then begin
+      notEqualInc:= -1;
+      totalInc:= -1;
+    end;
+  end;
+
 var
   isEqual: Boolean;
   dirIndex, fileIndex: Integer;
   rec: TSyncRec;
 begin
+  initInc;
   Synchronize(@_callback.onCheckContentThreadStart);
   Buffer1:= GetMem(BUF_LEN);
   Buffer2:= GetMem(BUF_LEN);
@@ -1389,26 +1395,8 @@ begin
     if (Buffer1 = nil) or (Buffer2 = nil) then
       raise EOutOfMemory.Create(SOutOfMemory);
 
-    with _callback do
-    begin
-      Statistics.DoneBytes:= 0;
-      Statistics.TotalBytes:= 0;
-      for dirIndex := 0 to _fullTree.Count - 1 do
-      begin
-        for fileIndex := 0 to _fullTree.dirItem(dirIndex).fileCount - 1 do
-        begin
-          if Terminated then Exit;
-          rec := _fullTree.fileSyncRec(dirIndex, fileIndex);
-          if rec.isFile and (rec.state = srsUnknown) then
-          begin
-            Statistics.TotalBytes+= rec.leftFile.Size;
-          end;
-        end;
-      end;
-      UpdateStatistics(Statistics);
-    end;
-
-    with _callback do
+    Statistics.DoneBytes:= 0;
+    Statistics.TotalBytes:= 0;
     for dirIndex := 0 to _fullTree.Count - 1 do
     begin
       for fileIndex := 0 to _fullTree.dirItem(dirIndex).fileCount - 1 do
@@ -1417,33 +1405,42 @@ begin
         rec := _fullTree.fileSyncRec(dirIndex, fileIndex);
         if rec.isFile and (rec.state = srsUnknown) then
         begin
-          try
-            isEqual:= CompareFiles(rec.leftFile.FullPath, rec.rightFile.FullPath, rec.leftFile.Size);
-            if Terminated then Exit;
-            if isEqual then
-            begin
-              _callback.onCheckContentThreadCountUpdated( 1, -1 );
-              rec.state := srsEqual
-            end
-            else begin
-              if cfAsymmetric in rec.option.flags then begin
-                rec.state := srsCopyToRight;
-              end else begin
-                rec.state := srsNotEq;
-              end;
-            end;
-            if rec.action = srsUnknown then
-            begin
-              rec.action := rec.state;
-            end;
-          except
-            on E: Exception do
-              DCDebug('[SyncDirs::CmpContentThread] ' + E.Message);
-          end;
+          Statistics.TotalBytes+= rec.leftFile.Size;
         end;
       end;
     end;
-    _done := True;
+    UpdateStatistics(Statistics);
+
+    for dirIndex := 0 to _fullTree.Count - 1 do
+    begin
+      for fileIndex := 0 to _fullTree.dirItem(dirIndex).fileCount - 1 do
+      begin
+        if Terminated then
+          Break;
+        rec := _fullTree.fileSyncRec(dirIndex, fileIndex);
+        if rec.isDir then
+          continue;
+        if rec.state <> srsUnknown then
+          continue;
+        try
+          isEqual:= CompareFiles(rec.leftFile.FullPath, rec.rightFile.FullPath, rec.leftFile.Size);
+          if isEqual then begin
+            _callback.onCheckContentThreadCountUpdated( totalInc, equalInc, notEqualInc );
+            rec.state := srsEqual;
+          end else begin
+            if cfAsymmetric in rec.option.flags then
+              rec.state := srsCopyToRight
+            else
+              rec.state := srsNotEq;
+          end;
+          if rec.action = srsUnknown then
+            rec.action := rec.state;
+        except
+          on E: Exception do
+            DCDebug('[SyncDirs::CmpContentThread] ' + E.Message);
+        end;
+      end;
+    end;
     Synchronize(@_callback.onCheckContentThreadReapplyFilter);
   finally
     Synchronize(@_callback.onCheckContentThreadFinish);
@@ -1474,9 +1471,11 @@ end;
 
 constructor TSyncDirsCheckContentThread.Create(
   const fullTree: TTwoLevelTree;
+  const filterFlags: TFilterFlags;
   const callback: ISyncDirsCheckContentThreadCallback );
 begin
   _fullTree:= fullTree;
+  _filterFlags:= filterFlags;
   _callback:= callback;
   _mutex:= TCriticalSection.Create;
   inherited Create(False);
