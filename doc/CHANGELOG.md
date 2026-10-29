@@ -10,6 +10,17 @@ fork revision counter.
 
 ## [Unreleased]
 
+## [1.3.0-tc.11] - 2026-10-29
+
+### Fixed (via upstream merge)
+- Dark mode: selected items in list boxes and combo box drop-downs are readable again.
+- Synchronize Directories: grid and status bar now update correctly after an aborted
+  "compare by content" or delete; correct file counts; "only selected" works across file sources.
+
+### Internal
+- Merged upstream Double Commander up to `592412a84` (21 commits, conflict-free, 8 files):
+  SyncDirs state/progress refactoring, memory-leak fixes, PT/RU translations, release workflow.
+
 ## [1.3.0-tc.10] - 2026-10-22
 
 ### Changed
