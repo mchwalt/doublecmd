@@ -2,13 +2,33 @@
 
 All notable changes to this Total Commander look-alike fork are documented here.
 Only the fork's own changes on top of upstream Double Commander are listed; for the
-upstream history see [`changelog.txt`](changelog.txt).
+upstream history see the
+[upstream releases](https://github.com/doublecmd/doublecmd/releases).
 
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Version scheme: `<upstream-base>-tc.<n>` - the Double Commander base version plus a
 fork revision counter.
 
 ## [Unreleased]
+
+## [1.3.0-tc.12] - 2026-11-10
+
+### Added (via upstream merge)
+- Search dialog: "Add to Stash" can now open the Stash afterwards (with confirmation).
+- Synchronize Directories: auto-size columns by double-clicking a column border; last
+  column fills the grid; long directory names may span multiple columns.
+- Hebrew translation; better tab titles for special locations.
+
+### Fixed (via upstream merge)
+- Synchronize Directories: progress bar display; "compare by content" of huge files can be
+  aborted quickly; less I/O when the two folders overlap little.
+- Wrong cursor position in archives (Brief view); opening files from archives in flat view
+  subfolders; selected-file count after cm_MarkPlus in search duplicates.
+
+### Internal
+- Merged upstream Double Commander up to `b33d3b3f3` (61 commits, conflict-free, 83 files):
+  SyncDirs refactoring, Qt6/Wayland/macOS fixes, MultiArc, translations. Upstream removed
+  `doc/changelog.txt` - links now point to the upstream releases page.
 
 ## [1.3.0-tc.11] - 2026-10-29
 

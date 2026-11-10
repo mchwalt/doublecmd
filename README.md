@@ -11,8 +11,8 @@ tweaks and a few small features on top.
 ## Changelog
 
 See [`doc/CHANGELOG.md`](doc/CHANGELOG.md) for the versioned history of this fork's changes
-(current: `1.3.0-tc.11`). The upstream Double Commander changelog is in
-[`doc/changelog.txt`](doc/changelog.txt).
+(current: `1.3.0-tc.12`). For upstream Double Commander changes see the
+[upstream releases](https://github.com/doublecmd/doublecmd/releases).
 
 ## What this fork changes
 
