@@ -9394,8 +9394,8 @@ msgid "only selected"
 msgstr "лише виділене"
 
 #: tfrmsyncdirsdlg.chksubdirs.caption
-msgid "Subdirs"
-msgstr "Підтеки"
+msgid "subdirs"
+msgstr "підтеки"
 
 #: tfrmsyncdirsdlg.groupbox1.caption
 msgid "Show:"
@@ -11023,6 +11023,11 @@ msgstr "Панелі інструментів DC"
 #: ulng.rsfilterxmlconfigfiles
 msgid ".xml Config files"
 msgstr "XML-Файли"
+
+#: ulng.rsfindconfirmafteraddtostash
+#, object-pascal-format
+msgid "%d files/directories have been added. Close the search window and open %s now?"
+msgstr ""
 
 #: ulng.rsfinddefinetemplate
 msgid "Define template"

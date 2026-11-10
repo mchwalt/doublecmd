@@ -9092,8 +9092,8 @@ msgid "only selected"
 msgstr "Le izbrano mapo"
 
 #: tfrmsyncdirsdlg.chksubdirs.caption
-msgid "Subdirs"
-msgstr "Upoštevaj podmape"
+msgid "subdirs"
+msgstr "upoštevaj podmape"
 
 #: tfrmsyncdirsdlg.groupbox1.caption
 msgid "Show:"
@@ -10674,6 +10674,11 @@ msgstr "Datoteke orodne vrstice DC"
 #: ulng.rsfilterxmlconfigfiles
 msgid ".xml Config files"
 msgstr "Nastavitvene datoteke .xml"
+
+#: ulng.rsfindconfirmafteraddtostash
+#, object-pascal-format
+msgid "%d files/directories have been added. Close the search window and open %s now?"
+msgstr ""
 
 #: ulng.rsfinddefinetemplate
 msgid "Define template"

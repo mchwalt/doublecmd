@@ -52,10 +52,10 @@ type
     class function consultCopyOperation(var params: TFileSourceConsultParams): Boolean;
     class function consultAndConfirmCopyOperation(var params: TFileSourceConsultParams): Boolean;
     class function supportsSyncDirs(const sourceFS: IFileSource; const targetFS: IFileSource): Boolean;
-    class function supportsCompareByContent(const fileSources: TDoubleFileSources): Boolean;
-    class function supportsVerify(const fileSources: TDoubleFileSources): Boolean;
-    class function supportsCopyProperties(const fileSources: TDoubleFileSources): Boolean;
-    class function isBothFileSystemFileSource(const fileSources: TDoubleFileSources): Boolean;
+    class function supportsCompareByContent(const fileSources: TDoubleFileSources): Boolean; inline;
+    class function supportsVerify(const fileSources: TDoubleFileSources): Boolean; inline;
+    class function supportsCopyProperties(const fileSources: TDoubleFileSources): Boolean; inline;
+    class function isBothFileSystemFileSource(const fileSources: TDoubleFileSources): Boolean; inline;
   public
     class procedure filterFlatListWithFlags(
       const fullTree: TTwoLevelTree;
@@ -106,9 +106,6 @@ type
       const sourceFile: TFile;
       const targetFile: TFile;
       const attrs: TCopyAttributesOptions ): Boolean;
-    function fileProcessorWithUIDeleteFile(
-      const fs: IFileSource;
-      const f: TFile): Boolean;
   end;
 
   { TSyncDirsSortService }
@@ -128,7 +125,7 @@ type
   { ISyncDirsCommonCallback }
 
   ISyncDirsCommonCallback = interface
-    function commonCheckRunning: Boolean;
+    function commonCheckRunning( const processMessages: Boolean = False ): Boolean;
   end;
 
   { TSyncDirsCommonService }
@@ -151,8 +148,7 @@ type
 
   { ISyncDirsTreeBuilderCallback }
 
-  ISyncDirsTreeBuilderCallback = interface
-    function treeBuilderCheckRunning( const processMessages: Boolean ): Boolean;
+  ISyncDirsTreeBuilderCallback = interface( ISyncDirsCommonCallback )
     function treeBuilderMaskFilt( const f: TFile ): Boolean;
     procedure onTreeBuilderUpdateProgress( const percent: Integer );
   end;
@@ -206,7 +202,7 @@ type
 
   { ISyncDirsCheckContentThreadCallback }
 
-  ISyncDirsCheckContentThreadCallback = interface
+  ISyncDirsCheckContentThreadCallback = interface( ISyncDirsCommonCallback )
     procedure onCheckContentThreadStart;
     procedure onCheckContentThreadFinish;
     procedure onCheckContentThreadReapplyFilter;
@@ -231,7 +227,31 @@ type
     function RetrieveStatistics: TFileSourceCopyOperationStatistics;
   end;
 
+  function otherSide(const side: TDoubleSide): TDoubleSide; inline;
+
 implementation
+
+function otherSide(const side: TDoubleSide): TDoubleSide;
+begin
+  if side = dsLeft then
+    Result:= dsRight
+  else
+    Result:= dsLeft;
+end;
+
+function fileProcessorWithUIDeleteFile(
+  const fileProcessor: ISyncDirsFileProcessorWithUI;
+  const fs: IFileSource;
+  const f: TFile): Boolean;
+var
+  files: TFiles;
+begin
+  files := TFiles.Create(EmptyStr);
+  files.OwnsObjects:= False;
+  files.Add( f );
+  Result:= fileProcessor.fileProcessorWithUIDeleteFiles(fs, files);
+  files.Free;
+end;
 
 { TSyncDirsUtil }
 
@@ -342,7 +362,7 @@ begin
         filterList.addPath( IncludeTrailingPathDelimiter(currentDirPath), rec );
     end;
     for fileIndex:= 0 to currentDirItem.fileCount-1 do begin
-      rec:= currentDirItem.fileSyncRec( fileIndex );
+      rec:= currentDirItem.getSyncRec( fileIndex );
       if isMatching(rec) then
         filterList.addPath( currentDirItem.files[fileIndex], rec );
     end;
@@ -360,7 +380,7 @@ class function TSyncDirsUtil.selectionToStringList(
     s: string;
     rec: TSyncRec;
   begin
-    rec := filteredList.fileSyncRec(R);
+    rec := filteredList.getSyncRec(R);
     if rec.isDir then
     begin
       s := filteredList.path(R);
@@ -563,8 +583,8 @@ procedure TSyncDirsSortService.sortDirItem( const dirItem: TTwoLevelTreeDirItem 
   begin
     if _sortIndex in [1..5] then
     begin
-      r1:= dirItem.fileSyncRec(i);
-      r2:= dirItem.fileSyncRec(j);
+      r1:= dirItem.getSyncRec(i);
+      r2:= dirItem.getSyncRec(j);
     end;
     case _sortIndex of
     0:
@@ -717,7 +737,7 @@ var
     if NOT Assigned(f) then
       Exit;
 
-    Result:= _fileProcessor.fileProcessorWithUIDeleteFile( _fileSources[side], f );
+    Result:= fileProcessorWithUIDeleteFile( _fileProcessor, _fileSources[side], f );
     if NOT Result then
       Exit;
 
@@ -754,13 +774,9 @@ var
   sourceSide: TDoubleSide;
   ret: Boolean;
 begin
-  if targetSide = dsLeft then
-    sourceSide:= dsRight
-  else
-    sourceSide:= dsLeft;
-
+  sourceSide:= otherSide( targetSide );
   for i in indexes do begin
-    rec:= _filteredList.fileSyncRec( i );
+    rec:= _filteredList.getSyncRec( i );
     if NOT rec.hasFilesOnBothSides then
       continue;
     ret:= _fileProcessor.fileProcessorWithUICopyProperties(
@@ -770,7 +786,7 @@ begin
       attrs );
     if NOT ret then
       break;
-    if NOT _callback.commonCheckRunning then
+    if NOT _callback.commonCheckRunning(True) then
       break;
   end;
 end;
@@ -873,7 +889,7 @@ procedure TSyncDirsTreeBuilder.build( const FFullTree: TTwoLevelTree; const sele
           if recIndex < 0 then
             rec := TSyncFileRec.Create(_compareOption, dir, parentDirIndex)
           else
-            rec := dirItem.fileSyncRec(recIndex);
+            rec := dirItem.getSyncRec(recIndex);
           rec.filesOnSide[side]:= f.Clone;
           rec.updateState;
           dirItem.addFile(filename, rec);
@@ -927,7 +943,7 @@ procedure TSyncDirsTreeBuilder.build( const FFullTree: TTwoLevelTree; const sele
           _callback.onTreeBuilderUpdateProgress( i * 100 div totalCount );
         dirPart:= leftDirs[i];
         scanDir(dir + dirPart, currentDirIndex, leftDirs, rightDirs);
-        if NOT _callback.treeBuilderCheckRunning(False) then
+        if NOT _callback.commonCheckRunning then
           Exit;
         rightIndex:= rightDirs.IndexOf(dirPart);
         if rightIndex >= 0 then begin
@@ -941,7 +957,7 @@ procedure TSyncDirsTreeBuilder.build( const FFullTree: TTwoLevelTree; const sele
           _callback.onTreeBuilderUpdateProgress( (leftDirs.Count + i) * 100 div totalCount );
         dirPart:= rightDirs[i];
         scanDir(dir + dirPart, currentDirIndex, leftDirs, rightDirs);
-        if NOT _callback.treeBuilderCheckRunning(False) then
+        if NOT _callback.commonCheckRunning then
           Exit;
       end;
     end;
@@ -969,10 +985,12 @@ procedure TSyncDirsTreeBuilder.build( const FFullTree: TTwoLevelTree; const sele
     rightDirs.CaseSensitive:= FileNameCaseSensitive;
     rightDirs.Sorted:= True;
     try
-      if NOT _callback.treeBuilderCheckRunning(True) then
+      if NOT _callback.commonCheckRunning(True) then
         Exit;
-      processOneSide(dirItem, currentDirIndex, leftDirs, dsLeft);
-      processOneSide(dirItem, currentDirIndex, rightDirs, dsRight);
+      if (dir='') or dirSyncRec.hasLeftFile then
+        processOneSide(dirItem, currentDirIndex, leftDirs, dsLeft);
+      if (dir='') or dirSyncRec.hasRightFile then
+        processOneSide(dirItem, currentDirIndex, rightDirs, dsRight);
       dirSyncRec.updateState;
       _sortedService.sortDirItem(dirItem);
       if not (cfSubdirs in _compareOption.flags) then
@@ -1012,7 +1030,7 @@ var
 begin
   Result:= Default( TSyncDirsSyncCount );
   for i:= 0 to _filteredList.Count-1 do begin
-    rec := _filteredList.fileSyncRec( i );
+    rec := _filteredList.getSyncRec( i );
     case rec.action of
       srsCopyToLeft:
         begin
@@ -1072,7 +1090,7 @@ var
 
     Result:= Assigned(f);
     if Result then
-      Result:= _fileProcessor.fileProcessorWithUIDeleteFile( _fileSources[side], f );
+      Result:= fileProcessorWithUIDeleteFile( _fileProcessor, _fileSources[side], f );
     f.Free;                                      // free file
   end;
 
@@ -1113,10 +1131,7 @@ var
       targetFile: TFile;
       targetPath: String;
     begin
-      if targetSide = dsLeft then
-        sourceSide:= dsRight
-      else
-        sourceSide:= dsLeft;
+      sourceSide:= otherSide( targetSide );
       sourceFile:= rec.filesOnSide[sourceSide].Clone;
       files.Add( sourceFile );
       targetPath:= _basePaths[targetSide] + rec.relPath;
@@ -1165,10 +1180,7 @@ var
     targetFS: IFileSource;
     targetFullPath: String;
   begin
-    if targetSide = dsLeft then
-      sourceSide:= dsRight
-    else
-      sourceSide:= dsLeft;
+    sourceSide:= otherSide( targetSide );
     sourceFS:= _fileSources[sourceSide];
     targetFS:= _fileSources[targetSide];
     targetFullPath:= ExcludeBackPathDelimiter( _basePaths[targetSide] + dirSyncRec.relPath );
@@ -1222,7 +1234,7 @@ var
         end;
         index:= index + 1;
         if index < _filteredList.Count then
-          rec:= _filteredList.fileSyncRec(index);
+          rec:= _filteredList.getSyncRec(index);
       until (index = _filteredList.Count) or rec.isDir;
 
       if copyToLeftFiles.Count > 0 then begin
@@ -1281,7 +1293,7 @@ begin
   Result:= True;
   index:= 0;
   while index < _filteredList.Count do begin
-    rec:= _filteredList.fileSyncRec(index);
+    rec:= _filteredList.getSyncRec(index);
     if rec.isDir then begin
       if NOT processDir then
         break;
@@ -1344,7 +1356,7 @@ var
 
           UpdateStatistics(Statistics);
 
-        until Terminated or not Result or (DoneBytes >= Size);
+        until NOT _callback.commonCheckRunning or NOT Result or (DoneBytes >= Size);
       finally
         File2.Free;
       end;
@@ -1382,27 +1394,19 @@ var
     end;
   end;
 
-var
-  isEqual: Boolean;
-  dirIndex, fileIndex: Integer;
-  rec: TSyncRec;
-begin
-  initInc;
-  Synchronize(@_callback.onCheckContentThreadStart);
-  Buffer1:= GetMem(BUF_LEN);
-  Buffer2:= GetMem(BUF_LEN);
-  try
-    if (Buffer1 = nil) or (Buffer2 = nil) then
-      raise EOutOfMemory.Create(SOutOfMemory);
-
+  procedure doCompareByContent;
+  var
+    isEqual: Boolean;
+    dirIndex, fileIndex: Integer;
+    rec: TSyncRec;
+  begin
     Statistics.DoneBytes:= 0;
     Statistics.TotalBytes:= 0;
     for dirIndex := 0 to _fullTree.Count - 1 do
     begin
       for fileIndex := 0 to _fullTree.dirItem(dirIndex).fileCount - 1 do
       begin
-        if Terminated then Exit;
-        rec := _fullTree.fileSyncRec(dirIndex, fileIndex);
+        rec := _fullTree.getSyncRec(dirIndex, fileIndex);
         if rec.isFile and (rec.state = srsUnknown) then
         begin
           Statistics.TotalBytes+= rec.leftFile.Size;
@@ -1415,9 +1419,9 @@ begin
     begin
       for fileIndex := 0 to _fullTree.dirItem(dirIndex).fileCount - 1 do
       begin
-        if Terminated then
-          Break;
-        rec := _fullTree.fileSyncRec(dirIndex, fileIndex);
+        if NOT _callback.commonCheckRunning then
+          Exit;
+        rec := _fullTree.getSyncRec(dirIndex, fileIndex);
         if rec.isDir then
           continue;
         if rec.state <> srsUnknown then
@@ -1441,6 +1445,17 @@ begin
         end;
       end;
     end;
+  end;
+
+begin
+  initInc;
+  Synchronize(@_callback.onCheckContentThreadStart);
+  Buffer1:= GetMem(BUF_LEN);
+  Buffer2:= GetMem(BUF_LEN);
+  try
+    if (Buffer1 = nil) or (Buffer2 = nil) then
+      raise EOutOfMemory.Create(SOutOfMemory);
+    doCompareByContent;
     Synchronize(@_callback.onCheckContentThreadReapplyFilter);
   finally
     Synchronize(@_callback.onCheckContentThreadFinish);

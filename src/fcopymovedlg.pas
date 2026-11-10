@@ -382,16 +382,6 @@ begin
       end;
     end;
   end;
-
-  {$IF lcl_fullversion < 093100}
-  case Key of
-    VK_ESCAPE: // Must handle before drag manager. Lazarus bug 0020676.
-      begin
-        ModalResult := mrCancel;
-        Key := 0;
-      end;
-  end;
-  {$ENDIF}
 end;
 
 procedure TfrmCopyDlg.FormPaint(Sender: TObject);

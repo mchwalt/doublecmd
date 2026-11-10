@@ -9275,8 +9275,8 @@ msgid "only selected"
 msgstr "μόνο το(α) επιλεγμένο(α)"
 
 #: tfrmsyncdirsdlg.chksubdirs.caption
-msgid "Subdirs"
-msgstr "Υποκατάλογοι"
+msgid "subdirs"
+msgstr "υποκατάλογοι"
 
 #: tfrmsyncdirsdlg.groupbox1.caption
 msgid "Show:"
@@ -10884,6 +10884,11 @@ msgstr "Αρχεία Μπάρας Εργαλείων DC"
 #: ulng.rsfilterxmlconfigfiles
 msgid ".xml Config files"
 msgstr "Αρχεία Διαμόρφωσης .xml"
+
+#: ulng.rsfindconfirmafteraddtostash
+#, object-pascal-format
+msgid "%d files/directories have been added. Close the search window and open %s now?"
+msgstr ""
 
 #: ulng.rsfinddefinetemplate
 msgid "Define template"

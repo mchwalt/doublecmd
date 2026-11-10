@@ -9068,7 +9068,7 @@ msgid "only selected"
 msgstr ""
 
 #: tfrmsyncdirsdlg.chksubdirs.caption
-msgid "Subdirs"
+msgid "subdirs"
 msgstr ""
 
 #: tfrmsyncdirsdlg.groupbox1.caption
@@ -10641,6 +10641,11 @@ msgstr ""
 
 #: ulng.rsfilterxmlconfigfiles
 msgid ".xml Config files"
+msgstr ""
+
+#: ulng.rsfindconfirmafteraddtostash
+#, object-pascal-format
+msgid "%d files/directories have been added. Close the search window and open %s now?"
 msgstr ""
 
 #: ulng.rsfinddefinetemplate

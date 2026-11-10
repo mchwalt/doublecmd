@@ -10090,8 +10090,8 @@ msgid "only selected"
 msgstr "&Kun valgte"
 
 #: tfrmsyncdirsdlg.chksubdirs.caption
-msgid "Subdirs"
-msgstr "&Undermapper"
+msgid "subdirs"
+msgstr "&undermapper"
 
 #: tfrmsyncdirsdlg.groupbox1.caption
 msgid "Show:"
@@ -11733,6 +11733,11 @@ msgstr "DC-værktøjslinjefil"
 #: ulng.rsfilterxmlconfigfiles
 msgid ".xml Config files"
 msgstr ".xml-konfigurationsfiler"
+
+#: ulng.rsfindconfirmafteraddtostash
+#, object-pascal-format
+msgid "%d files/directories have been added. Close the search window and open %s now?"
+msgstr ""
 
 # F5 - Indstillinger - (ikonet)_Vælg_skabelon
 #: ulng.rsfinddefinetemplate

@@ -17,8 +17,9 @@ uses
   {$ENDIF}
   cthreads,
   {$IFDEF DARWIN}
+  CocoaInt,         // enable autorelease pool
   iosxwstr,
-  iosxlocale,
+  iosxlocale,       // base on `autorelease`
   {$ELSE}
   cwstring,
   clocale,
@@ -256,7 +257,7 @@ begin
       Application.ProcessMessages;
       Application.Run;
 
-      if not UniqueInstance.isAnotherDCRunningWhileIamRunning then
+      if not UniqueInstance.isAnotherDCRunningWhileIamTerminating then
         DeleteTempFolderDeletableAtTheEnd;
 
       FreeMemoryFromOurAccentLookupTableList;

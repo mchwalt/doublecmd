@@ -9303,7 +9303,7 @@ msgid "only selected"
 msgstr "選択項目のみ"
 
 #: tfrmsyncdirsdlg.chksubdirs.caption
-msgid "Subdirs"
+msgid "subdirs"
 msgstr "サブディレクトリ"
 
 #: tfrmsyncdirsdlg.groupbox1.caption
@@ -10922,6 +10922,11 @@ msgstr "DC ツールバー ファイル"
 #: ulng.rsfilterxmlconfigfiles
 msgid ".xml Config files"
 msgstr ".xml構成ファイル"
+
+#: ulng.rsfindconfirmafteraddtostash
+#, object-pascal-format
+msgid "%d files/directories have been added. Close the search window and open %s now?"
+msgstr ""
 
 #: ulng.rsfinddefinetemplate
 msgid "Define template"

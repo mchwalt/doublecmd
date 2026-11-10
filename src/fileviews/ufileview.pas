@@ -512,6 +512,7 @@ type
     procedure MarkGroup(const sMask: String; bSelect: Boolean; pbCaseSensitive:PBoolean = nil; pbIgnoreAccents: PBoolean = nil; pbWindowsInterpretation: PBoolean = nil; pMarkFileChecks: TPFindFileChecks = nil);
     procedure MarkGroup(bSelect: Boolean; pbCaseSensitive:PBoolean = nil; pbIgnoreAccents: PBoolean = nil; pbWindowsInterpretation: PBoolean = nil; psAttribute:PString = nil);
     procedure OpenActiveFile;
+    procedure UpdateSelection;
     procedure RestoreSelection;
     procedure SaveSelection;
     procedure SaveSelectionToFile(const AFileName: String);
@@ -1083,11 +1084,12 @@ end;
 
 function TFileView.calcFileHashKey(const FileName, APath: String): String;
 begin
-  if FFlatView then begin
-    Result := ExcludeTrailingPathDelimiter( IncludeTrailingPathDelimiter(APath) + FileName );
-  end else begin
+  if FileName = EmptyStr then
+    Result := APath
+  else if FFlatView then
+    Result := ExcludeTrailingPathDelimiter( IncludeTrailingPathDelimiter(APath) + FileName )
+  else
     Result := FileName;
-  end;
 end;
 
 procedure TFileView.AddFile(const FileName, APath: String; NewFilesPosition: TNewFilesPosition; UpdatedFilesPosition: TUpdatedFilesPosition);
@@ -1776,6 +1778,11 @@ begin
           msgError(rsMsgErrSaveFile + '-' + E.Message);
       end;
   end;
+end;
+
+procedure TFileView.UpdateSelection;
+begin
+  Notify([fvnSelectionChanged]);
 end;
 
 procedure TFileView.RestoreSelection;
