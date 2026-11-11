@@ -91,7 +91,10 @@ type
   { How initially progress is shown for file operations }
   TFileOperationsProgressKind = (fopkSeparateWindow, fopkSeparateWindowMinimized, fopkOperationsPanel);
   { Operations with confirmation }
-  TFileOperationsConfirmation = (focCopy, focMove, focDelete, focDeleteToTrash, focVerifyChecksum, focTestArchive);
+  TFileOperationsConfirmation = (
+    focCopy, focMove,
+    focDelete, focDeleteToTrash, focDeleteReadOnly, focDeleteHiddenSystem,
+    focVerifyChecksum, focTestArchive);
   TFileOperationsConfirmations = set of TFileOperationsConfirmation;
 
   { Multi-Rename }
@@ -238,7 +241,8 @@ const
   // 14 -  Move some colors to colors.json
   // 15 -  Move custom columns colors to colors.json
   // 16 -  Move DirectoryHotList to localconfig.xml
-  ConfigVersion = 16;
+  // 17 -  add focDeleteReadOnly/focDeleteHiddenSystem to gFileOperationsConfirmations, and they need to be enabled by default
+  ConfigVersion = 17;
 
   COLORS_JSON = 'colors.json';
 
@@ -2122,7 +2126,7 @@ begin
   gNtfsHourTimeDelay := False;
   gAutoExtractOpenMask := EmptyStr;
   gFileOperationsProgressKind := fopkSeparateWindow;
-  gFileOperationsConfirmations := [focCopy, focMove, focDelete, focDeleteToTrash];
+  gFileOperationsConfirmations := [focCopy, focMove, focDelete, focDeleteToTrash, focDeleteReadOnly, focDeleteHiddenSystem];
   gFileOperationDuration := -1;
 
   { Multi-Rename }
@@ -3111,6 +3115,12 @@ begin
       gSearchDefaultTemplate := GetValue(Node, 'SearchDefaultTemplate', gSearchDefaultTemplate);
       gFileOperationsProgressKind := TFileOperationsProgressKind(GetValue(Node, 'ProgressKind', Integer(gFileOperationsProgressKind)));
       gFileOperationsConfirmations := TFileOperationsConfirmations(GetValue(Node, 'Confirmations', Integer(gFileOperationsConfirmations)));
+      if (LoadedConfigVersion < 17) then
+      begin
+        Include(gFileOperationsConfirmations, focDeleteReadOnly);
+        Include(gFileOperationsConfirmations, focDeleteHiddenSystem);
+      end;
+
       // Operations sounds
       SubNode := Node.FindNode('Sounds');
       if Assigned(SubNode) then
