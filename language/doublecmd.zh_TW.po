@@ -12,6 +12,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Native-Language: 繁體中文\n"
 
+#: fsetfileproperties.rssetfilepropertiesloadfromactivepanel
+msgctxt "fsetfileproperties.rssetfilepropertiesloadfromactivepanel"
+msgid "Active panel (source)"
+msgstr "現用面板（來源）"
+
+#: fsetfileproperties.rssetfilepropertiesloadfromclipboard
+msgid "Clipboard"
+msgstr "剪貼簿"
+
+#: fsetfileproperties.rssetfilepropertiesloadfrominactivepanel
+msgctxt "fsetfileproperties.rssetfilepropertiesloadfrominactivepanel"
+msgid "Inactive panel (target)"
+msgstr "非現用面板（目標）"
+
 #: fsyncdirsdlg.rscomparingpercent
 #, object-pascal-format
 msgid "Comparing... %d%% (ESC to cancel)"
@@ -8815,6 +8829,26 @@ msgstr ""
 msgid "&2."
 msgstr ""
 
+#: tfrmselectfileproperties.chkattributes.caption
+msgctxt "tfrmselectfileproperties.chkattributes.caption"
+msgid "File &attributes"
+msgstr "檔案屬性 (&A)"
+
+#: tfrmselectfileproperties.chkpermissions.caption
+msgctxt "tfrmselectfileproperties.chkpermissions.caption"
+msgid "&Permissions /  Ownership"
+msgstr "權限/擁有者 (&P)"
+
+#: tfrmselectfileproperties.chktime.caption
+msgctxt "tfrmselectfileproperties.chktime.caption"
+msgid "&Timestamp (date+time)"
+msgstr "日期時間 (&T)"
+
+#: tfrmselectfileproperties.chkxattributes.caption
+msgctxt "tfrmselectfileproperties.chkxattributes.caption"
+msgid "&Extended attributes"
+msgstr "擴展屬性 (&E)"
+
 #: tfrmselectpathrange.buttonpanel.cancelbutton.caption
 msgctxt "tfrmselectpathrange.buttonpanel.cancelbutton.caption"
 msgid "&Cancel"
@@ -8914,6 +8948,26 @@ msgctxt "TFRMSETFILEPROPERTIES.BTNCANCEL.CAPTION"
 msgid "&Cancel"
 msgstr "取消 (&C)"
 
+#: tfrmsetfileproperties.btnloadadv.caption
+msgctxt "tfrmsetfileproperties.btnloadadv.caption"
+msgid "Advanced(&0)..."
+msgstr "高級(&0)..."
+
+#: tfrmsetfileproperties.btnloadfromclipboard.caption
+msgctxt "tfrmsetfileproperties.btnloadfromclipboard.caption"
+msgid "First file in clipboard(&3)"
+msgstr "剪貼簿中的首個檔案(&3)"
+
+#: tfrmsetfileproperties.btnloadfromsource.caption
+msgctxt "tfrmsetfileproperties.btnloadfromsource.caption"
+msgid "File under cursor in active panel (source)(&1)"
+msgstr "現用面板（來源）中遊標下的檔案(&1)"
+
+#: tfrmsetfileproperties.btnloadfromtarget.caption
+msgctxt "tfrmsetfileproperties.btnloadfromtarget.caption"
+msgid "File in target(&2)"
+msgstr "目標面板中的檔案(&2)"
+
 #: tfrmsetfileproperties.btnok.caption
 msgctxt "TFRMSETFILEPROPERTIES.BTNOK.CAPTION"
 msgid "&OK"
@@ -8977,6 +9031,11 @@ msgstr "包含子資料夾"
 msgctxt "TFRMSETFILEPROPERTIES.CHKSYSTEM.CAPTION"
 msgid "System"
 msgstr "系統"
+
+#: tfrmsetfileproperties.gbloadattributes.caption
+msgctxt "tfrmsetfileproperties.gbloadattributes.caption"
+msgid "Load attributes from"
+msgstr "從中載入屬性"
 
 #: tfrmsetfileproperties.gbtimesamp.caption
 msgid "Timestamp properties"
@@ -9066,6 +9125,15 @@ msgstr ""
 msgctxt "tfrmsetfileproperties.zvlastwritedatetime.textfornulldate"
 msgid " "
 msgstr ""
+
+#: tfrmsetfilepropertiesadvload.gbloadattributes.caption
+msgid "Load these attributes"
+msgstr "載入以下屬性"
+
+#: tfrmsetfilepropertiesadvload.rgloadfrom.caption
+msgctxt "tfrmsetfilepropertiesadvload.rgloadfrom.caption"
+msgid "Load attributes from"
+msgstr "從下列檔案中載入屬性"
 
 #: tfrmsortanything.btnsort.caption
 msgid "&Sort"
@@ -9435,22 +9503,6 @@ msgstr "右邊: 刪除所有空白資料夾"
 #: tfrmsyncdirsperformdlg.chkverify.caption
 msgid "Verify"
 msgstr "校驗"
-
-#: tfrmsyncdirsselectpropertiesdlg.chkattributes.caption
-msgid "File &attributes"
-msgstr "檔案屬性 (&A)"
-
-#: tfrmsyncdirsselectpropertiesdlg.chkpermissions.caption
-msgid "&Permissions /  Ownership"
-msgstr "權限/擁有者 (&P)"
-
-#: tfrmsyncdirsselectpropertiesdlg.chktime.caption
-msgid "&Timestamp (date+time)"
-msgstr "日期時間 (&T)"
-
-#: tfrmsyncdirsselectpropertiesdlg.chkxattributes.caption
-msgid "&Extended attributes"
-msgstr "擴展屬性 (&E)"
 
 #: tfrmsyncdirsselectpropertiesdlg.lbllabel.caption
 msgid "Copy these file properties:"
@@ -14732,12 +14784,14 @@ msgid "Will show a simple message"
 msgstr ""
 
 #: ulng.rsvarsourcepanel
+msgctxt "ulng.rsvarsourcepanel"
 msgid "Active panel (source)"
-msgstr ""
+msgstr "現用面板（來源）"
 
 #: ulng.rsvartargetpanel
+msgctxt "ulng.rsvartargetpanel"
 msgid "Inactive panel (target)"
-msgstr ""
+msgstr "非現用面板（目標）"
 
 #: ulng.rsvarwillbequoted
 msgid "Filenames will be quoted from here (default)"

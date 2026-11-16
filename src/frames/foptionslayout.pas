@@ -27,7 +27,7 @@ unit fOptionsLayout;
 interface
 
 uses
-  Classes, SysUtils, StdCtrls,
+  Classes, SysUtils, StdCtrls, ExtCtrls,
   fOptionsFrame;
 
 type
@@ -54,12 +54,14 @@ type
     cbShowTabHeader: TCheckBox;
     cbShowTabs: TCheckBox;
     cbTermWindow: TCheckBox;
+    rgTermMode: TRadioGroup;
     cbTwoDiskPanels: TCheckBox;
     cbShowShortDriveFreeSpace: TCheckBox;
     chkShowMiddleToolBar: TCheckBox;
     gbScreenLayout: TGroupBox;
     procedure cbShowDiskPanelChange(Sender: TObject);
     procedure cbShowDriveFreeSpaceChange(Sender: TObject);
+    procedure cbTermWindowChange(Sender: TObject);
   protected
     procedure Load; override;
     function Save: TOptionsEditorSaveFlags; override;
@@ -87,6 +89,11 @@ procedure TfrmOptionsLayout.cbShowDriveFreeSpaceChange(Sender: TObject);
 begin
   cbShowShortDriveFreeSpace.Enabled:= cbShowDriveFreeSpace.Checked;
   if not(cbShowDriveFreeSpace.Checked) then cbShowShortDriveFreeSpace.Checked:= false;
+end;
+
+procedure TfrmOptionsLayout.cbTermWindowChange(Sender: TObject);
+begin
+  rgTermMode.Enabled := cbTermWindow.Checked;
 end;
 
 class function TfrmOptionsLayout.GetIconIndex: Integer;
@@ -118,6 +125,8 @@ begin
   cbFlatInterface.Checked := gInterfaceFlat;
   cbLogWindow.Checked := gLogWindow;
   cbTermWindow.Checked := gTermWindow;
+  rgTermMode.ItemIndex := gTermWindowMode;
+  rgTermMode.Enabled := gTermWindow;
   cbShowDriveFreeSpace.Checked := gDriveFreeSpace;
   cbFreespaceInd.Checked := gDriveInd;
   cbProgInMenuBar.Checked := gProgInMenuBar;
@@ -146,6 +155,7 @@ begin
   gInterfaceFlat := cbFlatInterface.Checked;
   gLogWindow := cbLogWindow.Checked;
   gTermWindow := cbTermWindow.Checked;
+  gTermWindowMode := rgTermMode.ItemIndex;
   gDriveFreeSpace := cbShowDriveFreeSpace.Checked;
   gDriveInd := cbFreespaceInd.Checked;
   gProgInMenuBar := cbProgInMenuBar.Checked;

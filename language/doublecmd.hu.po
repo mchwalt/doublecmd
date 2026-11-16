@@ -1,17 +1,31 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Double Commander 1.3.0\n"
+"Project-Id-Version: Double Commander 1.2.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 14:00+0200\n"
-"PO-Revision-Date: 2026-11-06 14:30+0100\n"
-"Last-Translator: Gyuri <irataim@gmail.com>\n"
-"Language-Team: Gyuri <irataim@gmail.com>\n"
+"POT-Creation-Date: 2026-11-13 13:20+0100\n"
+"PO-Revision-Date: 2026-11-13 13:20+0100\n"
+"Last-Translator: Mihaly Nyilas <dr.dabzse+dctr@gmail.com>\n"
+"Language-Team: dabzse.net | nyilas.dev <dr.dabzse+dctr@gmail.com>\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Native-Language: Magyar\n"
 "X-Generator: Poedit 3.10\n"
+
+#: fsetfileproperties.rssetfilepropertiesloadfromactivepanel
+msgctxt "fsetfileproperties.rssetfilepropertiesloadfromactivepanel"
+msgid "Active panel (source)"
+msgstr "Aktív panel (forrás)"
+
+#: fsetfileproperties.rssetfilepropertiesloadfromclipboard
+msgid "Clipboard"
+msgstr "Vágólap"
+
+#: fsetfileproperties.rssetfilepropertiesloadfrominactivepanel
+msgctxt "fsetfileproperties.rssetfilepropertiesloadfrominactivepanel"
+msgid "Inactive panel (target)"
+msgstr "Inaktív panel (cél)"
 
 #: fsyncdirsdlg.rscomparingpercent
 #, object-pascal-format
@@ -6098,11 +6112,11 @@ msgstr "Törlési művelet"
 
 #: tfrmoptionsfileoperations.cbdeletehiddensystemconfirmation.caption
 msgid "Delete hidden/system files"
-msgstr ""
+msgstr "Rejtett/rendszerfájlok törlése"
 
 #: tfrmoptionsfileoperations.cbdeletereadonlyconfirmation.caption
 msgid "Delete read-only files"
-msgstr ""
+msgstr "Csak olvasható fájlok törlése"
 
 #: tfrmoptionsfileoperations.cbdeletetotrash.caption
 msgid "Dele&te to recycle bin (Shift key reverses this setting)"
@@ -8590,6 +8604,26 @@ msgstr "Kiválasztás &név/kiterjesztés alapján:"
 msgid "&2."
 msgstr "&2."
 
+#: tfrmselectfileproperties.chkattributes.caption
+msgctxt "tfrmselectfileproperties.chkattributes.caption"
+msgid "File &attributes"
+msgstr "Fájl&attribútumok"
+
+#: tfrmselectfileproperties.chkpermissions.caption
+msgctxt "tfrmselectfileproperties.chkpermissions.caption"
+msgid "&Permissions /  Ownership"
+msgstr "&Jogosultságok /  Tulajdonjog"
+
+#: tfrmselectfileproperties.chktime.caption
+msgctxt "tfrmselectfileproperties.chktime.caption"
+msgid "&Timestamp (date+time)"
+msgstr "&Időbélyeg (dátum+idő)"
+
+#: tfrmselectfileproperties.chkxattributes.caption
+msgctxt "tfrmselectfileproperties.chkxattributes.caption"
+msgid "&Extended attributes"
+msgstr "&Kiterjesztett attribútumok"
+
 #: tfrmselectpathrange.buttonpanel.cancelbutton.caption
 msgctxt "tfrmselectpathrange.buttonpanel.cancelbutton.caption"
 msgid "&Cancel"
@@ -8689,6 +8723,26 @@ msgctxt "TFRMSETFILEPROPERTIES.BTNCANCEL.CAPTION"
 msgid "&Cancel"
 msgstr "&Mégsem"
 
+#: tfrmsetfileproperties.btnloadadv.caption
+msgctxt "tfrmsetfileproperties.btnloadadv.caption"
+msgid "Advanced(&0)..."
+msgstr "Haladó(&0)..."
+
+#: tfrmsetfileproperties.btnloadfromclipboard.caption
+msgctxt "tfrmsetfileproperties.btnloadfromclipboard.caption"
+msgid "First file in clipboard(&3)"
+msgstr "Első fájl a vágólapon(&3)"
+
+#: tfrmsetfileproperties.btnloadfromsource.caption
+msgctxt "tfrmsetfileproperties.btnloadfromsource.caption"
+msgid "File under cursor in active panel (source)(&1)"
+msgstr "Kurzor alatti fájl az aktív panelen (forrás)(&1)"
+
+#: tfrmsetfileproperties.btnloadfromtarget.caption
+msgctxt "tfrmsetfileproperties.btnloadfromtarget.caption"
+msgid "File in target(&2)"
+msgstr "Fájl a célban(&2)"
+
 #: tfrmsetfileproperties.btnok.caption
 msgctxt "TFRMSETFILEPROPERTIES.BTNOK.CAPTION"
 msgid "&OK"
@@ -8748,6 +8802,11 @@ msgstr "Almappákkal együtt"
 msgctxt "tfrmsetfileproperties.chksystem.caption"
 msgid "System"
 msgstr "Rendszer"
+
+#: tfrmsetfileproperties.gbloadattributes.caption
+msgctxt "tfrmsetfileproperties.gbloadattributes.caption"
+msgid "Load attributes from"
+msgstr "Attribútumok betöltése innen"
 
 #: tfrmsetfileproperties.gbtimesamp.caption
 msgid "Timestamp properties"
@@ -8837,6 +8896,15 @@ msgstr " "
 msgctxt "tfrmsetfileproperties.zvlastwritedatetime.textfornulldate"
 msgid " "
 msgstr " "
+
+#: tfrmsetfilepropertiesadvload.gbloadattributes.caption
+msgid "Load these attributes"
+msgstr ""
+
+#: tfrmsetfilepropertiesadvload.rgloadfrom.caption
+msgctxt "tfrmsetfilepropertiesadvload.rgloadfrom.caption"
+msgid "Load attributes from"
+msgstr ""
 
 #: tfrmsortanything.btnsort.caption
 msgid "&Sort"
@@ -9202,22 +9270,6 @@ msgstr "Jobb oldal: Az összes üres mappa törlése"
 #: tfrmsyncdirsperformdlg.chkverify.caption
 msgid "Verify"
 msgstr "Ellenőrzés"
-
-#: tfrmsyncdirsselectpropertiesdlg.chkattributes.caption
-msgid "File &attributes"
-msgstr "Fájl&attribútumok"
-
-#: tfrmsyncdirsselectpropertiesdlg.chkpermissions.caption
-msgid "&Permissions /  Ownership"
-msgstr "&Jogosultságok /  Tulajdonjog"
-
-#: tfrmsyncdirsselectpropertiesdlg.chktime.caption
-msgid "&Timestamp (date+time)"
-msgstr "&Időbélyeg (dátum+idő)"
-
-#: tfrmsyncdirsselectpropertiesdlg.chkxattributes.caption
-msgid "&Extended attributes"
-msgstr "&Kiterjesztett attribútumok"
 
 #: tfrmsyncdirsselectpropertiesdlg.lbllabel.caption
 msgid "Copy these file properties:"
@@ -10672,7 +10724,7 @@ msgstr ".xml konfigurációs fájlok"
 #: ulng.rsfindconfirmafteraddtostash
 #, object-pascal-format
 msgid "%d files/directories have been added. Close the search window and open %s now?"
-msgstr ""
+msgstr "%d fájl/könyvtár hozzáadva. Bezárja a keresési ablakot, és megnyitja most a következőt: %s?"
 
 #: ulng.rsfinddefinetemplate
 msgid "Define template"
@@ -14501,10 +14553,12 @@ msgid "Will show a simple message"
 msgstr "Egyszerű üzenetet jelenít meg"
 
 #: ulng.rsvarsourcepanel
+msgctxt "ulng.rsvarsourcepanel"
 msgid "Active panel (source)"
 msgstr "Aktív panel (forrás)"
 
 #: ulng.rsvartargetpanel
+msgctxt "ulng.rsvartargetpanel"
 msgid "Inactive panel (target)"
 msgstr "Inaktív panel (cél)"
 
