@@ -1,0 +1,108 @@
+name: tc-release
+
+# Fork release pipeline: builds Windows x64 and publishes a GitHub release
+# for tags like v1.3.0-tc.13. Release notes come from doc/CHANGELOG.md.
+
+on:
+  push:
+    tags:
+      - 'v*-tc.*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to release (e.g. v1.3.0-tc.13)'
+        required: true
+
+permissions:
+  contents: write
+
+env:
+  TAG: ${{ github.event.inputs.tag || github.ref_name }}
+
+jobs:
+  build-win:
+    runs-on: windows-latest
+    steps:
+    - name: Install Lazarus
+      uses: doublecmd/lazarus-install@win
+      with:
+        lazarus-version: "stable"
+
+    - name: Checkout source
+      uses: actions/checkout@v7
+      with:
+        ref: ${{ env.TAG }}
+        fetch-depth: 0
+
+    - name: Build and package
+      shell: cmd
+      run: |
+        set BUILD_PACK_DIR=%TEMP%\doublecmd-release
+        set PACK_DIR=%CD%\doublecmd-release
+        mkdir %PACK_DIR%
+
+        pushd install
+        curl -o windows.7z -L https://github.com/doublecmd/external/raw/main/windows.7z || exit /b 1
+        "%ProgramFiles%\7-Zip\7z.exe" x windows.7z || exit /b 1
+        del /Q windows.7z
+        popd
+
+        set CPU_TARGET=x86_64
+        set OS_TARGET=win64
+        call build.bat darkwin
+        rem build.bat returns 0 even on compile errors - check the result
+        if not exist doublecmd.exe exit /b 1
+
+        copy install\windows\lib\%CPU_TARGET%\*.dll            %CD%\
+        copy install\windows\lib\%CPU_TARGET%\winpty-agent.exe %CD%\
+
+        mkdir %BUILD_PACK_DIR%
+        call install\windows\install.bat
+
+        "%ProgramFiles%\7-Zip\7z.exe" a -tzip -mx9 %PACK_DIR%\doublecmd-%TAG:~1%-x86_64-win64.zip %DC_INSTALL_DIR% || exit /b 1
+
+    - name: Upload package
+      uses: actions/upload-artifact@v7
+      with:
+        name: release-win
+        retention-days: 1
+        compression-level: 0
+        path: doublecmd-release/*.zip
+
+  release:
+    needs: [build-win]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v7
+      with:
+        ref: ${{ env.TAG }}
+
+    - name: Download package
+      uses: actions/download-artifact@v8
+      with:
+        name: release-win
+        path: dist
+
+    - name: Extract release notes
+      run: |
+        VER="${TAG#v}"
+        awk -v ver="$VER" '
+          index($0, "## [" ver "]") == 1 { found = 1; next }
+          found && /^## \[/ { exit }
+          found { print }
+        ' doc/CHANGELOG.md > notes.md
+        if [ ! -s notes.md ]; then
+          echo "No CHANGELOG section for $VER" >&2
+          exit 1
+        fi
+
+    - name: Create release
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        gh release create "$TAG" dist/*.zip \
+          --repo "$GITHUB_REPOSITORY" \
+          --title "Double Commander TC ${TAG#v}" \
+          --notes-file notes.md \
+          --verify-tag
