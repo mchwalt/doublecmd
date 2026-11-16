@@ -11,6 +11,26 @@ fork revision counter.
 
 ## [Unreleased]
 
+## [1.3.0-tc.13] - 2026-11-16
+
+### Added (via upstream merge)
+- Change Attributes dialog: "Advanced..." section; load attributes from the file under
+  the cursor or from a file in the clipboard.
+- Built-in terminal: split terminal window layout; new "Terminal mode" option in
+  Options > Layout (single shared terminal / per panel / per tab).
+- Viewer: faster painting of large images, image scaling via the Image32 library.
+- Better captions/hints for panel tabs of archives, Stash, search results and iCloud.
+
+### Fixed (via upstream merge)
+- Built-in terminal starts in the correct directory on Windows.
+- Memory leak in reading the file name from the clipboard; drag and drop on toolbars
+  under Wayland; viewer repaint after mirroring an image.
+
+### Internal
+- Merged upstream Double Commander up to `da9dc1b47` (47 commits, 80 files). One conflict
+  in `foptionslayout.lfm`: upstream's new `rgTermMode` shifted the tab order, so the fork's
+  "Show file position index in footer" checkbox now has TabOrder 22.
+
 ## [1.3.0-tc.12] - 2026-11-10
 
 ### Added (via upstream merge)
